@@ -12,24 +12,79 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Code was sent to"
-        app:layout_constraintBottom_toTopOf="@+id/edt_code"
+        app:layout_constraintBottom_toTopOf="@+id/edt_code1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/edt_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter code"
-        android:inputType="phone"
+        android:id="@+id/edt_code1"
+        style="@style/CustomEditText"
+        android:layout_width="35dp"
+        android:layout_height="40dp"
+        android:background="@drawable/custom_input"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
+
+    <EditText
+        android:id="@+id/edt_code2"
+        android:layout_width="35dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/custom_input"
+        style="@style/CustomEditText"
+        app:layout_constraintBottom_toBottomOf="@+id/edt_code1"
+        app:layout_constraintStart_toEndOf="@+id/edt_code1"
+        app:layout_constraintTop_toTopOf="@+id/edt_code1"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/edt_code3"
+        android:layout_width="35dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/custom_input"
+        style="@style/CustomEditText"
+        app:layout_constraintBottom_toBottomOf="@+id/edt_code2"
+        app:layout_constraintStart_toEndOf="@+id/edt_code2"
+        app:layout_constraintTop_toTopOf="@+id/edt_code2" />
+
+    <EditText
+        android:id="@+id/edt_code4"
+        android:layout_width="35dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/custom_input"
+        style="@style/CustomEditText"
+        app:layout_constraintBottom_toBottomOf="@+id/edt_code3"
+        app:layout_constraintStart_toEndOf="@+id/edt_code3"
+        app:layout_constraintTop_toTopOf="@+id/edt_code3" />
+
+    <EditText
+        android:id="@+id/edt_code5"
+        android:layout_width="35dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/custom_input"
+        style="@style/CustomEditText"
+        app:layout_constraintBottom_toBottomOf="@+id/edt_code4"
+        app:layout_constraintStart_toEndOf="@+id/edt_code4"
+        app:layout_constraintTop_toTopOf="@+id/edt_code4" />
+
+    <EditText
+        android:id="@+id/edt_code6"
+        android:layout_width="35dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/custom_input"
+        style="@style/CustomEditText"
+        app:layout_constraintBottom_toBottomOf="@+id/edt_code5"
+        app:layout_constraintStart_toEndOf="@+id/edt_code5"
+        app:layout_constraintTop_toTopOf="@+id/edt_code5" />
 
     <Button
         android:id="@+id/btn_verify"
@@ -47,22 +102,22 @@
         android:id="@+id/txt_resend_otp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Resend OTP"
+        android:textColor="@color/red"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_code" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_code1" />
 
     <ProgressBar
         android:id="@+id/pb_otp_verify"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
         android:layout_marginTop="16dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
