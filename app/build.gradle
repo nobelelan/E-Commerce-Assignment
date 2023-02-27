@@ -49,4 +49,7 @@ dependencies {
     // Firebase
     implementation platform('com.google.firebase:firebase-bom:31.2.2')
     implementation 'com.google.firebase:firebase-auth-ktx'
+
+    // Country Code Picker
+    implementation 'com.hbb20:ccp:2.5.0'
 }

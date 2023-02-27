@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">E-Commerce</string>
+    <string name="enter_you_phone_number">Enter mobile number</string>
 </resources>
