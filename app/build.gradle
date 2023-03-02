@@ -52,12 +52,14 @@ dependencies {
     // Firebase
     implementation platform('com.google.firebase:firebase-bom:31.2.2')
     implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.google.android.gms:play-services-auth:20.4.1'
 
     // Country Code Picker
     implementation 'com.hbb20:ccp:2.5.0'
 
-    def nav_version = "2.5.3"
     // Navigation Component
+    def nav_version = "2.5.3"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 }

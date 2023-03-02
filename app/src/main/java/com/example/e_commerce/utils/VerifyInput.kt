@@ -6,4 +6,8 @@ object VerifyInput {
         return (code1.isNotEmpty() && code2.isNotEmpty() && code3.isNotEmpty() && code4.isNotEmpty()
                 && code5.isNotEmpty() && code6.isNotEmpty())
     }
+
+    fun verifyProfileInfo(name: String, phone: String, address: String): Boolean{
+        return (name.isNotEmpty() && phone.isNotEmpty() && address.isNotEmpty())
+    }
 }

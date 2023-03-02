@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.lifecycle.ViewModelProvider
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.ActivityVerifyOtpBinding
 import com.example.e_commerce.ui.main.MainActivity
@@ -13,6 +14,7 @@ import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
 import com.example.e_commerce.utils.VerifyInput.verifyCode
+import com.example.e_commerce.viewmodel.FirebaseViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
@@ -25,6 +27,7 @@ class VerifyOtpActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVerifyOtpBinding
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var firebaseViewModel: FirebaseViewModel
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -140,6 +143,14 @@ class VerifyOtpActivity : AppCompatActivity() {
                     binding.pbOtpVerify.hide()
                     binding.btnVerify.show()
                     showToast("Verification successful!")
+                    firebaseViewModel = ViewModelProvider(this)[FirebaseViewModel::class.java]
+                    firebaseViewModel.addProfile(
+                        hashMapOf(
+                            "name" to "User Name",
+                            "phone" to auth.currentUser?.phoneNumber.toString(),
+                            "address" to "Address"
+                        )
+                    )
                     val intent = Intent(this, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)

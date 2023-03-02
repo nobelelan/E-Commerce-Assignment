@@ -6,7 +6,7 @@
         android:icon="@drawable/baseline_home"/>
 
     <item android:id="@+id/fav_nav_graph"
-        android:title="Favourite"
+        android:title="Wishlist"
         android:icon="@drawable/baseline_favorite"/>
 
     <item android:id="@+id/cart_nav_graph"
