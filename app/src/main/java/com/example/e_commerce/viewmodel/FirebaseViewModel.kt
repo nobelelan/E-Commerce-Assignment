@@ -3,12 +3,14 @@ package com.example.e_commerce.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.e_commerce.model.Product
 import com.example.e_commerce.model.Profile
 import com.example.e_commerce.utils.Resource
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 
 class FirebaseViewModel: ViewModel() {
@@ -24,14 +26,19 @@ class FirebaseViewModel: ViewModel() {
     val getProfile: LiveData<Resource<Profile>>
         get() = _getProfile
 
+    private val _getShoes = MutableLiveData<Resource<List<Product>>>()
+    val getShoes: LiveData<Resource<List<Product>>>
+        get() = _getShoes
+
     private val auth = Firebase.auth
-    private val collectionRef = Firebase.firestore.collection("users")
+    private val profileCollectionRef = Firebase.firestore.collection("users")
         .document(auth.currentUser?.uid!!).collection("profile")
+    private val shoesCollectionRef = Firebase.firestore.collection("shoes")
 
 
     fun addProfile(profile: HashMap<String, String>){
         _addProfile.value = Resource.loading()
-        collectionRef.add(profile)
+        profileCollectionRef.add(profile)
             .addOnSuccessListener {
                 _addProfile.value = Resource.success("Successfully added data!")
             }
@@ -42,11 +49,11 @@ class FirebaseViewModel: ViewModel() {
 
     fun updateProfile(profile: Map<String, String>){
         _updateProfile.value = Resource.loading()
-        collectionRef.get()
+        profileCollectionRef.get()
             .addOnSuccessListener { querySnapshot->
                 if (querySnapshot.documents.isNotEmpty()){
                     querySnapshot.documents.forEach { documentSnapshot ->
-                        collectionRef.document(documentSnapshot.id)
+                        profileCollectionRef.document(documentSnapshot.id)
                             .set(profile, SetOptions.merge())
                             .addOnSuccessListener {
                                 _updateProfile.value = Resource.success("Successfully updated profile!")
@@ -61,7 +68,7 @@ class FirebaseViewModel: ViewModel() {
 
     fun getProfile(){
         _getProfile.value = Resource.loading()
-        collectionRef.addSnapshotListener { querySnapshot, error ->
+        profileCollectionRef.addSnapshotListener { querySnapshot, error ->
             error?.let {
                 _getProfile.value = Resource.error(message = it.message.toString())
             }
@@ -69,6 +76,18 @@ class FirebaseViewModel: ViewModel() {
                 it.forEach {documentSnapshot->
                     _getProfile.value = Resource.success(documentSnapshot.toObject())
                 }
+            }
+        }
+    }
+
+    fun getShoes(){
+        _getShoes.value = Resource.loading()
+        shoesCollectionRef.addSnapshotListener { querySnapshot, error ->
+            error?.let {
+                _getShoes.value = Resource.error(message = it.message.toString())
+            }
+            querySnapshot?.let {
+                _getShoes.value = Resource.success(it.toObjects())
             }
         }
     }
