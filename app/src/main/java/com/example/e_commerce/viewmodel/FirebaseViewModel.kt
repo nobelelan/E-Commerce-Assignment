@@ -34,11 +34,25 @@ class FirebaseViewModel: ViewModel() {
     val getGlasses: LiveData<Resource<List<Product>>>
         get() = _getGlasses
 
+    private val _addWishlist = MutableLiveData<Resource<String>>()
+    val addWishlist: LiveData<Resource<String>>
+        get() = _addWishlist
+
+    private val _getWishlist = MutableLiveData<Resource<List<Product>>>()
+    val getWishlist: LiveData<Resource<List<Product>>>
+        get() = _getWishlist
+
+    private val _deleteWishlist = MutableLiveData<Resource<String>>()
+    val deleteWishlist: LiveData<Resource<String>>
+        get() = _deleteWishlist
+
     private val auth = Firebase.auth
     private val profileCollectionRef = Firebase.firestore.collection("users")
         .document(auth.currentUser?.uid!!).collection("profile")
     private val shoesCollectionRef = Firebase.firestore.collection("shoes")
     private val glassesCollectionRef = Firebase.firestore.collection("glasses")
+    private val wishlistCollectionRef = Firebase.firestore.collection("users")
+        .document(auth.currentUser?.uid!!).collection("wishlist")
 
 
     fun addProfile(profile: HashMap<String, String>){
@@ -107,5 +121,48 @@ class FirebaseViewModel: ViewModel() {
                 _getGlasses.value = Resource.success(it.toObjects())
             }
         }
+    }
+
+    fun addWishlist(product: HashMap<String, String>){
+        _addWishlist.value = Resource.loading()
+        wishlistCollectionRef.add(product)
+            .addOnSuccessListener {
+                _addWishlist.value = Resource.success("Added to wishlist!")
+            }
+            .addOnFailureListener{
+                _addWishlist.value = Resource.error(message = it.message.toString())
+            }
+    }
+
+    fun getWishlist(){
+        _getWishlist.value = Resource.loading()
+        wishlistCollectionRef.addSnapshotListener { querySnapshot, error ->
+            error?.let {
+                _getWishlist.value = Resource.error(message = it.message.toString())
+            }
+            querySnapshot?.let {
+                _getWishlist.value = Resource.success(it.toObjects())
+            }
+        }
+    }
+
+    fun deleteWishlist(product: Product){
+        _deleteWishlist.value = Resource.loading()
+        wishlistCollectionRef
+            .whereEqualTo("url", product.url)
+            .get()
+            .addOnSuccessListener {
+                if (it.documents.isNotEmpty()){
+                    it.forEach { document->
+                        wishlistCollectionRef.document(document.id).delete()
+                            .addOnSuccessListener {
+                                _deleteWishlist.value = Resource.success("Removed from wishlist!")
+                            }
+                            .addOnFailureListener {
+                                _deleteWishlist.value = Resource.error(message = it.message.toString())
+                            }
+                    }
+                }
+            }
     }
 }

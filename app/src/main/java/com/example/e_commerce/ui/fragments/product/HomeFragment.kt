@@ -62,7 +62,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onFavIconClick(product: Product) {
-                requireActivity().showToast("Love clicked")
+                addProductToWishList(product)
             }
         })
         glassAdapter.setOnClickListener(object : GlassAdapter.OnItemClickListener{
@@ -71,9 +71,34 @@ class HomeFragment : Fragment() {
             }
 
             override fun onFavIconClick(product: Product) {
-                requireActivity().showToast("Love clicked")
+                addProductToWishList(product)
             }
         })
+    }
+
+    private fun addProductToWishList(product: Product) {
+        firebaseViewModel.addWishlist.observe(viewLifecycleOwner, Observer { resource->
+            when(resource.status){
+                Resource.Status.LOADING ->{
+                    binding.pbHome.show()
+                }
+                Resource.Status.SUCCESS ->{
+                    requireActivity().showToast(resource.data.toString())
+                    binding.pbHome.hide()
+                }
+                Resource.Status.ERROR ->{
+                    requireActivity().showToast(resource.message.toString())
+                    binding.pbHome.hide()
+                }
+            }
+        })
+        firebaseViewModel.addWishlist(
+            hashMapOf(
+                "name" to product.name.toString(),
+                "url" to product.url.toString(),
+                "price" to product.price.toString()
+            )
+        )
     }
 
     private fun retrieveAndSetGlasses() {

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/favFragment"
-        android:name="com.example.e_commerce.ui.fragments.fav.FavFragment"
+        android:name="com.example.e_commerce.ui.fragments.wishlist.WishlistFragment"
         android:label="fragment_fav"
-        tools:layout="@layout/fragment_fav" />
+        tools:layout="@layout/fragment_wishlist" />
 </navigation>
