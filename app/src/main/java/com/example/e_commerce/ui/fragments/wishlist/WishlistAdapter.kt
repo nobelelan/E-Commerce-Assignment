@@ -1,13 +1,7 @@
 package com.example.e_commerce.ui.fragments.wishlist
 
-import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -15,8 +9,6 @@ import com.bumptech.glide.Glide
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.RvHomeShoeBinding
 import com.example.e_commerce.model.Product
-import com.example.e_commerce.utils.ExtensionFunctions.hide
-import com.example.e_commerce.utils.ExtensionFunctions.show
 
 class WishlistAdapter: RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>() {
 
@@ -64,7 +56,7 @@ class WishlistAdapter: RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>(
         return differCallBack.currentList.size
     }
 
-    var onItemClickListener: OnItemClickListener? = null
+    private var onItemClickListener: OnItemClickListener? = null
 
     interface OnItemClickListener{
         fun onProductClick(product: Product)

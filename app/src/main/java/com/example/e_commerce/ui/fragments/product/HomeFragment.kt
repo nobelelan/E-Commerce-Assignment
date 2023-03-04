@@ -1,14 +1,10 @@
 package com.example.e_commerce.ui.fragments.product
 
-import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -18,7 +14,6 @@ import com.example.e_commerce.databinding.FragmentHomeBinding
 import com.example.e_commerce.model.Product
 import com.example.e_commerce.ui.fragments.product.adapter.GlassAdapter
 import com.example.e_commerce.ui.fragments.product.adapter.ShoeAdapter
-import com.example.e_commerce.ui.phoneauth.PhoneAuthActivity
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
@@ -82,6 +77,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun addProductToWishList(product: Product) {
+        firebaseViewModel.addWishlist(
+            hashMapOf(
+                "name" to product.name.toString(),
+                "url" to product.url.toString(),
+                "price" to product.price.toString(),
+                "details" to product.details.toString(),
+                "rating" to product.rating.toString()
+            )
+        )
         firebaseViewModel.addWishlist.observe(viewLifecycleOwner, Observer { resource->
             when(resource.status){
                 Resource.Status.LOADING ->{
@@ -97,18 +101,11 @@ class HomeFragment : Fragment() {
                 }
             }
         })
-        firebaseViewModel.addWishlist(
-            hashMapOf(
-                "name" to product.name.toString(),
-                "url" to product.url.toString(),
-                "price" to product.price.toString(),
-                "details" to product.details.toString(),
-                "rating" to product.rating.toString()
-            )
-        )
     }
 
     private fun retrieveAndSetGlasses() {
+        firebaseViewModel.getGlasses()
+
         firebaseViewModel.getGlasses.observe(viewLifecycleOwner, Observer { resource->
             when(resource.status){
                 Resource.Status.LOADING ->{
@@ -124,10 +121,11 @@ class HomeFragment : Fragment() {
                 }
             }
         })
-        firebaseViewModel.getGlasses()
     }
 
     private fun retrieveAndSetShoes() {
+        firebaseViewModel.getShoes()
+
         firebaseViewModel.getShoes.observe(viewLifecycleOwner, Observer { resource->
             when(resource.status){
                 Resource.Status.LOADING ->{
@@ -143,7 +141,6 @@ class HomeFragment : Fragment() {
                 }
             }
         })
-        firebaseViewModel.getShoes()
     }
 
     private fun setUpGlassRecyclerView() = binding.rvHomeGlass.apply {

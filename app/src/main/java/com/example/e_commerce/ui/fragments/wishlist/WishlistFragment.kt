@@ -50,6 +50,8 @@ class WishlistFragment : Fragment() {
             }
 
             override fun onFavIconClick(product: Product) {
+                firebaseViewModel.deleteWishlist(product)
+
                 firebaseViewModel.deleteWishlist.observe(viewLifecycleOwner, Observer { resource->
                     when(resource.status){
                         Resource.Status.LOADING ->{
@@ -66,12 +68,13 @@ class WishlistFragment : Fragment() {
                         }
                     }
                 })
-                firebaseViewModel.deleteWishlist(product)
             }
         })
     }
 
     private fun retrieveAndSetWishlist() {
+        firebaseViewModel.getWishlist()
+
         firebaseViewModel.getWishlist.observe(viewLifecycleOwner, Observer { resource->
             when(resource.status){
                 Resource.Status.LOADING ->{
@@ -87,7 +90,6 @@ class WishlistFragment : Fragment() {
                 }
             }
         })
-        firebaseViewModel.getWishlist()
     }
 
     private fun setUpWishlistAdapter() = binding.rvWishlist.apply {

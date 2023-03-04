@@ -59,6 +59,16 @@ class DetailsFragment : Fragment() {
     }
 
     private fun addToCart(product: Product) {
+        firebaseViewModel.addCart(
+            hashMapOf(
+                "name" to product.name.toString(),
+                "url" to product.url.toString(),
+                "price" to product.price.toString(),
+                "details" to product.details.toString(),
+                "rating" to product.rating.toString()
+            )
+        )
+
         firebaseViewModel.addCart.observe(viewLifecycleOwner, Observer { resource->
             when(resource.status){
                 Resource.Status.LOADING ->{
@@ -73,15 +83,6 @@ class DetailsFragment : Fragment() {
                 }
             }
         })
-        firebaseViewModel.addCart(
-            hashMapOf(
-                "name" to product.name.toString(),
-                "url" to product.url.toString(),
-                "price" to product.price.toString(),
-                "details" to product.details.toString(),
-                "rating" to product.rating.toString()
-            )
-        )
     }
 
     override fun onDestroyView() {
