@@ -83,12 +83,12 @@ class HomeFragment : Fragment() {
                     binding.pbHome.show()
                 }
                 Resource.Status.SUCCESS ->{
-                    requireActivity().showToast(resource.data.toString())
                     binding.pbHome.hide()
+                    requireActivity().showToast(resource.data.toString())
                 }
                 Resource.Status.ERROR ->{
-                    requireActivity().showToast(resource.message.toString())
                     binding.pbHome.hide()
+                    requireActivity().showToast(resource.message.toString())
                 }
             }
         })
@@ -96,7 +96,9 @@ class HomeFragment : Fragment() {
             hashMapOf(
                 "name" to product.name.toString(),
                 "url" to product.url.toString(),
-                "price" to product.price.toString()
+                "price" to product.price.toString(),
+                "details" to product.details.toString(),
+                "rating" to product.rating.toString()
             )
         )
     }
@@ -108,12 +110,12 @@ class HomeFragment : Fragment() {
                     binding.pbHome.show()
                 }
                 Resource.Status.SUCCESS ->{
-                    glassAdapter.differCallBack.submitList(resource.data)
                     binding.pbHome.hide()
+                    glassAdapter.differCallBack.submitList(resource.data)
                 }
                 Resource.Status.ERROR ->{
-                    requireActivity().showToast(resource.message.toString())
                     binding.pbHome.hide()
+                    requireActivity().showToast(resource.message.toString())
                 }
             }
         })
@@ -127,12 +129,12 @@ class HomeFragment : Fragment() {
                     binding.pbHome.show()
                 }
                 Resource.Status.SUCCESS ->{
-                    shoeAdapter.differCallBack.submitList(resource.data)
                     binding.pbHome.hide()
+                    shoeAdapter.differCallBack.submitList(resource.data)
                 }
                 Resource.Status.ERROR ->{
-                    requireActivity().showToast(resource.message.toString())
                     binding.pbHome.hide()
+                    requireActivity().showToast(resource.message.toString())
                 }
             }
         })

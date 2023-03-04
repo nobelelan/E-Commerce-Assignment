@@ -158,8 +158,8 @@ class FirebaseViewModel: ViewModel() {
                             .addOnSuccessListener {
                                 _deleteWishlist.value = Resource.success("Removed from wishlist!")
                             }
-                            .addOnFailureListener {
-                                _deleteWishlist.value = Resource.error(message = it.message.toString())
+                            .addOnFailureListener { error->
+                                _deleteWishlist.value = Resource.error(message = error.message.toString())
                             }
                     }
                 }
