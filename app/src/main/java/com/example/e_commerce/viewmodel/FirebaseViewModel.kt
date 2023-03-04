@@ -30,10 +30,15 @@ class FirebaseViewModel: ViewModel() {
     val getShoes: LiveData<Resource<List<Product>>>
         get() = _getShoes
 
+    private val _getGlasses = MutableLiveData<Resource<List<Product>>>()
+    val getGlasses: LiveData<Resource<List<Product>>>
+        get() = _getGlasses
+
     private val auth = Firebase.auth
     private val profileCollectionRef = Firebase.firestore.collection("users")
         .document(auth.currentUser?.uid!!).collection("profile")
     private val shoesCollectionRef = Firebase.firestore.collection("shoes")
+    private val glassesCollectionRef = Firebase.firestore.collection("glasses")
 
 
     fun addProfile(profile: HashMap<String, String>){
@@ -88,6 +93,18 @@ class FirebaseViewModel: ViewModel() {
             }
             querySnapshot?.let {
                 _getShoes.value = Resource.success(it.toObjects())
+            }
+        }
+    }
+
+    fun getGlasses(){
+        _getGlasses.value = Resource.loading()
+        glassesCollectionRef.addSnapshotListener { querySnapshot, error ->
+            error?.let {
+                _getGlasses.value = Resource.error(message = it.message.toString())
+            }
+            querySnapshot?.let {
+                _getGlasses.value = Resource.success(it.toObjects())
             }
         }
     }

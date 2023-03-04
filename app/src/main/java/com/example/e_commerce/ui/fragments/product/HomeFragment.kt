@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentHomeBinding
 import com.example.e_commerce.model.Product
+import com.example.e_commerce.ui.fragments.product.adapter.GlassAdapter
 import com.example.e_commerce.ui.fragments.product.adapter.ShoeAdapter
 import com.example.e_commerce.ui.phoneauth.PhoneAuthActivity
 import com.example.e_commerce.utils.ExtensionFunctions.hide
@@ -31,6 +32,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val shoeAdapter by lazy { ShoeAdapter() }
+    private val glassAdapter by lazy { GlassAdapter() }
 
     private lateinit var firebaseViewModel: FirebaseViewModel
 
@@ -49,8 +51,10 @@ class HomeFragment : Fragment() {
         firebaseViewModel = ViewModelProvider(requireActivity())[FirebaseViewModel::class.java]
 
         setUpShoeRecyclerView()
+        setUpGlassRecyclerView()
 
         retrieveAndSetShoes()
+        retrieveAndSetGlasses()
 
         shoeAdapter.setOnClickListener(object : ShoeAdapter.OnItemClickListener{
             override fun onProductClick(product: Product) {
@@ -61,6 +65,34 @@ class HomeFragment : Fragment() {
                 requireActivity().showToast("Love clicked")
             }
         })
+        glassAdapter.setOnClickListener(object : GlassAdapter.OnItemClickListener{
+            override fun onProductClick(product: Product) {
+                requireActivity().showToast("Product clicked")
+            }
+
+            override fun onFavIconClick(product: Product) {
+                requireActivity().showToast("Love clicked")
+            }
+        })
+    }
+
+    private fun retrieveAndSetGlasses() {
+        firebaseViewModel.getGlasses.observe(viewLifecycleOwner, Observer { resource->
+            when(resource.status){
+                Resource.Status.LOADING ->{
+                    binding.pbHome.show()
+                }
+                Resource.Status.SUCCESS ->{
+                    glassAdapter.differCallBack.submitList(resource.data)
+                    binding.pbHome.hide()
+                }
+                Resource.Status.ERROR ->{
+                    requireActivity().showToast(resource.message.toString())
+                    binding.pbHome.hide()
+                }
+            }
+        })
+        firebaseViewModel.getGlasses()
     }
 
     private fun retrieveAndSetShoes() {
@@ -80,6 +112,11 @@ class HomeFragment : Fragment() {
             }
         })
         firebaseViewModel.getShoes()
+    }
+
+    private fun setUpGlassRecyclerView() = binding.rvHomeGlass.apply {
+        adapter = glassAdapter
+        layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun setUpShoeRecyclerView() = binding.rvHomeShoe.apply {
