@@ -22,5 +22,8 @@
         <action
             android:id="@+id/action_detailsFragment_to_productFragment"
             app:destination="@id/productFragment" />
+        <argument
+            android:name="currentProduct"
+            app:argType="com.example.e_commerce.model.Product" />
     </fragment>
 </navigation>

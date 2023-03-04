@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
 
         shoeAdapter.setOnClickListener(object : ShoeAdapter.OnItemClickListener{
             override fun onProductClick(product: Product) {
-                requireActivity().showToast("Product clicked")
+                navigateToDetails(product)
             }
 
             override fun onFavIconClick(product: Product) {
@@ -67,13 +67,18 @@ class HomeFragment : Fragment() {
         })
         glassAdapter.setOnClickListener(object : GlassAdapter.OnItemClickListener{
             override fun onProductClick(product: Product) {
-                requireActivity().showToast("Product clicked")
+                navigateToDetails(product)
             }
 
             override fun onFavIconClick(product: Product) {
                 addProductToWishList(product)
             }
         })
+    }
+
+    private fun navigateToDetails(product: Product) {
+        val action = HomeFragmentDirections.actionProductFragmentToDetailsFragment(product)
+        findNavController().navigate(action)
     }
 
     private fun addProductToWishList(product: Product) {

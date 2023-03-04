@@ -46,6 +46,18 @@ class FirebaseViewModel: ViewModel() {
     val deleteWishlist: LiveData<Resource<String>>
         get() = _deleteWishlist
 
+    private val _addCart = MutableLiveData<Resource<String>>()
+    val addCart: LiveData<Resource<String>>
+        get() = _addCart
+
+    private val _getCart = MutableLiveData<Resource<List<Product>>>()
+    val getCart: LiveData<Resource<List<Product>>>
+        get() = _getCart
+
+    private val _deleteCart = MutableLiveData<Resource<String>>()
+    val deleteCart: LiveData<Resource<String>>
+        get() = _deleteCart
+
     private val auth = Firebase.auth
     private val profileCollectionRef = Firebase.firestore.collection("users")
         .document(auth.currentUser?.uid!!).collection("profile")
@@ -53,6 +65,8 @@ class FirebaseViewModel: ViewModel() {
     private val glassesCollectionRef = Firebase.firestore.collection("glasses")
     private val wishlistCollectionRef = Firebase.firestore.collection("users")
         .document(auth.currentUser?.uid!!).collection("wishlist")
+    private val cartCollectionRef = Firebase.firestore.collection("users")
+        .document(auth.currentUser?.uid!!).collection("cart")
 
 
     fun addProfile(profile: HashMap<String, String>){
@@ -160,6 +174,49 @@ class FirebaseViewModel: ViewModel() {
                             }
                             .addOnFailureListener { error->
                                 _deleteWishlist.value = Resource.error(message = error.message.toString())
+                            }
+                    }
+                }
+            }
+    }
+
+    fun addCart(product: HashMap<String, String>){
+        _addCart.value = Resource.loading()
+        cartCollectionRef.add(product)
+            .addOnSuccessListener {
+                _addCart.value = Resource.success("Added to cart!")
+            }
+            .addOnFailureListener{
+                _addCart.value = Resource.error(message = it.message.toString())
+            }
+    }
+
+    fun getCart(){
+        _getCart.value = Resource.loading()
+        cartCollectionRef.addSnapshotListener { querySnapshot, error ->
+            error?.let {
+                _getCart.value = Resource.error(message = it.message.toString())
+            }
+            querySnapshot?.let {
+                _getCart.value = Resource.success(it.toObjects())
+            }
+        }
+    }
+
+    fun deleteCart(product: Product){
+        _deleteCart.value = Resource.loading()
+        cartCollectionRef
+            .whereEqualTo("url", product.url)
+            .get()
+            .addOnSuccessListener {
+                if (it.documents.isNotEmpty()){
+                    it.forEach { document->
+                        cartCollectionRef.document(document.id).delete()
+                            .addOnSuccessListener {
+                                _deleteCart.value = Resource.success("Removed from cart!")
+                            }
+                            .addOnFailureListener { error->
+                                _deleteCart.value = Resource.error(message = error.message.toString())
                             }
                     }
                 }
