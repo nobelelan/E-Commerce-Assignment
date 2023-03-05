@@ -86,34 +86,18 @@ class CartFragment : Fragment() {
     }
 
     private fun showAlertDialog(){
-        var message = ""
-        firebaseViewModel.getProfile()
-        firebaseViewModel.getProfile.observe(viewLifecycleOwner, Observer { resource->
-            when(resource){
-                is Resource.Success->{
-                    message = "Your products are ready to be ordered at address: ${resource.data?.address}, " +
-                            "contact: ${resource.data?.phone}. Please proceed if everything's ok."
-
-                    AlertDialog.Builder(requireContext())
-                        .setTitle("Checkout")
-                        .setMessage(message)
-                        .setNegativeButton("Cancel"){_,_->}
-                        .setPositiveButton("Order"){_,_->
-                            removeCartProducts()
-                        }
-                        .create()
-                        .show()
-
-                    binding.pbCart.hide()
-                }
-                is Resource.Loading->{
-                    binding.pbCart.show()
-                }
-                is Resource.Error->{
-                    binding.pbCart.hide()
-                }
+        val message = "Your products are ready to be ordered with a total of ${binding.txtTotal.text}/= " +
+                "Taka(including delivery charge). Cash is on delivery. Your profile details " +
+                "will be used to reach your address. Please proceed if everything's alright."
+        AlertDialog.Builder(requireContext())
+            .setTitle("Checkout")
+            .setMessage(message)
+            .setNegativeButton("Cancel"){_,_->}
+            .setPositiveButton("Order"){_,_->
+                removeCartProducts()
             }
-        })
+            .create()
+            .show()
     }
 
     private fun removeCartProducts() {

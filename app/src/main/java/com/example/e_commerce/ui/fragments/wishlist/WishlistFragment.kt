@@ -60,7 +60,6 @@ class WishlistFragment : Fragment() {
                             binding.pbWishlist.show()
                         }
                         is Resource.Success ->{
-                            // TODO: being called multiple times, fixit
                             requireActivity().showToast(resource.data.toString())
                             binding.pbWishlist.hide()
                         }
