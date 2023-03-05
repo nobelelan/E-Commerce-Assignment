@@ -1,5 +1,6 @@
 package com.example.e_commerce.ui.fragments.product.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -30,12 +31,13 @@ class GlassAdapter: RecyclerView.Adapter<GlassAdapter.GlassViewHolder>() {
         return GlassViewHolder(RvHomeShoeBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: GlassViewHolder, position: Int) {
         val glass = differCallBack.currentList[position]
 
         holder.binding.apply {
             txtProductName.text = glass.name
-            txtProductPrice.text = glass.price
+            txtProductPrice.text = "${glass.price}/= Taka"
 
             Glide.with(holder.itemView.context)
                 .load(glass.url)

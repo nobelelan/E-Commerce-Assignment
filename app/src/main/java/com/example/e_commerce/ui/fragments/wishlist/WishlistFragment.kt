@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentWishlistBinding
@@ -46,7 +47,8 @@ class WishlistFragment : Fragment() {
 
         wishlistAdapter.setOnClickListener(object : WishlistAdapter.OnItemClickListener{
             override fun onProductClick(product: Product) {
-                requireActivity().showToast("Product Clicked")
+                val action = WishlistFragmentDirections.actionFavFragmentToDetailsFragment2(product)
+                findNavController().navigate(action)
             }
 
             override fun onFavIconClick(product: Product) {

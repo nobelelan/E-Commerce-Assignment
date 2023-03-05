@@ -9,5 +9,21 @@
         android:id="@+id/favFragment"
         android:name="com.example.e_commerce.ui.fragments.wishlist.WishlistFragment"
         android:label="fragment_fav"
-        tools:layout="@layout/fragment_wishlist" />
+        tools:layout="@layout/fragment_wishlist" >
+        <action
+            android:id="@+id/action_favFragment_to_detailsFragment2"
+            app:destination="@id/detailsFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment2"
+        android:name="com.example.e_commerce.ui.fragments.product.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" >
+        <action
+            android:id="@+id/action_detailsFragment2_to_favFragment"
+            app:destination="@id/favFragment" />
+        <argument
+            android:name="currentProduct"
+            app:argType="com.example.e_commerce.model.Product" />
+    </fragment>
 </navigation>

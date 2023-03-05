@@ -1,5 +1,6 @@
 package com.example.e_commerce.ui.fragments.cart
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnLongClickListener
@@ -34,12 +35,13 @@ class CartAdapter: RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
         return CartViewHolder(RvCartBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         val product = differCallBack.currentList[position]
 
         holder.binding.apply {
             txtProductName.text = product.name
-            txtProductPrice.text = product.price
+            txtProductPrice.text = "${product.price}/= Taka"
 
             Glide.with(holder.itemView.context)
                 .load(product.url)

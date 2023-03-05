@@ -1,5 +1,6 @@
 package com.example.e_commerce.ui.fragments.wishlist
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -30,12 +31,13 @@ class WishlistAdapter: RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>(
         return WishlistViewHolder(RvHomeShoeBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: WishlistViewHolder, position: Int) {
         val wishlist = differCallBack.currentList[position]
 
         holder.binding.apply {
             txtProductName.text = wishlist.name
-            txtProductPrice.text = wishlist.price
+            txtProductPrice.text = "${wishlist.price}/= Taka"
 
             Glide.with(holder.itemView.context)
                 .load(wishlist.url)
