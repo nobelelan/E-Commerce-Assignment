@@ -89,8 +89,8 @@ class CartFragment : Fragment() {
         var message = ""
         firebaseViewModel.getProfile()
         firebaseViewModel.getProfile.observe(viewLifecycleOwner, Observer { resource->
-            when(resource.status){
-                Resource.Status.SUCCESS->{
+            when(resource){
+                is Resource.Success->{
                     message = "Your products are ready to be ordered at address: ${resource.data?.address}, " +
                             "contact: ${resource.data?.phone}. Please proceed if everything's ok."
 
@@ -106,10 +106,10 @@ class CartFragment : Fragment() {
 
                     binding.pbCart.hide()
                 }
-                Resource.Status.LOADING->{
+                is Resource.Loading->{
                     binding.pbCart.show()
                 }
-                Resource.Status.ERROR->{
+                is Resource.Error->{
                     binding.pbCart.hide()
                 }
             }
@@ -119,18 +119,18 @@ class CartFragment : Fragment() {
     private fun removeCartProducts() {
         firebaseViewModel.getCart()
         firebaseViewModel.getCart.observe(viewLifecycleOwner, Observer { resource->
-            when(resource.status){
-                Resource.Status.LOADING->{
+            when(resource){
+                is Resource.Loading->{
                     binding.pbCart.show()
                 }
-                Resource.Status.SUCCESS->{
+                is Resource.Success->{
                     resource.data?.forEach { product ->
                         firebaseViewModel.deleteCart(product)
                     }
                     requireActivity().showToast("Your order has been placed successfully!")
                     binding.pbCart.hide()
                 }
-                Resource.Status.ERROR->{
+                is Resource.Error->{
                     binding.pbCart.hide()
                 }
             }
@@ -153,15 +153,15 @@ class CartFragment : Fragment() {
         firebaseViewModel.deleteCart(product)
 
         firebaseViewModel.deleteCart.observe(viewLifecycleOwner, Observer { resource->
-            when(resource.status){
-                Resource.Status.LOADING ->{
+            when(resource){
+                is Resource.Loading ->{
                     binding.pbCart.show()
                 }
-                Resource.Status.SUCCESS ->{
+                is Resource.Success ->{
                     binding.pbCart.hide()
                     requireActivity().showToast(resource.data.toString())
                 }
-                Resource.Status.ERROR ->{
+                is Resource.Error ->{
                     binding.pbCart.hide()
                     requireActivity().showToast(resource.message.toString())
                 }
@@ -173,11 +173,11 @@ class CartFragment : Fragment() {
         firebaseViewModel.getCart()
 
         firebaseViewModel.getCart.observe(viewLifecycleOwner, Observer { resource->
-            when(resource.status){
-                Resource.Status.LOADING ->{
+            when(resource){
+                is Resource.Loading ->{
                     binding.pbCart.show()
                 }
-                Resource.Status.SUCCESS ->{
+                is Resource.Success ->{
                     binding.pbCart.hide()
                     cartAdapter.differCallBack.submitList(resource.data)
 
@@ -187,7 +187,7 @@ class CartFragment : Fragment() {
                     }
                     calculateTotal(prices = prices)
                 }
-                Resource.Status.ERROR ->{
+                is Resource.Error ->{
                     binding.pbCart.hide()
                     requireActivity().showToast(resource.message.toString())
                 }

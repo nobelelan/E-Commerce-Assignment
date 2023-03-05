@@ -72,15 +72,15 @@ class DetailsFragment : Fragment() {
         )
 
         firebaseViewModel.addCart.observe(viewLifecycleOwner, Observer { resource->
-            when(resource.status){
-                Resource.Status.LOADING ->{
+            when(resource){
+                is Resource.Loading ->{
                     binding.pbDetails.show()
                 }
-                Resource.Status.SUCCESS ->{
+                is Resource.Success->{
                     requireActivity().showToast(resource.data.toString())
                     binding.pbDetails.hide()
                 }
-                Resource.Status.ERROR ->{
+                is Resource.Error ->{
                     requireActivity().showToast(resource.message.toString())
                 }
             }

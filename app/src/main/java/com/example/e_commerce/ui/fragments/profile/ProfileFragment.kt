@@ -64,11 +64,11 @@ class ProfileFragment : Fragment() {
 
     private fun getProfileInfo() {
         firebaseViewModel.getProfile.observe(viewLifecycleOwner, Observer { resource->
-            when(resource.status){
-                Resource.Status.LOADING -> {
+            when(resource){
+                is Resource.Loading -> {
                     binding.pbProfile.show()
                 }
-                Resource.Status.SUCCESS -> {
+                is Resource.Success -> {
                     binding.apply {
                         txtUserName.text = resource.data?.name.toString()
                         txtPhoneNumber.text = resource.data?.phone.toString()
@@ -76,7 +76,7 @@ class ProfileFragment : Fragment() {
                     }
                     binding.pbProfile.hide()
                 }
-                Resource.Status.ERROR -> {
+                is Resource.Error -> {
                     requireActivity().showToast(resource.message.toString())
                     binding.pbProfile.hide()
                 }
@@ -120,15 +120,15 @@ class ProfileFragment : Fragment() {
             "address" to address
         )
         firebaseViewModel.updateProfile.observe(viewLifecycleOwner, Observer { resource ->
-            when(resource.status){
-                Resource.Status.LOADING -> {
+            when(resource){
+                is Resource.Loading -> {
                     binding.pbProfile.show()
                 }
-                Resource.Status.SUCCESS -> {
+                is Resource.Success -> {
                     requireActivity().showToast(resource.data.toString())
                     binding.pbProfile.hide()
                 }
-                Resource.Status.ERROR -> {
+                is Resource.Error -> {
                     requireActivity().showToast(resource.message.toString())
                     binding.pbProfile.hide()
                 }

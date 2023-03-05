@@ -70,18 +70,18 @@ class FirebaseViewModel: ViewModel() {
 
 
     fun addProfile(profile: HashMap<String, String>){
-        _addProfile.value = Resource.loading()
+        _addProfile.value = Resource.Loading()
         profileCollectionRef.add(profile)
             .addOnSuccessListener {
-                _addProfile.value = Resource.success("Successfully added data!")
+                _addProfile.value = Resource.Success("Successfully added data!")
             }
             .addOnFailureListener{
-                _addProfile.value = Resource.error(message = it.message.toString())
+                _addProfile.value = Resource.Error(message = it.message.toString())
             }
     }
 
     fun updateProfile(profile: Map<String, String>){
-        _updateProfile.value = Resource.loading()
+        _updateProfile.value = Resource.Loading()
         profileCollectionRef.get()
             .addOnSuccessListener { querySnapshot->
                 if (querySnapshot.documents.isNotEmpty()){
@@ -89,10 +89,10 @@ class FirebaseViewModel: ViewModel() {
                         profileCollectionRef.document(documentSnapshot.id)
                             .set(profile, SetOptions.merge())
                             .addOnSuccessListener {
-                                _updateProfile.value = Resource.success("Successfully updated profile!")
+                                _updateProfile.value = Resource.Success("Successfully updated profile!")
                             }
                             .addOnFailureListener {
-                                _updateProfile.value = Resource.error(message = it.message.toString())
+                                _updateProfile.value = Resource.Error(message = it.message.toString())
                             }
                     }
                 }
@@ -100,68 +100,68 @@ class FirebaseViewModel: ViewModel() {
     }
 
     fun getProfile(){
-        _getProfile.value = Resource.loading()
+        _getProfile.value = Resource.Loading()
         profileCollectionRef.addSnapshotListener { querySnapshot, error ->
             error?.let {
-                _getProfile.value = Resource.error(message = it.message.toString())
+                _getProfile.value = Resource.Error(message = it.message.toString())
             }
             querySnapshot?.let {
                 it.forEach {documentSnapshot->
-                    _getProfile.value = Resource.success(documentSnapshot.toObject())
+                    _getProfile.value = Resource.Success(documentSnapshot.toObject())
                 }
             }
         }
     }
 
     fun getShoes(){
-        _getShoes.value = Resource.loading()
+        _getShoes.value = Resource.Loading()
         shoesCollectionRef.addSnapshotListener { querySnapshot, error ->
             error?.let {
-                _getShoes.value = Resource.error(message = it.message.toString())
+                _getShoes.value = Resource.Error(message = it.message.toString())
             }
             querySnapshot?.let {
-                _getShoes.value = Resource.success(it.toObjects())
+                _getShoes.value = Resource.Success(it.toObjects())
             }
         }
     }
 
     fun getGlasses(){
-        _getGlasses.value = Resource.loading()
+        _getGlasses.value = Resource.Loading()
         glassesCollectionRef.addSnapshotListener { querySnapshot, error ->
             error?.let {
-                _getGlasses.value = Resource.error(message = it.message.toString())
+                _getGlasses.value = Resource.Error(message = it.message.toString())
             }
             querySnapshot?.let {
-                _getGlasses.value = Resource.success(it.toObjects())
+                _getGlasses.value = Resource.Success(it.toObjects())
             }
         }
     }
 
     fun addWishlist(product: HashMap<String, String>){
-        _addWishlist.value = Resource.loading()
+        _addWishlist.value = Resource.Loading()
         wishlistCollectionRef.add(product)
             .addOnSuccessListener {
-                _addWishlist.value = Resource.success("Added to wishlist!")
+                _addWishlist.value = Resource.Success("Added to wishlist!")
             }
             .addOnFailureListener{
-                _addWishlist.value = Resource.error(message = it.message.toString())
+                _addWishlist.value = Resource.Error(message = it.message.toString())
             }
     }
 
     fun getWishlist(){
-        _getWishlist.value = Resource.loading()
+        _getWishlist.value = Resource.Loading()
         wishlistCollectionRef.addSnapshotListener { querySnapshot, error ->
             error?.let {
-                _getWishlist.value = Resource.error(message = it.message.toString())
+                _getWishlist.value = Resource.Error(message = it.message.toString())
             }
             querySnapshot?.let {
-                _getWishlist.value = Resource.success(it.toObjects())
+                _getWishlist.value = Resource.Success(it.toObjects())
             }
         }
     }
 
     fun deleteWishlist(product: Product){
-        _deleteWishlist.value = Resource.loading()
+        _deleteWishlist.value = Resource.Loading()
         wishlistCollectionRef
             .whereEqualTo("url", product.url)
             .get()
@@ -170,10 +170,10 @@ class FirebaseViewModel: ViewModel() {
                     it.forEach { document->
                         wishlistCollectionRef.document(document.id).delete()
                             .addOnSuccessListener {
-                                _deleteWishlist.value = Resource.success("Removed from wishlist!")
+                                _deleteWishlist.value = Resource.Success("Removed from wishlist!")
                             }
                             .addOnFailureListener { error->
-                                _deleteWishlist.value = Resource.error(message = error.message.toString())
+                                _deleteWishlist.value = Resource.Error(message = error.message.toString())
                             }
                     }
                 }
@@ -181,30 +181,30 @@ class FirebaseViewModel: ViewModel() {
     }
 
     fun addCart(product: HashMap<String, String>){
-        _addCart.value = Resource.loading()
+        _addCart.value = Resource.Loading()
         cartCollectionRef.add(product)
             .addOnSuccessListener {
-                _addCart.value = Resource.success("Added to cart!")
+                _addCart.value = Resource.Success("Added to cart!")
             }
             .addOnFailureListener{
-                _addCart.value = Resource.error(message = it.message.toString())
+                _addCart.value = Resource.Error(message = it.message.toString())
             }
     }
 
     fun getCart(){
-        _getCart.value = Resource.loading()
+        _getCart.value = Resource.Loading()
         cartCollectionRef.addSnapshotListener { querySnapshot, error ->
             error?.let {
-                _getCart.value = Resource.error(message = it.message.toString())
+                _getCart.value = Resource.Error(message = it.message.toString())
             }
             querySnapshot?.let {
-                _getCart.value = Resource.success(it.toObjects())
+                _getCart.value = Resource.Success(it.toObjects())
             }
         }
     }
 
     fun deleteCart(product: Product){
-        _deleteCart.value = Resource.loading()
+        _deleteCart.value = Resource.Loading()
         cartCollectionRef
             .whereEqualTo("url", product.url)
             .get()
@@ -213,10 +213,10 @@ class FirebaseViewModel: ViewModel() {
                     it.forEach { document->
                         cartCollectionRef.document(document.id).delete()
                             .addOnSuccessListener {
-                                _deleteCart.value = Resource.success("Removed from cart!")
+                                _deleteCart.value = Resource.Success("Removed from cart!")
                             }
                             .addOnFailureListener { error->
-                                _deleteCart.value = Resource.error(message = error.message.toString())
+                                _deleteCart.value = Resource.Error(message = error.message.toString())
                             }
                     }
                 }

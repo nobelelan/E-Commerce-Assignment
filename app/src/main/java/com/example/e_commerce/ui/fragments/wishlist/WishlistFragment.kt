@@ -55,16 +55,16 @@ class WishlistFragment : Fragment() {
                 firebaseViewModel.deleteWishlist(product)
 
                 firebaseViewModel.deleteWishlist.observe(viewLifecycleOwner, Observer { resource->
-                    when(resource.status){
-                        Resource.Status.LOADING ->{
+                    when(resource){
+                        is Resource.Loading ->{
                             binding.pbWishlist.show()
                         }
-                        Resource.Status.SUCCESS ->{
+                        is Resource.Success ->{
                             // TODO: being called multiple times, fixit
                             requireActivity().showToast(resource.data.toString())
                             binding.pbWishlist.hide()
                         }
-                        Resource.Status.ERROR ->{
+                        is Resource.Error ->{
                             requireActivity().showToast(resource.message.toString())
                             binding.pbWishlist.hide()
                         }
@@ -78,15 +78,15 @@ class WishlistFragment : Fragment() {
         firebaseViewModel.getWishlist()
 
         firebaseViewModel.getWishlist.observe(viewLifecycleOwner, Observer { resource->
-            when(resource.status){
-                Resource.Status.LOADING ->{
+            when(resource){
+                is Resource.Loading ->{
                     binding.pbWishlist.show()
                 }
-                Resource.Status.SUCCESS ->{
+                is Resource.Success ->{
                     wishlistAdapter.differCallBack.submitList(resource.data)
                     binding.pbWishlist.hide()
                 }
-                Resource.Status.ERROR ->{
+                is Resource.Error ->{
                     requireActivity().showToast(resource.message.toString())
                     binding.pbWishlist.hide()
                 }

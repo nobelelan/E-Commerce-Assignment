@@ -87,15 +87,15 @@ class HomeFragment : Fragment() {
             )
         )
         firebaseViewModel.addWishlist.observe(viewLifecycleOwner, Observer { resource->
-            when(resource.status){
-                Resource.Status.LOADING ->{
+            when(resource){
+                is Resource.Loading ->{
                     binding.pbHome.show()
                 }
-                Resource.Status.SUCCESS ->{
+                is Resource.Success ->{
                     binding.pbHome.hide()
                     requireActivity().showToast(resource.data.toString())
                 }
-                Resource.Status.ERROR ->{
+                is Resource.Error ->{
                     binding.pbHome.hide()
                     requireActivity().showToast(resource.message.toString())
                 }
@@ -107,15 +107,15 @@ class HomeFragment : Fragment() {
         firebaseViewModel.getGlasses()
 
         firebaseViewModel.getGlasses.observe(viewLifecycleOwner, Observer { resource->
-            when(resource.status){
-                Resource.Status.LOADING ->{
+            when(resource){
+                is Resource.Loading ->{
                     binding.pbHome.show()
                 }
-                Resource.Status.SUCCESS ->{
+                is Resource.Success ->{
                     binding.pbHome.hide()
                     glassAdapter.differCallBack.submitList(resource.data)
                 }
-                Resource.Status.ERROR ->{
+                is Resource.Error ->{
                     binding.pbHome.hide()
                     requireActivity().showToast(resource.message.toString())
                 }
@@ -127,15 +127,15 @@ class HomeFragment : Fragment() {
         firebaseViewModel.getShoes()
 
         firebaseViewModel.getShoes.observe(viewLifecycleOwner, Observer { resource->
-            when(resource.status){
-                Resource.Status.LOADING ->{
+            when(resource){
+                is Resource.Loading ->{
                     binding.pbHome.show()
                 }
-                Resource.Status.SUCCESS ->{
+                is Resource.Success ->{
                     binding.pbHome.hide()
                     shoeAdapter.differCallBack.submitList(resource.data)
                 }
-                Resource.Status.ERROR ->{
+                is Resource.Error ->{
                     binding.pbHome.hide()
                     requireActivity().showToast(resource.message.toString())
                 }
