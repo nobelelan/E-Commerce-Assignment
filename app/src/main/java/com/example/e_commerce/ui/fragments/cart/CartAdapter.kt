@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -57,11 +58,13 @@ class CartAdapter: RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
             btnMinus.setOnClickListener {
                 var counter = holder.binding.txtCounter.text.toString().toInt()
                 if (counter != 0){
+                    onItemClickListener?.onMinusClick(product.price.toString().toInt())
                     counter -= 1
                     holder.binding.txtCounter.text = counter.toString()
                 }
             }
             btnPlus.setOnClickListener {
+                onItemClickListener?.onPlusClick(product.price.toString().toInt())
                 var counter = holder.binding.txtCounter.text.toString().toInt()
                 counter += 1
                 holder.binding.txtCounter.text = counter.toString()
@@ -78,6 +81,8 @@ class CartAdapter: RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     interface OnItemClickListener{
         fun onLongClick(product: Product)
+        fun onPlusClick(price: Int)
+        fun onMinusClick(price: Int)
     }
 
     fun setOnClickListener(listener: OnItemClickListener){

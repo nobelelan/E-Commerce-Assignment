@@ -1,5 +1,6 @@
 package com.example.e_commerce.ui.fragments.product
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -37,6 +38,7 @@ class DetailsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_details, container, false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentDetailsBinding.bind(view)
@@ -46,7 +48,7 @@ class DetailsFragment : Fragment() {
         val product = args.currentProduct
 
         binding.apply {
-            txtProductPrice.text = product.price
+            txtProductPrice.text = "${product.price}/= Taka"
             rbDetails.rating = product.rating!!.toFloat()
             txtProductName.text = product.name
             txtProductDetails.text = product.details
