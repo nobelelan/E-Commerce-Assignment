@@ -14,6 +14,7 @@ import com.example.e_commerce.databinding.FragmentHomeBinding
 import com.example.e_commerce.model.Product
 import com.example.e_commerce.ui.fragments.product.adapter.GlassAdapter
 import com.example.e_commerce.ui.fragments.product.adapter.ShoeAdapter
+import com.example.e_commerce.ui.fragments.product.adapter.VarietiesAdapter
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
@@ -28,6 +29,7 @@ class HomeFragment : Fragment() {
 
     private val shoeAdapter by lazy { ShoeAdapter() }
     private val glassAdapter by lazy { GlassAdapter() }
+    private val varietiesAdapter by lazy { VarietiesAdapter() }
 
     private lateinit var firebaseViewModel: FirebaseViewModel
 
@@ -47,9 +49,11 @@ class HomeFragment : Fragment() {
 
         setUpShoeRecyclerView()
         setUpGlassRecyclerView()
+        setUpVarietiesRecyclerView()
 
         retrieveAndSetShoes()
         retrieveAndSetGlasses()
+        retrieveAndSetVarieties()
 
         shoeAdapter.setOnClickListener(object : ShoeAdapter.OnItemClickListener{
             override fun onProductClick(product: Product) {
@@ -61,6 +65,15 @@ class HomeFragment : Fragment() {
             }
         })
         glassAdapter.setOnClickListener(object : GlassAdapter.OnItemClickListener{
+            override fun onProductClick(product: Product) {
+                navigateToDetails(product)
+            }
+
+            override fun onFavIconClick(product: Product) {
+                addProductToWishList(product)
+            }
+        })
+        varietiesAdapter.setOnClickListener(object : VarietiesAdapter.OnItemClickListener{
             override fun onProductClick(product: Product) {
                 navigateToDetails(product)
             }
@@ -94,6 +107,26 @@ class HomeFragment : Fragment() {
                 is Resource.Success ->{
                     binding.pbHome.hide()
                     requireActivity().showToast(resource.data.toString())
+                }
+                is Resource.Error ->{
+                    binding.pbHome.hide()
+                    requireActivity().showToast(resource.message.toString())
+                }
+            }
+        })
+    }
+
+    private fun retrieveAndSetVarieties() {
+        firebaseViewModel.getVarieties()
+
+        firebaseViewModel.getVarieties.observe(viewLifecycleOwner, Observer { resource->
+            when(resource){
+                is Resource.Loading ->{
+                    binding.pbHome.show()
+                }
+                is Resource.Success ->{
+                    binding.pbHome.hide()
+                    varietiesAdapter.differCallBack.submitList(resource.data)
                 }
                 is Resource.Error ->{
                     binding.pbHome.hide()
@@ -141,6 +174,11 @@ class HomeFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun setUpVarietiesRecyclerView() = binding.rvHomeOtherProducts.apply {
+        adapter = varietiesAdapter
+        layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun setUpGlassRecyclerView() = binding.rvHomeGlass.apply {

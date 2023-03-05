@@ -34,6 +34,10 @@ class FirebaseViewModel: ViewModel() {
     val getGlasses: LiveData<Resource<List<Product>>>
         get() = _getGlasses
 
+    private val _getVarieties = MutableLiveData<Resource<List<Product>>>()
+    val getVarieties: LiveData<Resource<List<Product>>>
+        get() = _getVarieties
+
     private val _addWishlist = MutableLiveData<Resource<String>>()
     val addWishlist: LiveData<Resource<String>>
         get() = _addWishlist
@@ -63,6 +67,7 @@ class FirebaseViewModel: ViewModel() {
         .document(auth.currentUser?.uid!!).collection("profile")
     private val shoesCollectionRef = Firebase.firestore.collection("shoes")
     private val glassesCollectionRef = Firebase.firestore.collection("glasses")
+    private val varietiesCollectionRef = Firebase.firestore.collection("varieties")
     private val wishlistCollectionRef = Firebase.firestore.collection("users")
         .document(auth.currentUser?.uid!!).collection("wishlist")
     private val cartCollectionRef = Firebase.firestore.collection("users")
@@ -133,6 +138,18 @@ class FirebaseViewModel: ViewModel() {
             }
             querySnapshot?.let {
                 _getGlasses.value = Resource.Success(it.toObjects())
+            }
+        }
+    }
+
+    fun getVarieties(){
+        _getVarieties.value = Resource.Loading()
+        varietiesCollectionRef.addSnapshotListener { querySnapshot, error ->
+            error?.let {
+                _getVarieties.value = Resource.Error(message = it.message.toString())
+            }
+            querySnapshot?.let {
+                _getVarieties.value = Resource.Success(it.toObjects())
             }
         }
     }
