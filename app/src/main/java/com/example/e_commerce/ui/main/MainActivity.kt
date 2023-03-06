@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private var navController: LiveData<NavController>? = null
 
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,19 +41,11 @@ class MainActivity : AppCompatActivity() {
             R.navigation.cart_nav_graph,
             R.navigation.profile_nav_graph
         )
-        val controller = binding.bottomNav.setupWithNavController(
+        binding.bottomNav.setupWithNavController(
             graphIds,
             supportFragmentManager,
             R.id.nav_host_fragment,
             intent
         )
-        controller.observe(this){
-            setupActionBarWithNavController(it)
-        }
-        navController = controller
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return navController?.value?.navigateUp()!! || super.onSupportNavigateUp()
     }
 }

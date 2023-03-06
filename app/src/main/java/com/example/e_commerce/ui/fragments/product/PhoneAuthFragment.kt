@@ -1,14 +1,18 @@
-package com.example.e_commerce.ui.phoneauth
+package com.example.e_commerce.ui.fragments.product
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.e_commerce.databinding.ActivityPhoneAuthBinding
-import com.example.e_commerce.ui.main.MainActivity
-import com.example.e_commerce.ui.verifyotp.VerifyOtpActivity
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
+import com.example.e_commerce.R
+import com.example.e_commerce.databinding.FragmentPhoneAuthBinding
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
@@ -16,30 +20,43 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.util.concurrent.TimeUnit
 
-class PhoneAuthActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityPhoneAuthBinding
+class PhoneAuthFragment : Fragment() {
+
+    private var _binding: FragmentPhoneAuthBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var auth: FirebaseAuth
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityPhoneAuthBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_phone_auth, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentPhoneAuthBinding.bind(view)
+
+        activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)?.hide()
 
         auth = Firebase.auth
 
         if (auth.currentUser != null){
-            startActivity(Intent(this, MainActivity::class.java))
+            findNavController().navigate(R.id.action_phoneAuthFragment_to_productFragment)
+            activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)?.show()
         }
 
         binding.btnSendOtp.setOnClickListener {
             val phone = binding.edtPhone.text.toString().trim()
             if (phone.isEmpty()){
-                showToast("Invalid phone number")
+                requireActivity().showToast("Invalid phone number")
             }else if (phone.length != 10){
-                showToast("Type valid phone number")
+                requireActivity().showToast("Type valid phone number")
             }else{
                 sendOtp()
             }
@@ -63,11 +80,11 @@ class PhoneAuthActivity : AppCompatActivity() {
 
                 if (e is FirebaseAuthInvalidCredentialsException) {
                     e.localizedMessage?.let {
-                        showToast(it)
+                        requireActivity().showToast(it)
                     }
                 } else if (e is FirebaseTooManyRequestsException) {
                     e.localizedMessage?.let {
-                        showToast(it)
+                        requireActivity().showToast(it)
                     }
                 }
             }
@@ -79,18 +96,19 @@ class PhoneAuthActivity : AppCompatActivity() {
                 binding.pbPhoneAuth.hide()
                 binding.btnSendOtp.show()
 
-                showToast("Code sent.")
+                requireActivity().showToast("Code sent.")
 
-                val intent = Intent(this@PhoneAuthActivity, VerifyOtpActivity::class.java)
-                intent.putExtra("phone", binding.edtPhone.text.toString().trim())
-                intent.putExtra("verificationId", verificationId)
-                startActivity(intent)
+                val action = PhoneAuthFragmentDirections.actionPhoneAuthFragmentToVerifyOtpFragment(
+                    binding.edtPhone.text.toString().trim(),
+                    verificationId
+                )
+                findNavController().navigate(action)
             }
         }
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber("+880${binding.edtPhone.text.toString().trim()}")
             .setTimeout(60L, TimeUnit.SECONDS)
-            .setActivity(this)
+            .setActivity(requireActivity())
             .setCallbacks(callbacks)
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
@@ -98,23 +116,27 @@ class PhoneAuthActivity : AppCompatActivity() {
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
+            .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     binding.pbPhoneAuth.hide()
                     binding.btnSendOtp.show()
-                    showToast("Verification successful!")
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
+                    requireActivity().showToast("Verification successful!")
+                    findNavController().navigate(R.id.action_phoneAuthFragment_to_productFragment)
                 } else {
                     binding.pbPhoneAuth.hide()
                     binding.btnSendOtp.show()
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                        showToast("Verification failed!")
+                        requireActivity().showToast("Verification failed!")
                     }else{
-                        showToast("Something went wrong!")
+                        requireActivity().showToast("Something went wrong!")
                     }
                 }
             }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

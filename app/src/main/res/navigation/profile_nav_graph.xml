@@ -11,13 +11,12 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
-            android:id="@+id/action_profileFragment_to_phoneAuthActivity"
-            app:destination="@id/phoneAuthActivity"
-            app:popUpTo="@id/phoneAuthActivity" />
+            android:id="@+id/action_profileFragment_to_phoneAuthFragment2"
+            app:destination="@id/phoneAuthFragment2" />
     </fragment>
-    <activity
-        android:id="@+id/phoneAuthActivity"
-        android:name="com.example.e_commerce.ui.phoneauth.PhoneAuthActivity"
-        android:label="activity_phone_auth"
-        tools:layout="@layout/activity_phone_auth" />
+    <fragment
+        android:id="@+id/phoneAuthFragment2"
+        android:name="com.example.e_commerce.ui.fragments.product.PhoneAuthFragment"
+        android:label="fragment_phone_auth"
+        tools:layout="@layout/fragment_phone_auth" />
 </navigation>

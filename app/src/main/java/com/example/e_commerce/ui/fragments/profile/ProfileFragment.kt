@@ -1,7 +1,6 @@
 package com.example.e_commerce.ui.fragments.profile
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.AdEditProfileBinding
 import com.example.e_commerce.databinding.FragmentProfileBinding
-import com.example.e_commerce.ui.phoneauth.PhoneAuthActivity
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
@@ -63,7 +61,7 @@ class ProfileFragment : Fragment() {
                 .setPositiveButton("Proceed"){_,_->
                     auth.signOut()
                     if (auth.currentUser == null){
-                        findNavController().navigate(R.id.action_profileFragment_to_phoneAuthActivity)
+                        findNavController().navigate(R.id.action_profileFragment_to_phoneAuthFragment2)
                     }
                 }
                 .create()
