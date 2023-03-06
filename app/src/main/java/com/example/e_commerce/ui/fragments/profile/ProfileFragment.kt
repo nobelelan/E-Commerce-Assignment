@@ -46,6 +46,10 @@ class ProfileFragment : Fragment() {
 
         auth = Firebase.auth
 
+        if (auth.currentUser == null){
+            activity?.finish()
+        }
+
         firebaseViewModel = ViewModelProvider(requireActivity())[FirebaseViewModel::class.java]
 
         getProfileInfo()
@@ -61,7 +65,7 @@ class ProfileFragment : Fragment() {
                 .setPositiveButton("Proceed"){_,_->
                     auth.signOut()
                     if (auth.currentUser == null){
-                        findNavController().navigate(R.id.action_profileFragment_to_phoneAuthFragment2)
+                        activity?.finish()
                     }
                 }
                 .create()
