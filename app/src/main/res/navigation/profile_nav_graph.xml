@@ -9,5 +9,15 @@
         android:id="@+id/profileFragment"
         android:name="com.example.e_commerce.ui.fragments.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_phoneAuthActivity"
+            app:destination="@id/phoneAuthActivity"
+            app:popUpTo="@id/phoneAuthActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/phoneAuthActivity"
+        android:name="com.example.e_commerce.ui.phoneauth.PhoneAuthActivity"
+        android:label="activity_phone_auth"
+        tools:layout="@layout/activity_phone_auth" />
 </navigation>

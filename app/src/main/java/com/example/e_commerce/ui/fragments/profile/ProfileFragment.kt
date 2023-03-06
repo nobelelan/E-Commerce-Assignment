@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.AdEditProfileBinding
 import com.example.e_commerce.databinding.FragmentProfileBinding
-import com.example.e_commerce.model.Profile
 import com.example.e_commerce.ui.phoneauth.PhoneAuthActivity
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
@@ -57,8 +56,18 @@ class ProfileFragment : Fragment() {
             editProfile()
         }
 
-        binding.button.setOnClickListener {
-            auth.signOut()
+        binding.btnSignOut.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setTitle("Signing Out!")
+                .setNegativeButton("Cancel"){_,_->}
+                .setPositiveButton("Proceed"){_,_->
+                    auth.signOut()
+                    if (auth.currentUser == null){
+                        findNavController().navigate(R.id.action_profileFragment_to_phoneAuthActivity)
+                    }
+                }
+                .create()
+                .show()
         }
     }
 
