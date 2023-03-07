@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlin.math.round
+import kotlin.math.roundToInt
 
 
 class CartFragment : Fragment() {
@@ -109,7 +110,7 @@ class CartFragment : Fragment() {
                     resource.data?.forEach { product ->
                         firebaseViewModel.deleteCart(product)
                     }
-                    requireActivity().showToast("Your order has been placed successfully!")
+                    requireActivity().showToast(getString(R.string.order_placed_successfully))
                     binding.pbCart.hide()
                 }
                 is Resource.Error->{
@@ -141,7 +142,7 @@ class CartFragment : Fragment() {
                 }
                 is Resource.Success ->{
                     binding.pbCart.hide()
-                    requireActivity().showToast(resource.data.toString())
+                    requireActivity().showToast(getString(R.string.removed_from_cart))
                 }
                 is Resource.Error ->{
                     binding.pbCart.hide()
@@ -194,7 +195,7 @@ class CartFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun deliveryCharge(subTotal: Int) : Double{
         val deliveryCharge = (0.8/100.0) * subTotal
-        binding.txtDeliveryCharge.text = "%.0f".format(deliveryCharge)
+        binding.txtDeliveryCharge.text = ((deliveryCharge * 100.0).roundToInt() / 100.0).toString()
         return deliveryCharge
     }
 

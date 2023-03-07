@@ -49,4 +49,6 @@
     <string name="delete_item_checkout">Are you sure you want to remove %s from the cart.</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="removed_from_cart">Removed From Cart!</string>
+    <string name="order_placed_successfully">Your order has been placed successfully!</string>
 </resources>
