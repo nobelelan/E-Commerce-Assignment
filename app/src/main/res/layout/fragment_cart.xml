@@ -38,7 +38,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="4dp"
-        android:text="Sub Total"
+        android:text="@string/sub_total"
         app:layout_constraintBottom_toTopOf="@+id/txt_delivery_charge_text"
         app:layout_constraintEnd_toStartOf="@+id/txt_sub_total"
         app:layout_constraintStart_toStartOf="parent" />
@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="00"
+        android:text="@string/_00"
         app:layout_constraintBottom_toBottomOf="@+id/txt_sub_total_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txt_sub_total_text" />
@@ -60,7 +60,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="4dp"
-        android:text="Delivery Charge"
+        android:text="@string/delivery_charge"
         app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toStartOf="@+id/txt_delivery_charge"
         app:layout_constraintHorizontal_bias="0.0"
@@ -71,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="00"
+        android:text="@string/_00"
         app:layout_constraintBottom_toBottomOf="@+id/txt_delivery_charge_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txt_delivery_charge_text" />
@@ -94,7 +94,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Checkout"
+        android:text="@string/checkout"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -108,7 +108,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:text="Total"
+        android:text="@string/total"
         app:layout_constraintBottom_toTopOf="@+id/btn_checkout"
         app:layout_constraintEnd_toStartOf="@+id/txt_total"
         app:layout_constraintStart_toStartOf="parent" />
@@ -118,7 +118,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="00"
+        android:text="@string/_00"
         app:layout_constraintBottom_toBottomOf="@+id/txt_total_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txt_total_text" />

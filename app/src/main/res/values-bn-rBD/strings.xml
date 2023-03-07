@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">ই-কমার্স</string>
+    <string name="enter_you_phone_number">মোবাইল নাম্বার প্রবেশ করুন</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="product_name">পণ্যের নাম</string>
+    <string name="product_price">পণ্যের দাম</string>
+    <string name="plus">+</string>
+    <string name="zero">০</string>
+    <string name="minus">-</string>
+    <string name="verify">যাচাই করুন</string>
+    <string name="resend_otp">পুনরায় OTP পাঠান</string>
+    <string name="code_was_sent_to">কোড পাঠানো হয়েছে</string>
+    <string name="log_out">প্রস্থান</string>
+    <string name="user_name">ব্যবহারকারির নাম</string>
+    <string name="phone_number">মোবাইল নাম্বার</string>
+    <string name="address">ঠিকানা</string>
+    <string name="send_otp">OTP-পাঠান</string>
+    <string name="_880">+৮৮০</string>
+    <string name="shoes_category">জুতো</string>
+    <string name="glasses_category">চশমা</string>
+    <string name="products_you_may_like">আপনার পছন্দ হতে পারে এমন পণ্য</string>
+    <string name="variety_of_products">বিভিন্ন ধরনের পণ্য</string>
+    <string name="details">বিস্তারিত</string>
+    <string name="price">দাম</string>
+    <string name="add_to_cart">কার্টে যোগ করুন</string>
+    <string name="sub_total">উপ-মোট</string>
+    <string name="_00">০০</string>
+    <string name="delivery_charge">ডেলিভারি চার্জ</string>
+    <string name="checkout">চেকআউট</string>
+    <string name="total">মোট</string>
+    <string name="name">নাম</string>
+    <string name="home">হোম</string>
+    <string name="wishlist">চাহিদা তালিকা</string>
+    <string name="cart">কার্ট</string>
+    <string name="profile">প্রোফাইল</string>
+    <string name="edit_profile">প্রোফাইল সম্পাদনা করুন</string>
+    <string name="cancel">বাতিল করুন</string>
+    <string name="update">আপডেট</string>
+    <string name="signing_out">সাইন আউট করা হচ্ছে!</string>
+    <string name="proceed">এগিয়ে যান</string>
+    <string name="checkout_dialog_message">আপনার পণ্য মোট %s/= টাকা (ডেলিভারি চার্জ সহ) অর্ডার করার জন্য প্রস্তুত। ডেলিভারিতে নগদ টাকা নেওয়া হবে। আপনার প্রোফাইলের বিবরণ আপনার ঠিকানায় পৌঁছানোর জন্য ব্যবহার করা হবে। সবকিছু ঠিক থাকলে অনুগ্রহ করে এগিয়ে যান।</string>
+    <string name="order">অর্ডার করুন</string>
+    <string name="change_language">ভাষা পরিবর্তন করুন</string>
+    <string name="english">ইংরেজি</string>
+    <string name="bangla">বাংলা</string>
+    <string name="done">সম্পন্ন</string>
+</resources>

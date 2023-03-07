@@ -1,6 +1,8 @@
 package com.example.e_commerce.ui.fragments.product
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,15 +10,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentVerifyOtpBinding
+import com.example.e_commerce.utils.Constants.BANGLA_LANG_CODE
+import com.example.e_commerce.utils.Constants.ENGLISH_LANG_CODE
+import com.example.e_commerce.utils.Constants.LANGUAGE_CODE
+import com.example.e_commerce.utils.Constants.SHARED_PREF_KEY
+import com.example.e_commerce.utils.ExtensionFunctions.disable
+import com.example.e_commerce.utils.ExtensionFunctions.enable
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
+import com.example.e_commerce.utils.Util.applySharedPref
+import com.example.e_commerce.utils.Util.setLocal
 import com.example.e_commerce.utils.VerifyInput
 import com.example.e_commerce.viewmodel.FirebaseViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,6 +38,7 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import java.util.Locale
 
 
 class VerifyOtpFragment : Fragment() {
@@ -62,6 +75,10 @@ class VerifyOtpFragment : Fragment() {
 
         editTextInputHandler()
 
+        binding.apply {
+            btnVerify.enable()
+            spinnerOtp.hide()
+        }
         binding.btnVerify.setOnClickListener {
             val code1 = binding.edtCode1.text.toString().trim()
             val code2 = binding.edtCode2.text.toString().trim()
@@ -158,6 +175,7 @@ class VerifyOtpFragment : Fragment() {
                     // Sign in success, update UI with the signed-in user's information
                     binding.pbOtpVerify.hide()
                     binding.btnVerify.show()
+                    binding.btnVerify.disable()
                     requireActivity().showToast("Verification successful!")
                     firebaseViewModel = ViewModelProvider(this)[FirebaseViewModel::class.java]
                     firebaseViewModel.addProfile(
@@ -167,8 +185,11 @@ class VerifyOtpFragment : Fragment() {
                             "address" to "Address"
                         )
                     )
-                    findNavController().navigate(R.id.action_verifyOtpFragment_to_productFragment)
-                    activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)?.show()
+                    binding.apply {
+                        spinnerOtp.show()
+                        setUpAndRetrieveLangFromSpinner()
+                    }
+
                 } else {
                     // Sign in failed, display a message and update the UI
                     binding.pbOtpVerify.hide()
@@ -180,6 +201,46 @@ class VerifyOtpFragment : Fragment() {
                     }
                 }
             }
+    }
+
+    private fun setUpAndRetrieveLangFromSpinner() {
+        val languages = arrayListOf("Select Language", "English", "বাংলা")
+
+        val arrayAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            languages
+        )
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerOtp.apply {
+            adapter = arrayAdapter
+            setSelection(0)
+            onItemSelectedListener = object : OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                    val selectedLang = parent?.getItemAtPosition(position).toString()
+                    when(selectedLang){
+                        "English" ->{
+                            navigateToProductFragment(requireActivity(), ENGLISH_LANG_CODE)
+                            applySharedPref(requireContext(),ENGLISH_LANG_CODE)
+                        }
+                        "বাংলা" ->{
+                            navigateToProductFragment(requireActivity(), BANGLA_LANG_CODE)
+                            applySharedPref(requireContext(),BANGLA_LANG_CODE)
+                        }
+                    }
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {}
+            }
+        }
+    }
+
+    private fun navigateToProductFragment(activity: Activity?, langCode: String) {
+        activity?.let {
+            setLocal(requireActivity(), langCode)
+            findNavController().navigate(R.id.action_verifyOtpFragment_to_productFragment)
+            activity.findViewById<BottomNavigationView>(R.id.bottom_nav)?.show()
+        }
     }
 
     override fun onDestroyView() {

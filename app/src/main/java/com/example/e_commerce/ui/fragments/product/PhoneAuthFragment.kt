@@ -1,5 +1,6 @@
 package com.example.e_commerce.ui.fragments.product
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,9 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentPhoneAuthBinding
+import com.example.e_commerce.utils.Constants.BANGLA_LANG_CODE
+import com.example.e_commerce.utils.Constants.ENGLISH_LANG_CODE
+import com.example.e_commerce.utils.Constants.LANGUAGE_CODE
+import com.example.e_commerce.utils.Constants.SHARED_PREF_KEY
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
+import com.example.e_commerce.utils.Util.setLocal
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
@@ -49,6 +55,12 @@ class PhoneAuthFragment : Fragment() {
         if (auth.currentUser != null){
             findNavController().navigate(R.id.action_phoneAuthFragment_to_productFragment)
             activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)?.show()
+
+            val sharedPref = context?.getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE)
+            val langCode = sharedPref?.getString(LANGUAGE_CODE, ENGLISH_LANG_CODE)
+            langCode?.let {
+                setLocal(requireActivity(),it)
+            }
         }
 
         binding.btnSendOtp.setOnClickListener {

@@ -1,5 +1,6 @@
 package com.example.e_commerce.ui.fragments.profile
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,12 +11,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.R
+import com.example.e_commerce.databinding.AdChangeLanguageBinding
 import com.example.e_commerce.databinding.AdEditProfileBinding
 import com.example.e_commerce.databinding.FragmentProfileBinding
+import com.example.e_commerce.utils.Constants.BANGLA_LANG_CODE
+import com.example.e_commerce.utils.Constants.ENGLISH_LANG_CODE
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
 import com.example.e_commerce.utils.Resource
+import com.example.e_commerce.utils.Util.applySharedPref
+import com.example.e_commerce.utils.Util.setLocal
 import com.example.e_commerce.utils.VerifyInput.verifyProfileInfo
 import com.example.e_commerce.viewmodel.FirebaseViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -60,12 +66,30 @@ class ProfileFragment : Fragment() {
 
         binding.btnSignOut.setOnClickListener {
             AlertDialog.Builder(requireContext())
-                .setTitle("Signing Out!")
-                .setNegativeButton("Cancel"){_,_->}
-                .setPositiveButton("Proceed"){_,_->
+                .setTitle(R.string.signing_out)
+                .setNegativeButton(R.string.cancel){_,_->}
+                .setPositiveButton(R.string.proceed){_,_->
                     auth.signOut()
                     if (auth.currentUser == null){
                         activity?.finish()
+                    }
+                }
+                .create()
+                .show()
+        }
+        binding.btnChangeLanguage.setOnClickListener {
+            val changeLanguageBinding = AdChangeLanguageBinding.inflate(LayoutInflater.from(requireContext()))
+            AlertDialog.Builder(requireContext())
+                .setTitle(R.string.change_language)
+                .setView(changeLanguageBinding.root)
+                .setNegativeButton(R.string.cancel){_,_->}
+                .setPositiveButton(R.string.done){_,_->
+                    if (changeLanguageBinding.radioBtnBangla.isChecked){
+                        applySharedPref(requireContext(), BANGLA_LANG_CODE)
+                        setLocal(requireActivity(), BANGLA_LANG_CODE)
+                    }else if (changeLanguageBinding.radioBtnEnglish.isChecked){
+                        applySharedPref(requireContext(), ENGLISH_LANG_CODE)
+                        setLocal(requireActivity(), ENGLISH_LANG_CODE)
                     }
                 }
                 .create()
@@ -103,10 +127,10 @@ class ProfileFragment : Fragment() {
         profileBinding.edtAddress.setText(binding.txtAddress.text.toString())
 
         AlertDialog.Builder(requireContext())
-            .setTitle("Edit Profile")
+            .setTitle(R.string.edit_profile)
             .setView(profileBinding.root)
-            .setNegativeButton("Cancel"){_,_->}
-            .setPositiveButton("Update"){_,_->
+            .setNegativeButton(R.string.cancel){_,_->}
+            .setPositiveButton(R.string.update){_,_->
                 val name = profileBinding.editUserName.text.toString()
                 val phone = profileBinding.edtPhone.text.toString()
                 val address = profileBinding.edtAddress.text.toString()

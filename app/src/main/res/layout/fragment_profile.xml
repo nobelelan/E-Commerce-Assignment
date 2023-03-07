@@ -12,14 +12,13 @@
         android:id="@+id/btn_sign_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:drawableEnd="@drawable/baseline_logout"
-        android:text="  Log Out  "
+        android:text="@string/log_out"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inner_Constraint" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_change_language" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/inner_Constraint"
@@ -38,7 +37,7 @@
             android:id="@+id/txt_user_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="User Name"
+            android:text="@string/user_name"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -50,7 +49,7 @@
             android:id="@+id/txt_phone_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Phone Number"
+            android:text="@string/phone_number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/txt_user_name"
             app:layout_constraintTop_toBottomOf="@+id/txt_user_name" />
@@ -59,7 +58,7 @@
             android:id="@+id/txt_address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Address"
+            android:text="@string/address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/txt_phone_number"
             app:layout_constraintTop_toBottomOf="@+id/txt_phone_number" />
@@ -85,5 +84,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
+
+    <Button
+        android:id="@+id/btn_change_language"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/change_language"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inner_Constraint" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

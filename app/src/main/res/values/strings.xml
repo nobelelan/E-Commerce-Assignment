@@ -2,5 +2,46 @@
     <string name="app_name">E-Commerce</string>
     <string name="enter_you_phone_number">Enter mobile number</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="product_name">Product Name</string>
+    <string name="product_price">Product Price</string>
+    <string name="plus">+</string>
+    <string name="zero">0</string>
+    <string name="minus">-</string>
+    <string name="verify">Verify</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="code_was_sent_to">Code was sent to</string>
+    <string name="log_out">Log Out</string>
+    <string name="user_name">User Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="address">Address</string>
+    <string name="send_otp">Send OTP</string>
+    <string name="_880">+880</string>
+    <string name="shoes_category">Shoes Category</string>
+    <string name="glasses_category">Glasses Category</string>
+    <string name="products_you_may_like">Products You May Like</string>
+    <string name="variety_of_products">Variety of Products</string>
+    <string name="details">Details</string>
+    <string name="price">Price</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="sub_total">Sub Total</string>
+    <string name="_00">00</string>
+    <string name="delivery_charge">Delivery Charge</string>
+    <string name="checkout">Checkout</string>
+    <string name="total">Total</string>
+    <string name="name">Name</string>
+    <string name="home">Home</string>
+    <string name="wishlist">Wishlist</string>
+    <string name="cart">Cart</string>
+    <string name="profile">Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
+    <string name="signing_out">Signing Out!</string>
+    <string name="proceed">Proceed</string>
+    <string name="checkout_dialog_message">Your products are ready to be ordered with a total of %s /= Taka(including delivery charge). Cash is on delivery. Your profile details will be used to reach your address. Please proceed if everything is alright.</string>
+    <string name="order">Order</string>
+    <string name="change_language">Change Language</string>
+    <string name="english">English</string>
+    <string name="bangla">Bangla</string>
+    <string name="done">Done</string>
 </resources>

@@ -85,15 +85,13 @@ class CartFragment : Fragment() {
         }
     }
 
+    @SuppressLint("StringFormatInvalid")
     private fun showAlertDialog(){
-        val message = "Your products are ready to be ordered with a total of ${binding.txtTotal.text}/= " +
-                "Taka(including delivery charge). Cash is on delivery. Your profile details " +
-                "will be used to reach your address. Please proceed if everything's alright."
         AlertDialog.Builder(requireContext())
-            .setTitle("Checkout")
-            .setMessage(message)
-            .setNegativeButton("Cancel"){_,_->}
-            .setPositiveButton("Order"){_,_->
+            .setTitle(R.string.checkout)
+            .setMessage(getString(R.string.checkout_dialog_message, binding.txtTotal.text.toString()))
+            .setNegativeButton(R.string.cancel){_,_->}
+            .setPositiveButton(R.string.order){_,_->
                 removeCartProducts()
             }
             .create()
