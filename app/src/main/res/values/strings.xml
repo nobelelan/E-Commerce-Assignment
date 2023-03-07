@@ -44,4 +44,9 @@
     <string name="english">English</string>
     <string name="bangla">Bangla</string>
     <string name="done">Done</string>
+    <string name="fields_cant_be_empty">Fields cant be empty!</string>
+    <string name="delete">Delete</string>
+    <string name="delete_item_checkout">Are you sure you want to remove %s from the cart.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.example.e_commerce.ui.fragments.profile
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.AdChangeLanguageBinding
 import com.example.e_commerce.databinding.AdEditProfileBinding
@@ -142,7 +140,7 @@ class ProfileFragment : Fragment() {
                     }
                     updateProfile(name, phone, address)
                 }else{
-                    requireContext().showToast("Fields can't be empty!")
+                    requireContext().showToast(getString(R.string.fields_cant_be_empty))
                 }
             }.create().show()
     }

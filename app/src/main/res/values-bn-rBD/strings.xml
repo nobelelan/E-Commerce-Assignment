@@ -44,4 +44,9 @@
     <string name="english">ইংরেজি</string>
     <string name="bangla">বাংলা</string>
     <string name="done">সম্পন্ন</string>
+    <string name="fields_cant_be_empty">ঘরগুলো ফাঁকা রাখা যাবে না!</string>
+    <string name="delete">মুছে ফেলুন</string>
+    <string name="delete_item_checkout">আপনি কি নিশ্চিত যে আপনি কার্ট থেকে %s কে সরাতে চান৷</string>
+    <string name="yes">হ্যা</string>
+    <string name="no">না</string>
 </resources>

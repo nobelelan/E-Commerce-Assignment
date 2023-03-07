@@ -121,10 +121,10 @@ class CartFragment : Fragment() {
 
     private fun showAlertDialog(product: Product) {
         AlertDialog.Builder(requireContext())
-            .setTitle("Delete")
-            .setMessage("Are you sure you want to remove '${product.name.toString()}' from the cart.")
-            .setNegativeButton("No"){_,_->}
-            .setPositiveButton("Yes"){_,_->
+            .setTitle(R.string.delete)
+            .setMessage(getString(R.string.delete_item_checkout, product.name.toString()))
+            .setNegativeButton(R.string.no){_,_->}
+            .setPositiveButton(R.string.yes){_,_->
                 deleteProduct(product)
             }
             .create()
