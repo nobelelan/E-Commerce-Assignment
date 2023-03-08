@@ -51,4 +51,6 @@
     <string name="no">না</string>
     <string name="removed_from_cart">কার্ট থেকে সরানো হয়েছে!</string>
     <string name="order_placed_successfully">আপনার অর্ডার সফলভাবে স্থাপন করা হয়েছে!</string>
+    <string name="removed_from_wishlist">তালিকা থেকে সরানো হয়েছে!</string>
+    <string name="added_to_wishlist">তালিকায় যোগ করা হয়েছে!</string>
 </resources>

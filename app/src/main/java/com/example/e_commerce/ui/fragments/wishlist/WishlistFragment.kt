@@ -60,7 +60,7 @@ class WishlistFragment : Fragment() {
                             binding.pbWishlist.show()
                         }
                         is Resource.Success ->{
-                            requireActivity().showToast(resource.data.toString())
+                            requireActivity().showToast(getString(R.string.removed_from_wishlist))
                             binding.pbWishlist.hide()
                         }
                         is Resource.Error ->{

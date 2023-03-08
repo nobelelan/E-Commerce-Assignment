@@ -51,4 +51,6 @@
     <string name="no">No</string>
     <string name="removed_from_cart">Removed From Cart!</string>
     <string name="order_placed_successfully">Your order has been placed successfully!</string>
+    <string name="removed_from_wishlist">Removed from wishlist!</string>
+    <string name="added_to_wishlist">Added to wishlist!</string>
 </resources>

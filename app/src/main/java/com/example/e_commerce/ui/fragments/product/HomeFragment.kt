@@ -106,7 +106,7 @@ class HomeFragment : Fragment() {
                 }
                 is Resource.Success ->{
                     binding.pbHome.hide()
-                    requireActivity().showToast(resource.data.toString())
+                    requireActivity().showToast(getString(R.string.added_to_wishlist))
                 }
                 is Resource.Error ->{
                     binding.pbHome.hide()
