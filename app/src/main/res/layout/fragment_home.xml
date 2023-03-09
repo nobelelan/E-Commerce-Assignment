@@ -36,6 +36,7 @@
                 android:id="@+id/chip_group_glasses"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:singleSelection="true"
                 app:checkedChip="@id/chip_all_glasses"
                 android:layout_marginTop="4dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -45,25 +46,23 @@
                     android:id="@+id/chip_all_glasses"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checkable="true"
                     android:text="@string/all_glasses" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_transparent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checkable="true"
                     android:text="@string/transparent" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_sunglass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checkable="true"
                     android:text="@string/sun_glass" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_other_glasses"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/others" />
             </com.google.android.material.chip.ChipGroup>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -110,6 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:checkedChip="@id/chip_all_shoes"
+                app:singleSelection="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -117,25 +117,23 @@
                     android:id="@+id/chip_all_shoes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checkable="true"
                     android:text="@string/all_shoes" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_nike"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checkable="true"
                     android:text="@string/nike" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_adidas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checkable="true"
                     android:text="@string/adidas" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_other_shoes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/others" />
             </com.google.android.material.chip.ChipGroup>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

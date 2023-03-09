@@ -30,9 +30,25 @@ class FirebaseViewModel: ViewModel() {
     val getShoes: LiveData<Resource<List<Product>>>
         get() = _getShoes
 
+    private val _getAdidasShoes = MutableLiveData<Resource<List<Product>>>()
+    val getAdidasShoes: LiveData<Resource<List<Product>>>
+        get() = _getAdidasShoes
+
+    private val _getNikeShoes = MutableLiveData<Resource<List<Product>>>()
+    val getNikeShoes: LiveData<Resource<List<Product>>>
+        get() = _getNikeShoes
+
     private val _getGlasses = MutableLiveData<Resource<List<Product>>>()
     val getGlasses: LiveData<Resource<List<Product>>>
         get() = _getGlasses
+
+    private val _getTransparentGlasses = MutableLiveData<Resource<List<Product>>>()
+    val getTransparentGlasses: LiveData<Resource<List<Product>>>
+        get() = _getTransparentGlasses
+
+    private val _getSunGlasses = MutableLiveData<Resource<List<Product>>>()
+    val getSunGlasses: LiveData<Resource<List<Product>>>
+        get() = _getSunGlasses
 
     private val _getVarieties = MutableLiveData<Resource<List<Product>>>()
     val getVarieties: LiveData<Resource<List<Product>>>
@@ -65,9 +81,21 @@ class FirebaseViewModel: ViewModel() {
     private val auth = Firebase.auth
     private val profileCollectionRef = Firebase.firestore.collection("users")
         .document(auth.currentUser?.uid!!).collection("profile")
+
     private val shoesCollectionRef = Firebase.firestore.collection("shoes")
+    private val adidasCategoryCollectionRef = Firebase.firestore.collection("shoesCategory")
+        .document("1").collection("adidas")
+    private val nikeCategoryCollectionRef = Firebase.firestore.collection("shoesCategory")
+        .document("2").collection("nike")
+
     private val glassesCollectionRef = Firebase.firestore.collection("glasses")
+    private val transparentCategoryCollectionRef = Firebase.firestore.collection("glassesCategory")
+        .document("1").collection("transparent")
+    private val sunglassCategoryCollectionRef = Firebase.firestore.collection("glassesCategory")
+        .document("2").collection("sunglass")
+
     private val varietiesCollectionRef = Firebase.firestore.collection("varieties")
+
     private val wishlistCollectionRef = Firebase.firestore.collection("users")
         .document(auth.currentUser?.uid!!).collection("wishlist")
     private val cartCollectionRef = Firebase.firestore.collection("users")
@@ -130,6 +158,30 @@ class FirebaseViewModel: ViewModel() {
         }
     }
 
+    fun getAdidasShoes(){
+        _getAdidasShoes.value = Resource.Loading()
+        adidasCategoryCollectionRef.addSnapshotListener { querySnapshot, error ->
+            error?.let {
+                _getAdidasShoes.value = Resource.Error(message = it.message.toString())
+            }
+            querySnapshot?.let {
+                _getAdidasShoes.value = Resource.Success(it.toObjects())
+            }
+        }
+    }
+
+    fun getNikeShoes(){
+        _getNikeShoes.value = Resource.Loading()
+        nikeCategoryCollectionRef.addSnapshotListener { querySnapshot, error ->
+            error?.let {
+                _getNikeShoes.value = Resource.Error(message = it.message.toString())
+            }
+            querySnapshot?.let {
+                _getNikeShoes.value = Resource.Success(it.toObjects())
+            }
+        }
+    }
+
     fun getGlasses(){
         _getGlasses.value = Resource.Loading()
         glassesCollectionRef.addSnapshotListener { querySnapshot, error ->
@@ -138,6 +190,30 @@ class FirebaseViewModel: ViewModel() {
             }
             querySnapshot?.let {
                 _getGlasses.value = Resource.Success(it.toObjects())
+            }
+        }
+    }
+
+    fun getTransparentGlasses(){
+        _getTransparentGlasses.value = Resource.Loading()
+        transparentCategoryCollectionRef.addSnapshotListener { querySnapshot, error ->
+            error?.let {
+                _getTransparentGlasses.value = Resource.Error(message = it.message.toString())
+            }
+            querySnapshot?.let {
+                _getTransparentGlasses.value = Resource.Success(it.toObjects())
+            }
+        }
+    }
+
+    fun getSunGlasses(){
+        _getSunGlasses.value = Resource.Loading()
+        sunglassCategoryCollectionRef.addSnapshotListener { querySnapshot, error ->
+            error?.let {
+                _getSunGlasses.value = Resource.Error(message = it.message.toString())
+            }
+            querySnapshot?.let {
+                _getSunGlasses.value = Resource.Success(it.toObjects())
             }
         }
     }
