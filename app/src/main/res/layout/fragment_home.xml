@@ -21,19 +21,6 @@
             android:layout_height="match_parent"
             android:padding="8dp">
 
-            <TextView
-                android:id="@+id/txt_shoes_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="@string/shoes_category"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_home_shoe"
                 android:layout_width="match_parent"
@@ -42,22 +29,42 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_shoes_text"
+                app:layout_constraintTop_toBottomOf="@+id/chip_group_shoes"
                 tools:itemCount="3" />
 
-            <TextView
-                android:id="@+id/txt_glasses_text"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_glasses"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/glasses_category"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:checkedChip="@id/chip_all_glasses"
+                android:layout_marginTop="4dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rv_home_shoe" />
+                app:layout_constraintTop_toBottomOf="@+id/rv_home_shoe">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_all_glasses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_glasses" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_transparent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/transparent" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_sunglass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sun_glass" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_other_glasses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/others" />
+            </com.google.android.material.chip.ChipGroup>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_home_glass"
@@ -66,48 +73,10 @@
                 android:layout_marginTop="4dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_glasses_text"
+                app:layout_constraintTop_toBottomOf="@+id/chip_group_glasses"
                 tools:itemCount="3" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_suggestion"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@color/light_grey"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_home_glass">
-
-                <TextView
-                    android:id="@+id/txt_suggestion_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/products_you_may_like"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_suggestion_text"
-                    tools:itemCount="3" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/txt_other_products_text"
@@ -121,7 +90,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cl_suggestion" />
+                app:layout_constraintTop_toBottomOf="@+id/rv_home_glass" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_home_other_products"
@@ -135,6 +104,39 @@
                 app:layout_constraintTop_toBottomOf="@+id/txt_other_products_text"
                 app:layout_constraintVertical_bias="0.0"
                 tools:itemCount="3" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_shoes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:checkedChip="@id/chip_all_shoes"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_all_shoes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_shoes" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_nike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nike" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_adidas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/adidas" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_other_shoes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/others" />
+            </com.google.android.material.chip.ChipGroup>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

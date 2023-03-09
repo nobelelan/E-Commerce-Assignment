@@ -53,4 +53,11 @@
     <string name="order_placed_successfully">আপনার অর্ডার সফলভাবে স্থাপন করা হয়েছে!</string>
     <string name="removed_from_wishlist">তালিকা থেকে সরানো হয়েছে!</string>
     <string name="added_to_wishlist">তালিকায় যোগ করা হয়েছে!</string>
+    <string name="all_glasses">সমস্ত চশমা</string>
+    <string name="transparent">স্বচ্ছ</string>
+    <string name="sun_glass">রোদচশমা</string>
+    <string name="others">অন্যান্য</string>
+    <string name="all_shoes">সমস্ত জুতো</string>
+    <string name="nike">নাইকি</string>
+    <string name="adidas">এডিডাস</string>
 </resources>

@@ -53,4 +53,11 @@
     <string name="order_placed_successfully">Your order has been placed successfully!</string>
     <string name="removed_from_wishlist">Removed from wishlist!</string>
     <string name="added_to_wishlist">Added to wishlist!</string>
+    <string name="all_glasses">All Glasses</string>
+    <string name="transparent">Transparent</string>
+    <string name="sun_glass">Sun Glass</string>
+    <string name="others">Others</string>
+    <string name="all_shoes">All Shoes</string>
+    <string name="nike">Nike</string>
+    <string name="adidas">Adidas</string>
 </resources>
