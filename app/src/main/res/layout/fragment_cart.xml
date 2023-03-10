@@ -79,19 +79,21 @@
 
     <View
         android:id="@+id/view"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginBottom="4dp"
-        android:background="@color/black"
+        android:background="@color/pink_500"
         app:layout_constraintBottom_toTopOf="@+id/txt_total_text"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/txt_delivery_charge"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/txt_delivery_charge_text" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_checkout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        style="@style/CustomButton"
+        android:background="@drawable/custom_button"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"

@@ -8,10 +8,13 @@
     tools:context=".ui.fragments.profile.ProfileFragment">
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_sign_out"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        style="@style/CustomButton"
+        android:background="@drawable/custom_button"
         android:drawableEnd="@drawable/baseline_logout"
         android:text="@string/log_out"
         android:textAllCaps="false"
@@ -85,13 +88,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_change_language"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        style="@style/CustomButton"
+        android:background="@drawable/custom_button"
         android:layout_marginTop="8dp"
         android:text="@string/change_language"
-        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"

@@ -10,6 +10,7 @@
         android:id="@+id/ti_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        style="@style/CustomTextInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,6 +20,7 @@
             android:id="@+id/edit_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:ems="10"
             android:hint="@string/name"
             android:inputType="textPersonName" />
@@ -29,6 +31,7 @@
         android:id="@+id/ti_phone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        style="@style/CustomTextInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:ems="10"
+            android:textColor="@color/black"
             android:hint="@string/phone_number"
             android:inputType="phone" />
 
@@ -49,6 +53,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        style="@style/CustomTextInputLayout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -61,6 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:textColor="@color/black"
             android:ems="10"
             android:hint="@string/address"
             android:inputType="textPersonName" />
