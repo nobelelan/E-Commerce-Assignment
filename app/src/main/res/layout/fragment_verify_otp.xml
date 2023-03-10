@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/code_was_sent_to"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/edt_code1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -86,13 +87,14 @@
         app:layout_constraintStart_toEndOf="@+id/edt_code5"
         app:layout_constraintTop_toTopOf="@+id/edt_code5" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_verify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/verify"
-        android:textAllCaps="false"
+        style="@style/CustomButton"
+        android:background="@drawable/custom_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/resend_otp"
-        android:textColor="@color/red"
+        android:textColor="@color/pink_500"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
