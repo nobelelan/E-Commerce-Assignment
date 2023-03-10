@@ -10,7 +10,7 @@
 
     <Button
         android:id="@+id/btn_sign_out"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:drawableEnd="@drawable/baseline_logout"
         android:text="@string/log_out"
@@ -24,7 +24,7 @@
         android:id="@+id/inner_Constraint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/light_grey"
+        android:background="@drawable/custom_input"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -87,9 +87,11 @@
 
     <Button
         android:id="@+id/btn_change_language"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/change_language"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
