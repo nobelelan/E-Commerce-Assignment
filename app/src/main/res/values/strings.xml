@@ -60,4 +60,5 @@
     <string name="all_shoes">All Shoes</string>
     <string name="nike">Nike</string>
     <string name="adidas">Adidas</string>
+    <string name="order_status">Order Status</string>
 </resources>
