@@ -60,4 +60,5 @@
     <string name="all_shoes">সমস্ত জুতো</string>
     <string name="nike">নাইকি</string>
     <string name="adidas">এডিডাস</string>
+    <string name="order_status">অর্ডার স্ট্যাটাস</string>
 </resources>
