@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_productFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
@@ -33,11 +37,19 @@
         tools:layout="@layout/fragment_phone_auth" >
         <action
             android:id="@+id/action_phoneAuthFragment_to_verifyOtpFragment"
-            app:destination="@id/verifyOtpFragment" />
+            app:destination="@id/verifyOtpFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_phoneAuthFragment_to_productFragment"
             app:destination="@id/productFragment"
-            app:popUpTo="@id/phoneAuthFragment" />
+            app:popUpTo="@id/phoneAuthFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
     </fragment>
     <fragment
         android:id="@+id/verifyOtpFragment"
@@ -47,7 +59,11 @@
         <action
             android:id="@+id/action_verifyOtpFragment_to_productFragment"
             app:destination="@id/productFragment"
-            app:popUpTo="@id/verifyOtpFragment" />
+            app:popUpTo="@id/verifyOtpFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
         <argument
             android:name="phone"
             app:argType="string" />
