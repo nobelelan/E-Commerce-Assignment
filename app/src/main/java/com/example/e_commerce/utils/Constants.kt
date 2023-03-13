@@ -7,8 +7,7 @@ object Constants {
     const val SHARED_PREF_KEY = "my_prefs"
     const val LANGUAGE_CODE = "langCode"
 
-    const val CHANNEL_ID = "CHANNEL_ID"
-    const val CHANNEL_NAME = "CHANNEL_NAME"
-    const val CHANNEL_DESCRIPTION = "CHANNEL_DESCRIPTION"
-    const val NOTIFICATION_ID = 1
+    const val BASE_URL = "https://fcm.googleapis.com"
+    const val SERVER_KEY = "AAAA9qLEZA8:APA91bE7pm7F6Ol6qWf_sZF8hC1BHtNKkB_mkf6rZ2bQKgaLDhC5ve-_EkV7Vr2aJ3bj858CoP75VqhMbUmFUACgRoiwv3KcbPjphQqNSG-2FC5j7EyZexRtHlvVsNV82aHT789FlluO"
+    const val CONTENT_TYPE = "application/json"
 }

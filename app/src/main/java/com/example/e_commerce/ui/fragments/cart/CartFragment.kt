@@ -1,34 +1,21 @@
 package com.example.e_commerce.ui.fragments.cart
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.e_commerce.notification.NotificationData
+import com.example.e_commerce.notification.PushNotification
 import com.example.e_commerce.R
+import com.example.e_commerce.notification.RetrofitInstance
 import com.example.e_commerce.databinding.FragmentCartBinding
 import com.example.e_commerce.model.Product
-import com.example.e_commerce.utils.Constants.CHANNEL_DESCRIPTION
-import com.example.e_commerce.utils.Constants.CHANNEL_ID
-import com.example.e_commerce.utils.Constants.CHANNEL_NAME
-import com.example.e_commerce.utils.Constants.NOTIFICATION_ID
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
@@ -37,10 +24,13 @@ import com.example.e_commerce.viewmodel.FirebaseViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlin.math.round
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 
+const val TOPIC = "/topics/myTopic2"
 class CartFragment : Fragment() {
 
     private var _binding: FragmentCartBinding? = null
@@ -109,10 +99,20 @@ class CartFragment : Fragment() {
             .setNegativeButton(R.string.cancel){_,_->}
             .setPositiveButton(R.string.order){_,_->
                 removeCartProducts()
-                showNotification()
+                PushNotification(
+                    NotificationData(getString(R.string.order_status),
+                    getString(R.string.order_placed_successfully)),
+                    TOPIC
+                ).also {
+                    sendNotification(it)
+                }
             }
             .create()
             .show()
+    }
+
+    private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
+        RetrofitInstance.api.postNotification(notification)
     }
 
     private fun removeCartProducts() {
@@ -135,36 +135,6 @@ class CartFragment : Fragment() {
         })
     }
 
-    private fun showNotification() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance).apply {
-                description = CHANNEL_DESCRIPTION
-            }
-            // Register the channel with the system
-            notificationManager().createNotificationChannel(channel)
-        }
-
-        // Create intent to launch the application
-        val intent = requireActivity().packageManager.getLaunchIntentForPackage(requireContext().packageName)
-        val pendingIntent = PendingIntent.getActivity(requireContext(), 0, intent,0)
-
-        val builder = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
-            .setSmallIcon(R.drawable.baseline_shopping_cart)
-            .setContentTitle(getString(R.string.order_status))
-            .setContentText(getString(R.string.order_placed_successfully))
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-
-        // Show the notification
-        notificationManager().notify(NOTIFICATION_ID, builder.build())
-    }
-
-    private fun notificationManager(): NotificationManager {
-        return requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-    }
 
     private fun showAlertDialog(product: Product) {
         AlertDialog.Builder(requireContext())
