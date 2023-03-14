@@ -5,6 +5,7 @@ object Constants {
     const val BANGLA_LANG_CODE = "bn"
     const val ENGLISH_LANG_CODE = "en"
     const val SHARED_PREF_KEY = "my_prefs"
+    const val PHONE_AUTH_SHARED_PREF_KEY = "PhoneAuth"
     const val LANGUAGE_CODE = "langCode"
 
     const val BASE_URL = "https://fcm.googleapis.com"

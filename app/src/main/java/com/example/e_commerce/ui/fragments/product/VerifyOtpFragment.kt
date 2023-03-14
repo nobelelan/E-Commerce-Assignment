@@ -21,6 +21,7 @@ import com.example.e_commerce.databinding.FragmentVerifyOtpBinding
 import com.example.e_commerce.utils.Constants.BANGLA_LANG_CODE
 import com.example.e_commerce.utils.Constants.ENGLISH_LANG_CODE
 import com.example.e_commerce.utils.Constants.LANGUAGE_CODE
+import com.example.e_commerce.utils.Constants.PHONE_AUTH_SHARED_PREF_KEY
 import com.example.e_commerce.utils.Constants.SHARED_PREF_KEY
 import com.example.e_commerce.utils.ExtensionFunctions.disable
 import com.example.e_commerce.utils.ExtensionFunctions.enable
@@ -32,13 +33,14 @@ import com.example.e_commerce.utils.Util.setLocal
 import com.example.e_commerce.utils.VerifyInput
 import com.example.e_commerce.viewmodel.FirebaseViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseTooManyRequestsException
+import com.google.firebase.auth.*
+import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 
 class VerifyOtpFragment : Fragment() {
@@ -48,6 +50,8 @@ class VerifyOtpFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var firebaseViewModel: FirebaseViewModel
+
+    private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
     private val args by navArgs<VerifyOtpFragmentArgs>()
 
@@ -68,16 +72,16 @@ class VerifyOtpFragment : Fragment() {
 
         auth = Firebase.auth
 
-        val phone = args.phone
-        val verificationId = args.verificationId
-
-        binding.txtOtpSentNumTxt.text = "Code was sent to $phone"
+        binding.txtOtpSentNumTxt.text = "Code was sent to ${args.codeSentData.phone}"
 
         editTextInputHandler()
 
         binding.apply {
             btnVerify.enable()
             spinnerOtp.hide()
+        }
+        binding.txtResendOtp.setOnClickListener {
+            resendOtp()
         }
         binding.btnVerify.setOnClickListener {
             val code1 = binding.edtCode1.text.toString().trim()
@@ -90,12 +94,59 @@ class VerifyOtpFragment : Fragment() {
                 val finalCode = code1 + code2 + code3 + code4 + code5 + code6
                 binding.pbOtpVerify.show()
                 binding.btnVerify.hide()
-                val credential = PhoneAuthProvider.getCredential(verificationId, finalCode)
+                val credential =
+                    args.codeSentData.verificationId.let { it1 -> PhoneAuthProvider.getCredential(it1, finalCode) }
                 signInWithPhoneAuthCredential(credential)
             }else{
                 requireActivity().showToast("Invalid Code")
             }
         }
+    }
+
+    private fun resendOtp() {
+        binding.pbOtpVerify.show()
+        binding.btnVerify.hide()
+
+        callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                signInWithPhoneAuthCredential(credential)
+            }
+
+            override fun onVerificationFailed(e: FirebaseException) {
+                binding.pbOtpVerify.hide()
+                binding.btnVerify.show()
+
+                if (e is FirebaseAuthInvalidCredentialsException) {
+                    e.localizedMessage?.let {
+                        requireActivity().showToast(it)
+                    }
+                } else if (e is FirebaseTooManyRequestsException) {
+                    e.localizedMessage?.let {
+                        requireActivity().showToast(it)
+                    }
+                }
+            }
+
+            override fun onCodeSent(
+                verification: String,
+                tokenn: PhoneAuthProvider.ForceResendingToken
+            ) {
+
+                binding.pbOtpVerify.hide()
+                binding.btnVerify.show()
+
+                requireActivity().showToast("Code sent.")
+            }
+        }
+        val options = PhoneAuthOptions.newBuilder(auth)
+            .setPhoneNumber("+880${args.codeSentData.phone}")
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(requireActivity())
+            .setCallbacks(callbacks)
+            .setForceResendingToken(args.codeSentData.token)
+            .build()
+        PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
     private fun editTextInputHandler() {

@@ -65,10 +65,7 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right"/>
         <argument
-            android:name="phone"
-            app:argType="string" />
-        <argument
-            android:name="verificationId"
-            app:argType="string" />
+            android:name="codeSentData"
+            app:argType="com.example.e_commerce.model.CodeSentData" />
     </fragment>
 </navigation>

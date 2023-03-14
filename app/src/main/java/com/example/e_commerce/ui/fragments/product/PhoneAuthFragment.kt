@@ -6,17 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentPhoneAuthBinding
-import com.example.e_commerce.utils.Constants.BANGLA_LANG_CODE
+import com.example.e_commerce.model.CodeSentData
 import com.example.e_commerce.utils.Constants.ENGLISH_LANG_CODE
 import com.example.e_commerce.utils.Constants.LANGUAGE_CODE
 import com.example.e_commerce.utils.Constants.SHARED_PREF_KEY
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
+import com.example.e_commerce.utils.Util.phoneAuthSharedPref
 import com.example.e_commerce.utils.Util.setLocal
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseException
@@ -111,8 +111,7 @@ class PhoneAuthFragment : Fragment() {
                 requireActivity().showToast("Code sent.")
 
                 val action = PhoneAuthFragmentDirections.actionPhoneAuthFragmentToVerifyOtpFragment(
-                    binding.edtPhone.text.toString().trim(),
-                    verificationId
+                    CodeSentData(verificationId, binding.edtPhone.text.toString().trim(), token)
                 )
                 findNavController().navigate(action)
             }
