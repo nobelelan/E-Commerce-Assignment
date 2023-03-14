@@ -16,7 +16,6 @@ import com.example.e_commerce.utils.Constants.SHARED_PREF_KEY
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
-import com.example.e_commerce.utils.Util.phoneAuthSharedPref
 import com.example.e_commerce.utils.Util.setLocal
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseException
