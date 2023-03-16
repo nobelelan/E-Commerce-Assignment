@@ -2,7 +2,10 @@ package com.example.e_commerce.ui.fragments.product
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,6 +20,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.e_commerce.R
+import com.example.e_commerce.broadcast.SmsBroadcastReceiver
+import com.example.e_commerce.broadcast.SmsBroadcastReceiverListener
 import com.example.e_commerce.databinding.FragmentVerifyOtpBinding
 import com.example.e_commerce.utils.Constants.BANGLA_LANG_CODE
 import com.example.e_commerce.utils.Constants.ENGLISH_LANG_CODE
@@ -32,6 +37,7 @@ import com.example.e_commerce.utils.Util.applySharedPref
 import com.example.e_commerce.utils.Util.setLocal
 import com.example.e_commerce.utils.VerifyInput
 import com.example.e_commerce.viewmodel.FirebaseViewModel
+import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
@@ -41,6 +47,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.util.Locale
 import java.util.concurrent.TimeUnit
+import java.util.regex.Pattern
 
 
 class VerifyOtpFragment : Fragment() {
@@ -54,6 +61,10 @@ class VerifyOtpFragment : Fragment() {
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
     private val args by navArgs<VerifyOtpFragmentArgs>()
+
+    private var smsBroadcastReceiver: SmsBroadcastReceiver? = null
+    private val REQ_USER_CONSENT = 200
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,6 +84,8 @@ class VerifyOtpFragment : Fragment() {
         auth = Firebase.auth
 
         binding.txtOtpSentNumTxt.text = "Code was sent to ${args.codeSentData.phone}"
+
+        startSmartUserConsent()
 
         editTextInputHandler()
 
@@ -101,6 +114,55 @@ class VerifyOtpFragment : Fragment() {
                 requireActivity().showToast("Invalid Code")
             }
         }
+    }
+
+    private fun startSmartUserConsent() {
+        val client = SmsRetriever.getClient(requireContext())
+        client.startSmsUserConsent(null)
+    }
+
+    private fun registerBroadcastReceiver(){
+        smsBroadcastReceiver = SmsBroadcastReceiver()
+        smsBroadcastReceiver!!.smsBroadcastReceiverListener = object : SmsBroadcastReceiverListener{
+            override fun onSuccess(intent: Intent?) {
+                startActivityForResult(intent, REQ_USER_CONSENT)
+            }
+
+            override fun onFailure() {
+
+            }
+        }
+        val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
+        requireActivity().registerReceiver(smsBroadcastReceiver, intentFilter)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQ_USER_CONSENT){
+            if (resultCode == RESULT_OK && data != null){
+                val message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
+                retrieveOtpFromMessage(message)
+            }
+        }
+    }
+
+    private fun retrieveOtpFromMessage(message: String?) {
+        val otpPattern = Pattern.compile("(|^)\\d{6}")
+        val matcher = otpPattern.matcher(message)
+        if (matcher.find()){
+            binding.edtOtp.setText(matcher.group(0))
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        registerBroadcastReceiver()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        requireActivity().unregisterReceiver(smsBroadcastReceiver)
+        // TODO: have a look, change to onPause or use, "LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(YOUR_RECEIVER_HERE);"
     }
 
     private fun resendOtp() {

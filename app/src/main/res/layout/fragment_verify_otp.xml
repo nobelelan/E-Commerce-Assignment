@@ -89,12 +89,12 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_verify"
+        style="@style/CustomButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/verify"
-        style="@style/CustomButton"
         android:background="@drawable/custom_button"
+        android:text="@string/verify"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,12 +129,24 @@
         android:id="@+id/spinner_otp"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
         android:layout_marginTop="8dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_verify" />
+
+    <EditText
+        android:id="@+id/edt_otp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Please enter the OTP"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/txt_otp_sent_num_txt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

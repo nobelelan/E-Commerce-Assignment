@@ -117,7 +117,7 @@ class PhoneAuthFragment : Fragment() {
         }
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber("+880${binding.edtPhone.text.toString().trim()}")
-            .setTimeout(60L, TimeUnit.SECONDS)
+            .setTimeout(0L, TimeUnit.SECONDS)
             .setActivity(requireActivity())
             .setCallbacks(callbacks)
             .build()
