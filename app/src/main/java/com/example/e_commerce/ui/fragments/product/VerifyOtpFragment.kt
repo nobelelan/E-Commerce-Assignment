@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -150,7 +151,16 @@ class VerifyOtpFragment : Fragment() {
         val otpPattern = Pattern.compile("(|^)\\d{6}")
         val matcher = otpPattern.matcher(message)
         if (matcher.find()){
-            binding.edtOtp.setText(matcher.group(0))
+            val otp = matcher.group(0)
+            val editTexts = listOf(binding.edtCode1, binding.edtCode2, binding.edtCode3,
+                binding.edtCode4, binding.edtCode5, binding.edtCode6)
+            val otps = arrayListOf<Int>()
+            otp?.forEach {
+                otps.add(it.digitToInt())
+            }
+            otps.zip(editTexts){otpInt,editText->
+                editText.setText(otpInt.toString())
+            }
         }
     }
 
