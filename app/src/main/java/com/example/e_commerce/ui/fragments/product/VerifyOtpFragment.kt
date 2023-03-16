@@ -129,9 +129,7 @@ class VerifyOtpFragment : Fragment() {
                 startActivityForResult(intent, REQ_USER_CONSENT)
             }
 
-            override fun onFailure() {
-
-            }
+            override fun onFailure() {}
         }
         val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
         requireActivity().registerReceiver(smsBroadcastReceiver, intentFilter)
@@ -172,7 +170,6 @@ class VerifyOtpFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         requireActivity().unregisterReceiver(smsBroadcastReceiver)
-        // TODO: have a look, change to onPause or use, "LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(YOUR_RECEIVER_HERE);"
     }
 
     private fun resendOtp() {
