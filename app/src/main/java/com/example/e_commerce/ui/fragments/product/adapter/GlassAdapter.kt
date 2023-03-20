@@ -3,6 +3,7 @@ package com.example.e_commerce.ui.fragments.product.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -50,6 +51,10 @@ class GlassAdapter: RecyclerView.Adapter<GlassAdapter.GlassViewHolder>() {
             root.setOnClickListener {
                 onItemClickListener?.onProductClick(glass)
             }
+            imgDeleteProduct.setOnClickListener {
+                onItemClickListener?.onDeleteClick(glass)
+            }
+            onItemClickListener?.onViewCreated(imgDeleteProduct)
         }
 
     }
@@ -63,6 +68,8 @@ class GlassAdapter: RecyclerView.Adapter<GlassAdapter.GlassViewHolder>() {
     interface OnItemClickListener{
         fun onProductClick(product: Product)
         fun onFavIconClick(product: Product)
+        fun onDeleteClick(product: Product)
+        fun onViewCreated(view: ImageView)
     }
 
     fun setOnClickListener(listener: OnItemClickListener){

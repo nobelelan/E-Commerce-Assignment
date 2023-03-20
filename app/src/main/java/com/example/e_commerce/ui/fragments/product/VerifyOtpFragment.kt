@@ -17,6 +17,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -34,6 +35,7 @@ import com.example.e_commerce.utils.ExtensionFunctions.enable
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
+import com.example.e_commerce.utils.Resource
 import com.example.e_commerce.utils.Util.applySharedPref
 import com.example.e_commerce.utils.Util.setLocal
 import com.example.e_commerce.utils.VerifyInput
@@ -298,13 +300,35 @@ class VerifyOtpFragment : Fragment() {
                     binding.btnVerify.disable()
                     requireActivity().showToast("Verification successful!")
                     firebaseViewModel = ViewModelProvider(this)[FirebaseViewModel::class.java]
-                    firebaseViewModel.addProfile(
-                        hashMapOf(
-                            "name" to "User Name",
-                            "phone" to auth.currentUser?.phoneNumber.toString(),
-                            "address" to "Address"
-                        )
-                    )
+                    firebaseViewModel.getProfile()
+                    firebaseViewModel.getProfile.observe(viewLifecycleOwner, Observer { resource ->
+                        when(resource){
+                            is Resource.Success ->{
+                                resource.data?.let { profile->
+                                    if (profile.name != null && profile.address != null && profile.role != null){
+                                        firebaseViewModel.addProfile(
+                                            hashMapOf(
+                                                "name" to profile.name,
+                                                "phone" to profile.phone,
+                                                "address" to profile.address,
+                                                "role" to profile.role
+                                            )
+                                        )
+                                    }
+                                }?:firebaseViewModel.addProfile(
+                                    hashMapOf(
+                                        "name" to "User Name",
+                                        "phone" to auth.currentUser?.phoneNumber.toString(),
+                                        "address" to "Address",
+                                        "role" to "user"
+                                    )
+                                )
+                            }
+                            is Resource.Loading ->{}
+                            is Resource.Error ->{}
+                        }
+                    })
+
                     binding.apply {
                         spinnerOtp.show()
                         setUpAndRetrieveLangFromSpinner()

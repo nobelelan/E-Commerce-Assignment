@@ -2,8 +2,10 @@ package com.example.e_commerce.ui.fragments.product.adapter
 
 
 import android.annotation.SuppressLint
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -51,6 +53,10 @@ class VarietiesAdapter: RecyclerView.Adapter<VarietiesAdapter.VarietiesViewHolde
             root.setOnClickListener {
                 onItemClickListener?.onProductClick(shoe)
             }
+            imgDeleteProduct.setOnClickListener {
+                onItemClickListener?.onDeleteClick(shoe)
+            }
+            onItemClickListener?.onViewCreated(imgDeleteProduct)
         }
 
     }
@@ -64,6 +70,8 @@ class VarietiesAdapter: RecyclerView.Adapter<VarietiesAdapter.VarietiesViewHolde
     interface OnItemClickListener{
         fun onProductClick(product: Product)
         fun onFavIconClick(product: Product)
+        fun onDeleteClick(product: Product)
+        fun onViewCreated(view: ImageView)
     }
 
     fun setOnClickListener(listener: OnItemClickListener){

@@ -18,6 +18,7 @@ import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
 import com.example.e_commerce.utils.Resource
+import com.example.e_commerce.utils.Util.applyProfileSharedPref
 import com.example.e_commerce.utils.Util.applySharedPref
 import com.example.e_commerce.utils.Util.setLocal
 import com.example.e_commerce.utils.VerifyInput.verifyProfileInfo
@@ -160,6 +161,8 @@ class ProfileFragment : Fragment() {
                 is Resource.Success -> {
                     requireActivity().showToast(resource.data.toString())
                     binding.pbProfile.hide()
+                    val role = firebaseViewModel.getProfile.value?.data?.role
+                    applyProfileSharedPref(requireContext(), name, phone, address, role!!)
                 }
                 is Resource.Error -> {
                     requireActivity().showToast(resource.message.toString())

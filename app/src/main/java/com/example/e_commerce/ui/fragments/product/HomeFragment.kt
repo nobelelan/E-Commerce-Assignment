@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -52,6 +53,8 @@ class HomeFragment : Fragment() {
 
         firebaseViewModel = ViewModelProvider(requireActivity())[FirebaseViewModel::class.java]
 
+        decideUserAccess()
+
         setUpShoeRecyclerView()
         setUpGlassRecyclerView()
         setUpVarietiesRecyclerView()
@@ -68,6 +71,14 @@ class HomeFragment : Fragment() {
             override fun onFavIconClick(product: Product) {
                 addProductToWishList(product)
             }
+
+            override fun onDeleteClick(product: Product) {
+                deleteShoes(product)
+            }
+
+            override fun onViewCreated(view: ImageView) {
+                retrieveProfileData(view)
+            }
         })
         glassAdapter.setOnClickListener(object : GlassAdapter.OnItemClickListener{
             override fun onProductClick(product: Product) {
@@ -76,6 +87,14 @@ class HomeFragment : Fragment() {
 
             override fun onFavIconClick(product: Product) {
                 addProductToWishList(product)
+            }
+
+            override fun onDeleteClick(product: Product) {
+                deleteGlasses(product)
+            }
+
+            override fun onViewCreated(view: ImageView) {
+                retrieveProfileData(view)
             }
         })
         varietiesAdapter.setOnClickListener(object : VarietiesAdapter.OnItemClickListener{
@@ -86,7 +105,88 @@ class HomeFragment : Fragment() {
             override fun onFavIconClick(product: Product) {
                 addProductToWishList(product)
             }
+
+            override fun onDeleteClick(product: Product) {
+                firebaseViewModel.deleteVarieties(product)
+            }
+
+            override fun onViewCreated(view: ImageView) {
+                retrieveProfileData(view)
+            }
         })
+    }
+
+    private fun decideUserAccess() {
+        retrieveProfileData()
+    }
+
+    private fun retrieveProfileData(view: View? = null) {
+        firebaseViewModel.getProfile()
+        firebaseViewModel.getProfile.observe(viewLifecycleOwner, Observer{resource->
+            when(resource){
+                is Resource.Loading ->{
+                    binding.pbHome.show()
+                }
+                is Resource.Success ->{
+                    binding.pbHome.hide()
+                    resource.data?.role.let {
+                        hideAndShowView(it, view)
+                    }
+
+                }
+                is Resource.Error ->{
+                    binding.pbHome.hide()
+                }
+            }
+        })
+    }
+
+    private fun hideAndShowView(it: String?, view: View? = null) {
+        it?.let { role->
+            if (role == "user"){
+                binding.fabAddProduct.hide()
+                view?.hide()
+            }else if (role == "admin"){
+                binding.fabAddProduct.show()
+                view?.show()
+            } else {}
+        }
+    }
+
+    private fun deleteShoes(product: Product) {
+        binding.chipGroupShoes.setOnCheckedStateChangeListener { group, checkedIds ->
+            checkedIds.forEach {
+                when(it){
+                    R.id.chip_all_shoes ->{
+                        firebaseViewModel.deleteShoes(product)
+                    }
+                    R.id.chip_adidas ->{
+                        firebaseViewModel.deleteAdidasShoes(product)
+                    }
+                    R.id.chip_nike ->{
+                        firebaseViewModel.deleteNikeShoes(product)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun deleteGlasses(product: Product) {
+        binding.chipGroupGlasses.setOnCheckedStateChangeListener { group, checkedIds ->
+            checkedIds.forEach {
+                when(it){
+                    R.id.chip_all_glasses ->{
+                        firebaseViewModel.deleteGlasses(product)
+                    }
+                    R.id.chip_transparent ->{
+                        firebaseViewModel.deleteTransparentGlasses(product)
+                    }
+                    R.id.chip_sunglass ->{
+                        firebaseViewModel.deleteSunGlasses(product)
+                    }
+                }
+            }
+        }
     }
 
     private fun navigateToDetails(product: Product) {
