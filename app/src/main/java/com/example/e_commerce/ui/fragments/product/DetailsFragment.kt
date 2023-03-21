@@ -51,7 +51,7 @@ class DetailsFragment : Fragment() {
             txtProductPrice.text = "${product.price}/= Taka"
             rbDetails.rating = product.rating!!.toFloat()
             txtProductName.text = product.name
-            txtProductDetails.text = product.details
+            txtProductDetails.text = product.description
             Glide.with(requireContext()).load(product.url).into(imgProduct)
 
             btnAddToCart.setOnClickListener {
@@ -66,7 +66,7 @@ class DetailsFragment : Fragment() {
                 "name" to product.name.toString(),
                 "url" to product.url.toString(),
                 "price" to product.price.toString(),
-                "details" to product.details.toString(),
+                "details" to product.description.toString(),
                 "rating" to product.rating.toString()
             )
         )

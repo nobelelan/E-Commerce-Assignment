@@ -16,6 +16,9 @@ import com.example.e_commerce.model.Product
 import com.example.e_commerce.ui.fragments.product.adapter.GlassAdapter
 import com.example.e_commerce.ui.fragments.product.adapter.ShoeAdapter
 import com.example.e_commerce.ui.fragments.product.adapter.VarietiesAdapter
+import com.example.e_commerce.utils.Constants.ALL_GLASSES
+import com.example.e_commerce.utils.Constants.SUN_GLASSES
+import com.example.e_commerce.utils.Constants.TRANSPARENT_GLASSES
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
@@ -94,7 +97,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onDeleteClick(product: Product) {
-                deleteGlasses(product)
+//                deleteGlasses(product)
             }
 
             override fun onViewCreated(view: ImageView) {
@@ -175,23 +178,23 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun deleteGlasses(product: Product) {
-        binding.chipGroupGlasses.setOnCheckedStateChangeListener { group, checkedIds ->
-            checkedIds.forEach {
-                when(it){
-                    R.id.chip_all_glasses ->{
-                        firebaseViewModel.deleteGlasses(product)
-                    }
-                    R.id.chip_transparent ->{
-                        firebaseViewModel.deleteTransparentGlasses(product)
-                    }
-                    R.id.chip_sunglass ->{
-                        firebaseViewModel.deleteSunGlasses(product)
-                    }
-                }
-            }
-        }
-    }
+//    private fun deleteGlasses(product: Product) {
+//        binding.chipGroupGlasses.setOnCheckedStateChangeListener { group, checkedIds ->
+//            checkedIds.forEach {
+//                when(it){
+//                    R.id.chip_all_glasses ->{
+//                        firebaseViewModel.deleteGlasses(product)
+//                    }
+//                    R.id.chip_transparent ->{
+//                        firebaseViewModel.deleteTransparentGlasses(product)
+//                    }
+//                    R.id.chip_sunglass ->{
+//                        firebaseViewModel.deleteSunGlasses(product)
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private fun navigateToDetails(product: Product) {
         val action = HomeFragmentDirections.actionProductFragmentToDetailsFragment(product)
@@ -204,7 +207,7 @@ class HomeFragment : Fragment() {
                 "name" to product.name.toString(),
                 "url" to product.url.toString(),
                 "price" to product.price.toString(),
-                "details" to product.details.toString(),
+                "details" to product.description.toString(),
                 "rating" to product.rating.toString()
             )
         )
@@ -246,66 +249,66 @@ class HomeFragment : Fragment() {
     }
 
     private fun retrieveAndSetGlasses() {
-        getAllGlasses()
+        getGlasses(ALL_GLASSES)
         binding.chipGroupGlasses.setOnCheckedStateChangeListener { group, checkedIds ->
             checkedIds.forEach {
                 when(it){
                     R.id.chip_all_glasses ->{
-                        getAllGlasses()
+                        getGlasses(ALL_GLASSES)
                     }
                     R.id.chip_transparent ->{
-                        getTransparentGlasses()
+                        getGlasses(TRANSPARENT_GLASSES)
                     }
                     R.id.chip_sunglass ->{
-                        getSunglasses()
+                        getGlasses(SUN_GLASSES)
                     }
                 }
             }
         }
     }
 
-    private fun getSunglasses() {
-        firebaseViewModel.getSunGlasses()
+//    private fun getSunglasses() {
+//        firebaseViewModel.getSunGlasses()
+//
+//        firebaseViewModel.getSunGlasses.observe(viewLifecycleOwner, Observer { resource->
+//            when(resource){
+//                is Resource.Loading ->{
+//                    binding.pbHome.show()
+//                }
+//                is Resource.Success ->{
+//                    binding.pbHome.hide()
+//                    glassAdapter.differCallBack.submitList(resource.data)
+//                }
+//                is Resource.Error ->{
+//                    binding.pbHome.hide()
+//                    requireActivity().showToast(resource.message.toString())
+//                }
+//            }
+//        })
+//    }
 
-        firebaseViewModel.getSunGlasses.observe(viewLifecycleOwner, Observer { resource->
-            when(resource){
-                is Resource.Loading ->{
-                    binding.pbHome.show()
-                }
-                is Resource.Success ->{
-                    binding.pbHome.hide()
-                    glassAdapter.differCallBack.submitList(resource.data)
-                }
-                is Resource.Error ->{
-                    binding.pbHome.hide()
-                    requireActivity().showToast(resource.message.toString())
-                }
-            }
-        })
-    }
+//    private fun getTransparentGlasses() {
+//        firebaseViewModel.getTransparentGlasses()
+//
+//        firebaseViewModel.getTransparentGlasses.observe(viewLifecycleOwner, Observer { resource->
+//            when(resource){
+//                is Resource.Loading ->{
+//                    binding.pbHome.show()
+//                }
+//                is Resource.Success ->{
+//                    binding.pbHome.hide()
+//                    glassAdapter.differCallBack.submitList(resource.data)
+//                }
+//                is Resource.Error ->{
+//                    binding.pbHome.hide()
+//                    requireActivity().showToast(resource.message.toString())
+//                }
+//            }
+//        })
+//    }
 
-    private fun getTransparentGlasses() {
-        firebaseViewModel.getTransparentGlasses()
-
-        firebaseViewModel.getTransparentGlasses.observe(viewLifecycleOwner, Observer { resource->
-            when(resource){
-                is Resource.Loading ->{
-                    binding.pbHome.show()
-                }
-                is Resource.Success ->{
-                    binding.pbHome.hide()
-                    glassAdapter.differCallBack.submitList(resource.data)
-                }
-                is Resource.Error ->{
-                    binding.pbHome.hide()
-                    requireActivity().showToast(resource.message.toString())
-                }
-            }
-        })
-    }
-
-    private fun getAllGlasses() {
-        firebaseViewModel.getGlasses()
+    private fun getGlasses(type: String) {
+        firebaseViewModel.getGlasses(type)
 
         firebaseViewModel.getGlasses.observe(viewLifecycleOwner, Observer { resource->
             when(resource){

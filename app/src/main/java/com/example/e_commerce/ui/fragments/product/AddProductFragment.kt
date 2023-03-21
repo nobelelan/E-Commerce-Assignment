@@ -11,6 +11,9 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentAddProductBinding
+import com.example.e_commerce.utils.Constants.ALL_GLASSES
+import com.example.e_commerce.utils.Constants.SUN_GLASSES
+import com.example.e_commerce.utils.Constants.TRANSPARENT_GLASSES
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.viewmodel.FirebaseViewModel
@@ -53,53 +56,69 @@ class AddProductFragment : Fragment() {
         binding.spinnerProductType.apply {
             adapter = arrayAdapter
             setSelection(0)
-            binding.btnSubmitProduct.setOnClickListener {
-                onItemSelectedListener = object : OnItemSelectedListener{
-                    override fun onItemSelected(parent: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                        val selectedProductType = parent?.getItemAtPosition(position).toString()
-                        when(selectedProductType){
-                            "Varieties" ->{
-                                binding.rgShoes.hide()
-                                binding.rgGlasses.hide()
-                                //add to varieties
-                            }
-                            "Shoes" ->{
-                                binding.rgShoes.show()
-                                binding.rgGlasses.hide()
-                                when(binding.rgShoes.checkedRadioButtonId){
-                                    R.id.rb_all_shoes ->{
-                                        //add to all shoes
-                                    }
-                                    R.id.rb_adidas ->{
-                                        //add to adidas
-                                    }
-                                    R.id.rb_nike ->{
-                                        //add to nike
-                                    }
+            onItemSelectedListener = object : OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                    val selectedProductType = parent?.getItemAtPosition(position).toString()
+                    when(selectedProductType){
+                        "Varieties" ->{
+                            binding.rgShoes.hide()
+                            binding.rgGlasses.hide()
+                            //add to varieties
+                        }
+                        "Shoes" ->{
+                            binding.rgShoes.show()
+                            binding.rgGlasses.hide()
+                            when(binding.rgShoes.checkedRadioButtonId){
+                                R.id.rb_all_shoes ->{
+                                    //add to all shoes
+                                }
+                                R.id.rb_adidas ->{
+                                    //add to adidas
+                                }
+                                R.id.rb_nike ->{
+                                    //add to nike
                                 }
                             }
-                            "Glasses" ->{
-                                binding.rgGlasses.show()
-                                binding.rgShoes.hide()
+                        }
+                        "Glasses" ->{
+                            binding.rgGlasses.show()
+                            binding.rgShoes.hide()
+                            binding.btnSubmitProduct.setOnClickListener {
                                 when(binding.rgGlasses.checkedRadioButtonId){
                                     R.id.rb_all_glasses ->{
                                         //add to all glasses
+                                        addProduct(ALL_GLASSES)
                                     }
                                     R.id.rb_transparent ->{
                                         //add to transparent
+                                        addProduct(TRANSPARENT_GLASSES)
                                     }
                                     R.id.rb_sunglass ->{
                                         //add to sunglass
+                                        addProduct(SUN_GLASSES)
                                     }
                                 }
                             }
                         }
                     }
-
-                    override fun onNothingSelected(p0: AdapterView<*>?) {}
                 }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
         }
+    }
+
+    private fun addProduct(type: String) {
+        firebaseViewModel.addGlasses(
+            hashMapOf(
+                "name" to binding.edtProductName.text.toString(),
+                "type" to type,
+                "url" to binding.edtProductUrl.text.toString(),
+                "price" to binding.edtProductPrice.text.toString(),
+                "description" to binding.edtProductDescription.text.toString(),
+                "rating" to binding.edtProductRating.text.toString()
+            )
+        )
     }
 
     override fun onDestroyView() {

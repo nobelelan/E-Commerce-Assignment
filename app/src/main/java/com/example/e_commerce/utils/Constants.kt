@@ -11,4 +11,8 @@ object Constants {
     const val BASE_URL = "https://fcm.googleapis.com"
     const val SERVER_KEY = "AAAA9qLEZA8:APA91bE7pm7F6Ol6qWf_sZF8hC1BHtNKkB_mkf6rZ2bQKgaLDhC5ve-_EkV7Vr2aJ3bj858CoP75VqhMbUmFUACgRoiwv3KcbPjphQqNSG-2FC5j7EyZexRtHlvVsNV82aHT789FlluO"
     const val CONTENT_TYPE = "application/json"
+
+    const val ALL_GLASSES = "AllGlasses"
+    const val TRANSPARENT_GLASSES = "TransparentGlasses"
+    const val SUN_GLASSES = "SunGlasses"
 }
