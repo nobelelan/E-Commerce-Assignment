@@ -79,6 +79,10 @@ class FirebaseViewModel: ViewModel() {
 //    val deleteSunglasses: LiveData<Resource<String>>
 //        get() = _deleteSunglasses
 
+    private val _addVarieties = MutableLiveData<Resource<String>>()
+    val addVarieties: LiveData<Resource<String>>
+        get() = _addVarieties
+
     private val _getVarieties = MutableLiveData<Resource<List<Product>>>()
     val getVarieties: LiveData<Resource<List<Product>>>
         get() = _getVarieties
@@ -377,6 +381,17 @@ class FirebaseViewModel: ViewModel() {
 //                }
 //            }
 //    }
+
+    fun addVarieties(product: HashMap<String, String>){
+        _addVarieties.value = Resource.Loading()
+        varietiesCollectionRef.add(product)
+            .addOnSuccessListener {
+                _addVarieties.value = Resource.Success("Successfully added data!")
+            }
+            .addOnFailureListener{
+                _addVarieties.value = Resource.Error(message = it.message.toString())
+            }
+    }
 
     fun getVarieties(){
         _getVarieties.value = Resource.Loading()

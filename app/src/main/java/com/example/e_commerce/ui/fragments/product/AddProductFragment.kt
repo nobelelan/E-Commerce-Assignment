@@ -14,6 +14,7 @@ import com.example.e_commerce.databinding.FragmentAddProductBinding
 import com.example.e_commerce.utils.Constants.ALL_GLASSES
 import com.example.e_commerce.utils.Constants.SUN_GLASSES
 import com.example.e_commerce.utils.Constants.TRANSPARENT_GLASSES
+import com.example.e_commerce.utils.Constants.VARIETIES
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.viewmodel.FirebaseViewModel
@@ -64,6 +65,18 @@ class AddProductFragment : Fragment() {
                             binding.rgShoes.hide()
                             binding.rgGlasses.hide()
                             //add to varieties
+                            binding.btnSubmitProduct.setOnClickListener {
+                                firebaseViewModel.addVarieties(
+                                    hashMapOf(
+                                        "name" to binding.edtProductName.text.toString(),
+                                        "type" to VARIETIES,
+                                        "url" to binding.edtProductUrl.text.toString(),
+                                        "price" to binding.edtProductPrice.text.toString(),
+                                        "description" to binding.edtProductDescription.text.toString(),
+                                        "rating" to binding.edtProductRating.text.toString()
+                                    )
+                                )
+                            }
                         }
                         "Shoes" ->{
                             binding.rgShoes.show()
