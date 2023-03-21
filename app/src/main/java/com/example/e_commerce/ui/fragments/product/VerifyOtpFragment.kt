@@ -302,13 +302,13 @@ class VerifyOtpFragment : Fragment() {
                     firebaseViewModel = ViewModelProvider(this)[FirebaseViewModel::class.java]
 
                     firebaseViewModel.getProfile()
-                    if (firebaseViewModel.getProfile.value == null){
+                    if (firebaseViewModel.getProfile.value?.data == null){
                         firebaseViewModel.setProfile(
                             hashMapOf(
                                 "name" to "User Name",
                                 "phone" to auth.currentUser!!.phoneNumber!!,
                                 "address" to "Address",
-                                "role" to "User"
+                                "role" to "user"
                             )
                         )
                     }else{
