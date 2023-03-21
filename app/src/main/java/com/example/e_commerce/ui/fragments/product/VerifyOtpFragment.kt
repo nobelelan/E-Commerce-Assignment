@@ -300,34 +300,48 @@ class VerifyOtpFragment : Fragment() {
                     binding.btnVerify.disable()
                     requireActivity().showToast("Verification successful!")
                     firebaseViewModel = ViewModelProvider(this)[FirebaseViewModel::class.java]
+
                     firebaseViewModel.getProfile()
-                    firebaseViewModel.getProfile.observe(viewLifecycleOwner, Observer { resource ->
-                        when(resource){
-                            is Resource.Success ->{
-                                resource.data?.let { profile->
-                                    if (profile.name != null && profile.address != null && profile.role != null){
-                                        firebaseViewModel.addProfile(
-                                            hashMapOf(
-                                                "name" to profile.name,
-                                                "phone" to profile.phone,
-                                                "address" to profile.address,
-                                                "role" to profile.role
+                    if (firebaseViewModel.getProfile.value == null){
+                        firebaseViewModel.setProfile(
+                            hashMapOf(
+                                "name" to "User Name",
+                                "phone" to auth.currentUser!!.phoneNumber!!,
+                                "address" to "Address",
+                                "role" to "User"
+                            )
+                        )
+                    }else{
+                        firebaseViewModel.getProfile()
+                        firebaseViewModel.getProfile.observe(viewLifecycleOwner, Observer { resource ->
+                            when(resource){
+                                is Resource.Success ->{
+                                    resource.data?.let { profile->
+                                        if (profile.name != null && profile.address != null && profile.role != null){
+                                            firebaseViewModel.setProfile(
+                                                hashMapOf(
+                                                    "name" to profile.name,
+                                                    "phone" to profile.phone,
+                                                    "address" to profile.address,
+                                                    "role" to profile.role
+                                                )
                                             )
-                                        )
+                                        }
                                     }
-                                }?:firebaseViewModel.addProfile(
-                                    hashMapOf(
-                                        "name" to "User Name",
-                                        "phone" to auth.currentUser?.phoneNumber.toString(),
-                                        "address" to "Address",
-                                        "role" to "user"
-                                    )
-                                )
+//                                        ?:firebaseViewModel.setProfile(
+//                                        hashMapOf(
+//                                            "name" to "User Name",
+//                                            "phone" to auth.currentUser?.phoneNumber.toString(),
+//                                            "address" to "Address",
+//                                            "role" to "user"
+//                                        )
+//                                    )
+                                }
+                                is Resource.Loading ->{}
+                                is Resource.Error ->{}
                             }
-                            is Resource.Loading ->{}
-                            is Resource.Error ->{}
-                        }
-                    })
+                        })
+                    }
 
                     binding.apply {
                         spinnerOtp.show()

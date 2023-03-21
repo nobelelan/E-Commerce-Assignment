@@ -18,6 +18,10 @@ class FirebaseViewModel: ViewModel() {
     val addProfile: LiveData<Resource<String>>
         get() = _addProfile
 
+    private val _setProfile = MutableLiveData<Resource<String>>()
+    val setProfile: LiveData<Resource<String>>
+        get() = _setProfile
+
     private val _updateProfile = MutableLiveData<Resource<String>>()
     val updateProfile: LiveData<Resource<String>>
         get() = _updateProfile
@@ -109,6 +113,8 @@ class FirebaseViewModel: ViewModel() {
     private val auth = Firebase.auth
     private val profileCollectionRef = Firebase.firestore.collection("users")
         .document(auth.currentUser?.uid!!).collection("profile").document(auth.currentUser?.uid!!)
+//    private val addProfileCollectionRef = Firebase.firestore.collection("users")
+//        .document(auth.currentUser?.uid!!).collection("profile")
 
     private val shoesCollectionRef = Firebase.firestore.collection("shoes")
     private val adidasCategoryCollectionRef = Firebase.firestore.collection("shoesCategory")
@@ -129,15 +135,25 @@ class FirebaseViewModel: ViewModel() {
     private val cartCollectionRef = Firebase.firestore.collection("users")
         .document(auth.currentUser?.uid!!).collection("cart")
 
+//    fun addProfile(profile: HashMap<String, String>){
+//        _addProfile.value = Resource.Loading()
+//        addProfileCollectionRef.add(profile)
+//            .addOnSuccessListener {
+//                _addProfile.value = Resource.Success("Successfully added data!")
+//            }
+//            .addOnFailureListener{
+//                _addProfile.value = Resource.Error(message = it.message.toString())
+//            }
+//    }
 
-    fun addProfile(profile: HashMap<String, String>){
-        _addProfile.value = Resource.Loading()
+    fun setProfile(profile: HashMap<String, String>){
+        _setProfile.value = Resource.Loading()
         profileCollectionRef.set(profile)
             .addOnSuccessListener {
-                _addProfile.value = Resource.Success("Successfully added data!")
+                _setProfile.value = Resource.Success("Successfully set data!")
             }
             .addOnFailureListener{
-                _addProfile.value = Resource.Error(message = it.message.toString())
+                _setProfile.value = Resource.Error(message = it.message.toString())
             }
     }
 
