@@ -63,6 +63,10 @@ class HomeFragment : Fragment() {
         retrieveAndSetGlasses()
         retrieveAndSetVarieties()
 
+        binding.fabAddProduct.setOnClickListener {
+            findNavController().navigate(R.id.action_productFragment_to_addProductFragment)
+        }
+
         shoeAdapter.setOnClickListener(object : ShoeAdapter.OnItemClickListener{
             override fun onProductClick(product: Product) {
                 navigateToDetails(product)
