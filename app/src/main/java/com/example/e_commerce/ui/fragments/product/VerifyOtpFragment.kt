@@ -47,6 +47,7 @@ import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.Locale
 import java.util.concurrent.TimeUnit
@@ -301,47 +302,43 @@ class VerifyOtpFragment : Fragment() {
                     requireActivity().showToast("Verification successful!")
                     firebaseViewModel = ViewModelProvider(this)[FirebaseViewModel::class.java]
 
-                    firebaseViewModel.getProfile()
-                    if (firebaseViewModel.getProfile.value?.data == null){
-                        firebaseViewModel.setProfile(
-                            hashMapOf(
-                                "name" to "User Name",
-                                "phone" to auth.currentUser!!.phoneNumber!!,
-                                "address" to "Address",
-                                "role" to "user"
-                            )
-                        )
-                    }else{
-                        firebaseViewModel.getProfile()
-                        firebaseViewModel.getProfile.observe(viewLifecycleOwner, Observer { resource ->
-                            when(resource){
-                                is Resource.Success ->{
-                                    resource.data?.let { profile->
-                                        if (profile.name != null && profile.address != null && profile.role != null){
-                                            firebaseViewModel.setProfile(
-                                                hashMapOf(
-                                                    "name" to profile.name,
-                                                    "phone" to profile.phone,
-                                                    "address" to profile.address,
-                                                    "role" to profile.role
-                                                )
-                                            )
+                    Firebase.firestore.collection("users")
+                        .document(auth.currentUser?.uid!!).collection("profile").document(auth.currentUser?.uid!!)
+                        .get()
+                        .addOnSuccessListener { documentSnapshot->
+                            if (!documentSnapshot.exists()){
+                                firebaseViewModel.setProfile(
+                                    hashMapOf(
+                                        "name" to "User Name",
+                                        "phone" to auth.currentUser!!.phoneNumber.toString(),
+                                        "address" to "Address",
+                                        "role" to "user"
+                                    )
+                                )
+                            }else{
+                                firebaseViewModel.getProfile()
+                                firebaseViewModel.getProfile.observe(viewLifecycleOwner, Observer { resource ->
+                                    when(resource){
+                                        is Resource.Success ->{
+                                            resource.data?.let { profile->
+                                                if (profile.name != null && profile.address != null && profile.role != null){
+                                                    firebaseViewModel.setProfile(
+                                                        hashMapOf(
+                                                            "name" to profile.name,
+                                                            "phone" to profile.phone,
+                                                            "address" to profile.address,
+                                                            "role" to profile.role
+                                                        )
+                                                    )
+                                                }
+                                            }
                                         }
+                                        is Resource.Loading ->{}
+                                        is Resource.Error ->{}
                                     }
-//                                        ?:firebaseViewModel.setProfile(
-//                                        hashMapOf(
-//                                            "name" to "User Name",
-//                                            "phone" to auth.currentUser?.phoneNumber.toString(),
-//                                            "address" to "Address",
-//                                            "role" to "user"
-//                                        )
-//                                    )
-                                }
-                                is Resource.Loading ->{}
-                                is Resource.Error ->{}
+                                })
                             }
-                        })
-                    }
+                        }
 
                     binding.apply {
                         spinnerOtp.show()
