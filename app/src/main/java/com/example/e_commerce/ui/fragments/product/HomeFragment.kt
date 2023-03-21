@@ -16,7 +16,10 @@ import com.example.e_commerce.model.Product
 import com.example.e_commerce.ui.fragments.product.adapter.GlassAdapter
 import com.example.e_commerce.ui.fragments.product.adapter.ShoeAdapter
 import com.example.e_commerce.ui.fragments.product.adapter.VarietiesAdapter
+import com.example.e_commerce.utils.Constants.ADIDAS_SHOES
 import com.example.e_commerce.utils.Constants.ALL_GLASSES
+import com.example.e_commerce.utils.Constants.ALL_SHOES
+import com.example.e_commerce.utils.Constants.NIKE_SHOES
 import com.example.e_commerce.utils.Constants.SUN_GLASSES
 import com.example.e_commerce.utils.Constants.TRANSPARENT_GLASSES
 import com.example.e_commerce.utils.ExtensionFunctions.hide
@@ -168,10 +171,10 @@ class HomeFragment : Fragment() {
                         firebaseViewModel.deleteShoes(product)
                     }
                     R.id.chip_adidas ->{
-                        firebaseViewModel.deleteAdidasShoes(product)
+                        firebaseViewModel.deleteShoes(product)
                     }
                     R.id.chip_nike ->{
-                        firebaseViewModel.deleteNikeShoes(product)
+                        firebaseViewModel.deleteShoes(product)
                     }
                 }
             }
@@ -267,46 +270,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-//    private fun getSunglasses() {
-//        firebaseViewModel.getSunGlasses()
-//
-//        firebaseViewModel.getSunGlasses.observe(viewLifecycleOwner, Observer { resource->
-//            when(resource){
-//                is Resource.Loading ->{
-//                    binding.pbHome.show()
-//                }
-//                is Resource.Success ->{
-//                    binding.pbHome.hide()
-//                    glassAdapter.differCallBack.submitList(resource.data)
-//                }
-//                is Resource.Error ->{
-//                    binding.pbHome.hide()
-//                    requireActivity().showToast(resource.message.toString())
-//                }
-//            }
-//        })
-//    }
-
-//    private fun getTransparentGlasses() {
-//        firebaseViewModel.getTransparentGlasses()
-//
-//        firebaseViewModel.getTransparentGlasses.observe(viewLifecycleOwner, Observer { resource->
-//            when(resource){
-//                is Resource.Loading ->{
-//                    binding.pbHome.show()
-//                }
-//                is Resource.Success ->{
-//                    binding.pbHome.hide()
-//                    glassAdapter.differCallBack.submitList(resource.data)
-//                }
-//                is Resource.Error ->{
-//                    binding.pbHome.hide()
-//                    requireActivity().showToast(resource.message.toString())
-//                }
-//            }
-//        })
-//    }
-
     private fun getGlasses(type: String) {
         firebaseViewModel.getGlasses(type)
 
@@ -328,66 +291,26 @@ class HomeFragment : Fragment() {
     }
 
     private fun retrieveAndSetShoes() {
-        getAllShoes()
+        getShoes(ALL_SHOES)
         binding.chipGroupShoes.setOnCheckedStateChangeListener { group, checkedIds ->
             checkedIds.forEach {
                 when(it){
                     R.id.chip_all_shoes ->{
-                        getAllShoes()
+                        getShoes(ALL_SHOES)
                     }
                     R.id.chip_adidas ->{
-                        getAdidasShoes()
+                        getShoes(ADIDAS_SHOES)
                     }
                     R.id.chip_nike ->{
-                        getNikeShoes()
+                        getShoes(NIKE_SHOES)
                     }
                 }
             }
         }
     }
 
-    private fun getNikeShoes() {
-        firebaseViewModel.getNikeShoes()
-
-        firebaseViewModel.getNikeShoes.observe(viewLifecycleOwner, Observer { resource->
-            when(resource){
-                is Resource.Loading ->{
-                    binding.pbHome.show()
-                }
-                is Resource.Success ->{
-                    binding.pbHome.hide()
-                    shoeAdapter.differCallBack.submitList(resource.data)
-                }
-                is Resource.Error ->{
-                    binding.pbHome.hide()
-                    requireActivity().showToast(resource.message.toString())
-                }
-            }
-        })
-    }
-
-    private fun getAdidasShoes() {
-        firebaseViewModel.getAdidasShoes()
-
-        firebaseViewModel.getAdidasShoes.observe(viewLifecycleOwner, Observer { resource->
-            when(resource){
-                is Resource.Loading ->{
-                    binding.pbHome.show()
-                }
-                is Resource.Success ->{
-                    binding.pbHome.hide()
-                    shoeAdapter.differCallBack.submitList(resource.data)
-                }
-                is Resource.Error ->{
-                    binding.pbHome.hide()
-                    requireActivity().showToast(resource.message.toString())
-                }
-            }
-        })
-    }
-
-    private fun getAllShoes() {
-        firebaseViewModel.getShoes()
+    private fun getShoes(type: String) {
+        firebaseViewModel.getShoes(type)
 
         firebaseViewModel.getShoes.observe(viewLifecycleOwner, Observer { resource->
             when(resource){

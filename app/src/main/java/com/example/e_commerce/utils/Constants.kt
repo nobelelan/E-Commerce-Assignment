@@ -16,4 +16,7 @@ object Constants {
     const val ALL_GLASSES = "AllGlasses"
     const val TRANSPARENT_GLASSES = "TransparentGlasses"
     const val SUN_GLASSES = "SunGlasses"
+    const val ALL_SHOES = "AllShoes"
+    const val NIKE_SHOES = "NikeShoes"
+    const val ADIDAS_SHOES = "AdidasShoes"
 }

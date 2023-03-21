@@ -11,14 +11,16 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentAddProductBinding
+import com.example.e_commerce.utils.Constants.ADIDAS_SHOES
 import com.example.e_commerce.utils.Constants.ALL_GLASSES
+import com.example.e_commerce.utils.Constants.ALL_SHOES
+import com.example.e_commerce.utils.Constants.NIKE_SHOES
 import com.example.e_commerce.utils.Constants.SUN_GLASSES
 import com.example.e_commerce.utils.Constants.TRANSPARENT_GLASSES
 import com.example.e_commerce.utils.Constants.VARIETIES
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.viewmodel.FirebaseViewModel
-import com.google.firebase.auth.FirebaseAuth
 
 
 class AddProductFragment : Fragment() {
@@ -66,30 +68,23 @@ class AddProductFragment : Fragment() {
                             binding.rgGlasses.hide()
                             //add to varieties
                             binding.btnSubmitProduct.setOnClickListener {
-                                firebaseViewModel.addVarieties(
-                                    hashMapOf(
-                                        "name" to binding.edtProductName.text.toString(),
-                                        "type" to VARIETIES,
-                                        "url" to binding.edtProductUrl.text.toString(),
-                                        "price" to binding.edtProductPrice.text.toString(),
-                                        "description" to binding.edtProductDescription.text.toString(),
-                                        "rating" to binding.edtProductRating.text.toString()
-                                    )
-                                )
+                                addVarieties()
                             }
                         }
                         "Shoes" ->{
                             binding.rgShoes.show()
                             binding.rgGlasses.hide()
-                            when(binding.rgShoes.checkedRadioButtonId){
-                                R.id.rb_all_shoes ->{
-                                    //add to all shoes
-                                }
-                                R.id.rb_adidas ->{
-                                    //add to adidas
-                                }
-                                R.id.rb_nike ->{
-                                    //add to nike
+                            binding.btnSubmitProduct.setOnClickListener {
+                                when(binding.rgShoes.checkedRadioButtonId){
+                                    R.id.rb_all_shoes ->{
+                                        addShoes(ALL_SHOES)
+                                    }
+                                    R.id.rb_adidas ->{
+                                        addShoes(ADIDAS_SHOES)
+                                    }
+                                    R.id.rb_nike ->{
+                                        addShoes(NIKE_SHOES)
+                                    }
                                 }
                             }
                         }
@@ -100,15 +95,15 @@ class AddProductFragment : Fragment() {
                                 when(binding.rgGlasses.checkedRadioButtonId){
                                     R.id.rb_all_glasses ->{
                                         //add to all glasses
-                                        addProduct(ALL_GLASSES)
+                                        addGlass(ALL_GLASSES)
                                     }
                                     R.id.rb_transparent ->{
                                         //add to transparent
-                                        addProduct(TRANSPARENT_GLASSES)
+                                        addGlass(TRANSPARENT_GLASSES)
                                     }
                                     R.id.rb_sunglass ->{
                                         //add to sunglass
-                                        addProduct(SUN_GLASSES)
+                                        addGlass(SUN_GLASSES)
                                     }
                                 }
                             }
@@ -121,7 +116,32 @@ class AddProductFragment : Fragment() {
         }
     }
 
-    private fun addProduct(type: String) {
+    private fun addShoes(type: String) {
+        firebaseViewModel.addShoes(
+            hashMapOf(
+                "name" to binding.edtProductName.text.toString(),
+                "type" to type,
+                "url" to binding.edtProductUrl.text.toString(),
+                "price" to binding.edtProductPrice.text.toString(),
+                "description" to binding.edtProductDescription.text.toString(),
+                "rating" to binding.edtProductRating.text.toString()
+            )
+        )
+    }
+    private fun addVarieties() {
+        firebaseViewModel.addVarieties(
+            hashMapOf(
+                "name" to binding.edtProductName.text.toString(),
+                "type" to VARIETIES,
+                "url" to binding.edtProductUrl.text.toString(),
+                "price" to binding.edtProductPrice.text.toString(),
+                "description" to binding.edtProductDescription.text.toString(),
+                "rating" to binding.edtProductRating.text.toString()
+            )
+        )
+    }
+
+    private fun addGlass(type: String) {
         firebaseViewModel.addGlasses(
             hashMapOf(
                 "name" to binding.edtProductName.text.toString(),

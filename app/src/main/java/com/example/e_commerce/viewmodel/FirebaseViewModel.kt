@@ -27,6 +27,10 @@ class FirebaseViewModel: ViewModel() {
     val getProfile: LiveData<Resource<Profile>>
         get() = _getProfile
 
+    private val _addShoes = MutableLiveData<Resource<String>>()
+    val addShoes: LiveData<Resource<String>>
+        get() = _addShoes
+
     private val _getShoes = MutableLiveData<Resource<List<Product>>>()
     val getShoes: LiveData<Resource<List<Product>>>
         get() = _getShoes
@@ -34,22 +38,6 @@ class FirebaseViewModel: ViewModel() {
     private val _deleteShoes = MutableLiveData<Resource<String>>()
     val deleteShoes: LiveData<Resource<String>>
         get() = _deleteShoes
-
-    private val _getAdidasShoes = MutableLiveData<Resource<List<Product>>>()
-    val getAdidasShoes: LiveData<Resource<List<Product>>>
-        get() = _getAdidasShoes
-
-    private val _deleteAdidasShoes = MutableLiveData<Resource<String>>()
-    val deleteAdidasShoes: LiveData<Resource<String>>
-        get() = _deleteAdidasShoes
-
-    private val _getNikeShoes = MutableLiveData<Resource<List<Product>>>()
-    val getNikeShoes: LiveData<Resource<List<Product>>>
-        get() = _getNikeShoes
-
-    private val _deleteNikeShoes = MutableLiveData<Resource<String>>()
-    val deleteNikeShoes: LiveData<Resource<String>>
-        get() = _deleteNikeShoes
 
     private val _addGlasses = MutableLiveData<Resource<String>>()
     val addGlasses: LiveData<Resource<String>>
@@ -62,22 +50,6 @@ class FirebaseViewModel: ViewModel() {
     private val _deleteGlasses = MutableLiveData<Resource<String>>()
     val deleteGlasses: LiveData<Resource<String>>
         get() = _deleteGlasses
-
-//    private val _getTransparentGlasses = MutableLiveData<Resource<List<Product>>>()
-//    val getTransparentGlasses: LiveData<Resource<List<Product>>>
-//        get() = _getTransparentGlasses
-//
-//    private val _deleteTransparentGlasses = MutableLiveData<Resource<String>>()
-//    val deleteTransparentGlasses: LiveData<Resource<String>>
-//        get() = _deleteTransparentGlasses
-//
-//    private val _getSunGlasses = MutableLiveData<Resource<List<Product>>>()
-//    val getSunGlasses: LiveData<Resource<List<Product>>>
-//        get() = _getSunGlasses
-//
-//    private val _deleteSunglasses = MutableLiveData<Resource<String>>()
-//    val deleteSunglasses: LiveData<Resource<String>>
-//        get() = _deleteSunglasses
 
     private val _addVarieties = MutableLiveData<Resource<String>>()
     val addVarieties: LiveData<Resource<String>>
@@ -178,9 +150,21 @@ class FirebaseViewModel: ViewModel() {
         }
     }
 
-    fun getShoes(){
+    fun addShoes(product: HashMap<String, String>){
+        _addShoes.value = Resource.Loading()
+        shoesCollectionRef.add(product)
+            .addOnSuccessListener {
+                _addShoes.value = Resource.Success("Successfully added data!")
+            }
+            .addOnFailureListener{
+                _addShoes.value = Resource.Error(message = it.message.toString())
+            }
+    }
+
+    fun getShoes(type: String){
         _getShoes.value = Resource.Loading()
-        shoesCollectionRef.addSnapshotListener { querySnapshot, error ->
+        shoesCollectionRef
+            .whereEqualTo("type",type).addSnapshotListener { querySnapshot, error ->
             error?.let {
                 _getShoes.value = Resource.Error(message = it.message.toString())
             }
@@ -204,70 +188,6 @@ class FirebaseViewModel: ViewModel() {
                             }
                             .addOnFailureListener { error->
                                 _deleteShoes.value = Resource.Error(message = error.message.toString())
-                            }
-                    }
-                }
-            }
-    }
-
-    fun getAdidasShoes(){
-        _getAdidasShoes.value = Resource.Loading()
-        adidasCategoryCollectionRef.addSnapshotListener { querySnapshot, error ->
-            error?.let {
-                _getAdidasShoes.value = Resource.Error(message = it.message.toString())
-            }
-            querySnapshot?.let {
-                _getAdidasShoes.value = Resource.Success(it.toObjects())
-            }
-        }
-    }
-
-    fun deleteAdidasShoes(product: Product){
-        _deleteAdidasShoes.value = Resource.Loading()
-        adidasCategoryCollectionRef
-            .whereEqualTo("url", product.url)
-            .get()
-            .addOnSuccessListener {
-                if (it.documents.isNotEmpty()){
-                    it.forEach { document->
-                        adidasCategoryCollectionRef.document(document.id).delete()
-                            .addOnSuccessListener {
-                                _deleteAdidasShoes.value = Resource.Success("Removed from Adidas shoes!")
-                            }
-                            .addOnFailureListener { error->
-                                _deleteAdidasShoes.value = Resource.Error(message = error.message.toString())
-                            }
-                    }
-                }
-            }
-    }
-
-    fun getNikeShoes(){
-        _getNikeShoes.value = Resource.Loading()
-        nikeCategoryCollectionRef.addSnapshotListener { querySnapshot, error ->
-            error?.let {
-                _getNikeShoes.value = Resource.Error(message = it.message.toString())
-            }
-            querySnapshot?.let {
-                _getNikeShoes.value = Resource.Success(it.toObjects())
-            }
-        }
-    }
-
-    fun deleteNikeShoes(product: Product){
-        _deleteNikeShoes.value = Resource.Loading()
-        nikeCategoryCollectionRef
-            .whereEqualTo("url", product.url)
-            .get()
-            .addOnSuccessListener {
-                if (it.documents.isNotEmpty()){
-                    it.forEach { document->
-                        nikeCategoryCollectionRef.document(document.id).delete()
-                            .addOnSuccessListener {
-                                _deleteNikeShoes.value = Resource.Success("Removed from Nike shoes!")
-                            }
-                            .addOnFailureListener { error->
-                                _deleteNikeShoes.value = Resource.Error(message = error.message.toString())
                             }
                     }
                 }
@@ -317,70 +237,6 @@ class FirebaseViewModel: ViewModel() {
                 }
             }
     }
-
-//    fun getTransparentGlasses(){
-//        _getTransparentGlasses.value = Resource.Loading()
-//        transparentCategoryCollectionRef.addSnapshotListener { querySnapshot, error ->
-//            error?.let {
-//                _getTransparentGlasses.value = Resource.Error(message = it.message.toString())
-//            }
-//            querySnapshot?.let {
-//                _getTransparentGlasses.value = Resource.Success(it.toObjects())
-//            }
-//        }
-//    }
-//
-//    fun deleteTransparentGlasses(product: Product){
-//        _deleteTransparentGlasses.value = Resource.Loading()
-//        transparentCategoryCollectionRef
-//            .whereEqualTo("url", product.url)
-//            .get()
-//            .addOnSuccessListener {
-//                if (it.documents.isNotEmpty()){
-//                    it.forEach { document->
-//                        transparentCategoryCollectionRef.document(document.id).delete()
-//                            .addOnSuccessListener {
-//                                _deleteTransparentGlasses.value = Resource.Success("Removed from transparent glasses!")
-//                            }
-//                            .addOnFailureListener { error->
-//                                _deleteTransparentGlasses.value = Resource.Error(message = error.message.toString())
-//                            }
-//                    }
-//                }
-//            }
-//    }
-//
-//    fun getSunGlasses(){
-//        _getSunGlasses.value = Resource.Loading()
-//        sunglassCategoryCollectionRef.addSnapshotListener { querySnapshot, error ->
-//            error?.let {
-//                _getSunGlasses.value = Resource.Error(message = it.message.toString())
-//            }
-//            querySnapshot?.let {
-//                _getSunGlasses.value = Resource.Success(it.toObjects())
-//            }
-//        }
-//    }
-//
-//    fun deleteSunGlasses(product: Product){
-//        _deleteSunglasses.value = Resource.Loading()
-//        sunglassCategoryCollectionRef
-//            .whereEqualTo("url", product.url)
-//            .get()
-//            .addOnSuccessListener {
-//                if (it.documents.isNotEmpty()){
-//                    it.forEach { document->
-//                        sunglassCategoryCollectionRef.document(document.id).delete()
-//                            .addOnSuccessListener {
-//                                _deleteSunglasses.value = Resource.Success("Removed from sunglasses!")
-//                            }
-//                            .addOnFailureListener { error->
-//                                _deleteSunglasses.value = Resource.Error(message = error.message.toString())
-//                            }
-//                    }
-//                }
-//            }
-//    }
 
     fun addVarieties(product: HashMap<String, String>){
         _addVarieties.value = Resource.Loading()
