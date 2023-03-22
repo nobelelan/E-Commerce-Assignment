@@ -30,11 +30,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
-            android:id="@+id/rb_all_shoes"
+            android:id="@+id/rb_converse_shoes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="All Shoes" />
+            android:text="Converse" />
 
         <RadioButton
             android:id="@+id/rb_nike"
@@ -60,11 +60,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
-            android:id="@+id/rb_all_glasses"
+            android:id="@+id/rb_round_glasses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="All Glasses" />
+            android:text="Round Glasses" />
 
         <RadioButton
             android:id="@+id/rb_transparent"
@@ -148,7 +148,7 @@
         android:background="@drawable/custom_input"
         android:ems="10"
         android:hint="Rating"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:maxLength="3"
         android:maxLines="1"
         android:paddingStart="8dp"
@@ -170,4 +170,15 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_product_rating" />
+
+    <ProgressBar
+        android:id="@+id/pb_add_product"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_submit_product"
+        app:layout_constraintStart_toStartOf="@+id/btn_submit_product"
+        app:layout_constraintTop_toBottomOf="@+id/btn_submit_product" />
 </androidx.constraintlayout.widget.ConstraintLayout>

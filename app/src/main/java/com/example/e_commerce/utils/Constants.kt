@@ -13,10 +13,10 @@ object Constants {
     const val CONTENT_TYPE = "application/json"
 
     const val VARIETIES = "Varieties"
-    const val ALL_GLASSES = "AllGlasses"
+    const val ROUND_GLASSES = "RoundGlasses"
     const val TRANSPARENT_GLASSES = "TransparentGlasses"
     const val SUN_GLASSES = "SunGlasses"
-    const val ALL_SHOES = "AllShoes"
+    const val CONVERSE_SHOES = "ConverseShoes"
     const val NIKE_SHOES = "NikeShoes"
     const val ADIDAS_SHOES = "AdidasShoes"
 }

@@ -8,18 +8,21 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentAddProductBinding
 import com.example.e_commerce.utils.Constants.ADIDAS_SHOES
-import com.example.e_commerce.utils.Constants.ALL_GLASSES
-import com.example.e_commerce.utils.Constants.ALL_SHOES
+import com.example.e_commerce.utils.Constants.CONVERSE_SHOES
 import com.example.e_commerce.utils.Constants.NIKE_SHOES
+import com.example.e_commerce.utils.Constants.ROUND_GLASSES
 import com.example.e_commerce.utils.Constants.SUN_GLASSES
 import com.example.e_commerce.utils.Constants.TRANSPARENT_GLASSES
 import com.example.e_commerce.utils.Constants.VARIETIES
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
+import com.example.e_commerce.utils.ExtensionFunctions.showToast
+import com.example.e_commerce.utils.Resource
 import com.example.e_commerce.viewmodel.FirebaseViewModel
 
 
@@ -66,7 +69,6 @@ class AddProductFragment : Fragment() {
                         "Varieties" ->{
                             binding.rgShoes.hide()
                             binding.rgGlasses.hide()
-                            //add to varieties
                             binding.btnSubmitProduct.setOnClickListener {
                                 addVarieties()
                             }
@@ -76,8 +78,8 @@ class AddProductFragment : Fragment() {
                             binding.rgGlasses.hide()
                             binding.btnSubmitProduct.setOnClickListener {
                                 when(binding.rgShoes.checkedRadioButtonId){
-                                    R.id.rb_all_shoes ->{
-                                        addShoes(ALL_SHOES)
+                                    R.id.rb_converse_shoes ->{
+                                        addShoes(CONVERSE_SHOES)
                                     }
                                     R.id.rb_adidas ->{
                                         addShoes(ADIDAS_SHOES)
@@ -93,16 +95,13 @@ class AddProductFragment : Fragment() {
                             binding.rgShoes.hide()
                             binding.btnSubmitProduct.setOnClickListener {
                                 when(binding.rgGlasses.checkedRadioButtonId){
-                                    R.id.rb_all_glasses ->{
-                                        //add to all glasses
-                                        addGlass(ALL_GLASSES)
+                                    R.id.rb_round_glasses ->{
+                                        addGlass(ROUND_GLASSES)
                                     }
                                     R.id.rb_transparent ->{
-                                        //add to transparent
                                         addGlass(TRANSPARENT_GLASSES)
                                     }
                                     R.id.rb_sunglass ->{
-                                        //add to sunglass
                                         addGlass(SUN_GLASSES)
                                     }
                                 }
@@ -127,6 +126,21 @@ class AddProductFragment : Fragment() {
                 "rating" to binding.edtProductRating.text.toString()
             )
         )
+        firebaseViewModel.addShoes.observe(viewLifecycleOwner, Observer { resource->
+            when(resource){
+                is Resource.Success ->{
+                    requireActivity().showToast("Submitted Successfully!")
+                    binding.pbAddProduct.hide()
+                }
+                is Resource.Loading ->{
+                    binding.pbAddProduct.show()
+                }
+                is Resource.Error ->{
+                    requireActivity().showToast("Something went wrong!")
+                    binding.pbAddProduct.hide()
+                }
+            }
+        })
     }
     private fun addVarieties() {
         firebaseViewModel.addVarieties(
@@ -139,6 +153,21 @@ class AddProductFragment : Fragment() {
                 "rating" to binding.edtProductRating.text.toString()
             )
         )
+        firebaseViewModel.addVarieties.observe(viewLifecycleOwner, Observer { resource->
+            when(resource){
+                is Resource.Success ->{
+                    requireActivity().showToast("Submitted Successfully!")
+                    binding.pbAddProduct.hide()
+                }
+                is Resource.Loading ->{
+                    binding.pbAddProduct.show()
+                }
+                is Resource.Error ->{
+                    requireActivity().showToast("Something went wrong!")
+                    binding.pbAddProduct.hide()
+                }
+            }
+        })
     }
 
     private fun addGlass(type: String) {
@@ -152,6 +181,21 @@ class AddProductFragment : Fragment() {
                 "rating" to binding.edtProductRating.text.toString()
             )
         )
+        firebaseViewModel.addGlasses.observe(viewLifecycleOwner, Observer { resource->
+            when(resource){
+                is Resource.Success ->{
+                    requireActivity().showToast("Submitted Successfully!")
+                    binding.pbAddProduct.hide()
+                }
+                is Resource.Loading ->{
+                    binding.pbAddProduct.show()
+                }
+                is Resource.Error ->{
+                    requireActivity().showToast("Something went wrong!")
+                    binding.pbAddProduct.hide()
+                }
+            }
+        })
     }
 
     override fun onDestroyView() {

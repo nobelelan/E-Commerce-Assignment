@@ -36,17 +36,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:singleSelection="true"
-                app:checkedChip="@id/chip_all_glasses"
+                app:checkedChip="@id/chip_round_glasses"
                 android:layout_marginTop="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_home_shoe">
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_all_glasses"
+                    android:id="@+id/chip_round_glasses"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/CustomChipStyle"
-                    android:text="@string/all_glasses" />
+                    android:text="Round" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_transparent"
@@ -106,17 +106,17 @@
                 android:id="@+id/chip_group_shoes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:checkedChip="@id/chip_all_shoes"
+                app:checkedChip="@id/chip_converse_shoes"
                 app:singleSelection="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_all_shoes"
+                    android:id="@+id/chip_converse_shoes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/CustomChipStyle"
-                    android:text="@string/all_shoes" />
+                    android:text="Converse" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_nike"

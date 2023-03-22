@@ -92,16 +92,8 @@ class FirebaseViewModel: ViewModel() {
         .document(auth.currentUser?.uid!!).collection("profile").document(auth.currentUser?.uid!!)
 
     private val shoesCollectionRef = Firebase.firestore.collection("shoes")
-    private val adidasCategoryCollectionRef = Firebase.firestore.collection("shoesCategory")
-        .document("1").collection("adidas")
-    private val nikeCategoryCollectionRef = Firebase.firestore.collection("shoesCategory")
-        .document("2").collection("nike")
 
     private val glassesCollectionRef = Firebase.firestore.collection("glasses")
-//    private val transparentCategoryCollectionRef = Firebase.firestore.collection("glassesCategory")
-//        .document("1").collection("transparent")
-//    private val sunglassCategoryCollectionRef = Firebase.firestore.collection("glassesCategory")
-//        .document("2").collection("sunglass")
 
     private val varietiesCollectionRef = Firebase.firestore.collection("varieties")
 

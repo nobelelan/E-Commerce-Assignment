@@ -17,9 +17,9 @@ import com.example.e_commerce.ui.fragments.product.adapter.GlassAdapter
 import com.example.e_commerce.ui.fragments.product.adapter.ShoeAdapter
 import com.example.e_commerce.ui.fragments.product.adapter.VarietiesAdapter
 import com.example.e_commerce.utils.Constants.ADIDAS_SHOES
-import com.example.e_commerce.utils.Constants.ALL_GLASSES
-import com.example.e_commerce.utils.Constants.ALL_SHOES
+import com.example.e_commerce.utils.Constants.CONVERSE_SHOES
 import com.example.e_commerce.utils.Constants.NIKE_SHOES
+import com.example.e_commerce.utils.Constants.ROUND_GLASSES
 import com.example.e_commerce.utils.Constants.SUN_GLASSES
 import com.example.e_commerce.utils.Constants.TRANSPARENT_GLASSES
 import com.example.e_commerce.utils.ExtensionFunctions.hide
@@ -27,11 +27,6 @@ import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
 import com.example.e_commerce.utils.Resource
 import com.example.e_commerce.viewmodel.FirebaseViewModel
-import com.google.android.material.chip.ChipGroup
-import com.google.android.material.chip.ChipGroup.OnCheckedStateChangeListener
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.ktx.Firebase
 
 
 class HomeFragment : Fragment() {
@@ -83,7 +78,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onDeleteClick(product: Product) {
-                deleteShoes(product)
+                firebaseViewModel.deleteShoes(product)
             }
 
             override fun onViewCreated(view: ImageView) {
@@ -100,7 +95,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onDeleteClick(product: Product) {
-//                deleteGlasses(product)
+                firebaseViewModel.deleteGlasses(product)
             }
 
             override fun onViewCreated(view: ImageView) {
@@ -163,42 +158,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun deleteShoes(product: Product) {
-        binding.chipGroupShoes.setOnCheckedStateChangeListener { group, checkedIds ->
-            checkedIds.forEach {
-                when(it){
-                    R.id.chip_all_shoes ->{
-                        firebaseViewModel.deleteShoes(product)
-                    }
-                    R.id.chip_adidas ->{
-                        firebaseViewModel.deleteShoes(product)
-                    }
-                    R.id.chip_nike ->{
-                        firebaseViewModel.deleteShoes(product)
-                    }
-                }
-            }
-        }
-    }
-
-//    private fun deleteGlasses(product: Product) {
-//        binding.chipGroupGlasses.setOnCheckedStateChangeListener { group, checkedIds ->
-//            checkedIds.forEach {
-//                when(it){
-//                    R.id.chip_all_glasses ->{
-//                        firebaseViewModel.deleteGlasses(product)
-//                    }
-//                    R.id.chip_transparent ->{
-//                        firebaseViewModel.deleteTransparentGlasses(product)
-//                    }
-//                    R.id.chip_sunglass ->{
-//                        firebaseViewModel.deleteSunGlasses(product)
-//                    }
-//                }
-//            }
-//        }
-//    }
-
     private fun navigateToDetails(product: Product) {
         val action = HomeFragmentDirections.actionProductFragmentToDetailsFragment(product)
         findNavController().navigate(action)
@@ -252,12 +211,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun retrieveAndSetGlasses() {
-        getGlasses(ALL_GLASSES)
+        getGlasses(ROUND_GLASSES)
         binding.chipGroupGlasses.setOnCheckedStateChangeListener { group, checkedIds ->
             checkedIds.forEach {
                 when(it){
-                    R.id.chip_all_glasses ->{
-                        getGlasses(ALL_GLASSES)
+                    R.id.chip_round_glasses ->{
+                        getGlasses(ROUND_GLASSES)
                     }
                     R.id.chip_transparent ->{
                         getGlasses(TRANSPARENT_GLASSES)
@@ -291,12 +250,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun retrieveAndSetShoes() {
-        getShoes(ALL_SHOES)
+        getShoes(CONVERSE_SHOES)
         binding.chipGroupShoes.setOnCheckedStateChangeListener { group, checkedIds ->
             checkedIds.forEach {
                 when(it){
-                    R.id.chip_all_shoes ->{
-                        getShoes(ALL_SHOES)
+                    R.id.chip_converse_shoes ->{
+                        getShoes(CONVERSE_SHOES)
                     }
                     R.id.chip_adidas ->{
                         getShoes(ADIDAS_SHOES)
