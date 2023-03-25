@@ -6,15 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.product.HomeFragment">
 
+    <TextView
+        android:id="@+id/txt_discover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Discover"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_your_products_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Your Products"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txt_discover"
+        app:layout_constraintTop_toBottomOf="@+id/txt_discover" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5">
+        app:layout_constraintTop_toBottomOf="@+id/txt_your_products_text">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,35 +56,48 @@
                 app:layout_constraintTop_toBottomOf="@+id/chip_group_shoes"
                 tools:itemCount="3" />
 
+            <TextView
+                android:id="@+id/txt_home_shoe_no_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="No items"
+                android:gravity="center_horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chip_group_shoes" />
+
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chip_group_glasses"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:singleSelection="true"
-                app:checkedChip="@id/chip_round_glasses"
                 android:layout_marginTop="4dp"
+                app:checkedChip="@id/chip_round_glasses"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_home_shoe">
+                app:layout_constraintTop_toBottomOf="@+id/rv_home_shoe"
+                app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_round_glasses"
+                    style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/CustomChipStyle"
                     android:text="Round" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_transparent"
+                    style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/CustomChipStyle"
                     android:text="@string/transparent" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_sunglass"
+                    style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/CustomChipStyle"
                     android:text="@string/sun_glass" />
 
             </com.google.android.material.chip.ChipGroup>
@@ -74,6 +112,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chip_group_glasses"
                 tools:itemCount="3" />
+
+            <TextView
+                android:id="@+id/txt_home_glass_no_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:visibility="gone"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="No items"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chip_group_glasses" />
 
             <TextView
                 android:id="@+id/txt_other_products_text"
@@ -107,29 +158,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:checkedChip="@id/chip_converse_shoes"
-                app:singleSelection="true"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_converse_shoes"
+                    style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/CustomChipStyle"
                     android:text="Converse" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_nike"
+                    style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/CustomChipStyle"
                     android:text="@string/nike" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_adidas"
+                    style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/CustomChipStyle"
                     android:text="@string/adidas" />
 
             </com.google.android.material.chip.ChipGroup>

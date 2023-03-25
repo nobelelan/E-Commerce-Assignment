@@ -15,7 +15,6 @@
         android:layout_marginTop="8dp"
         style="@style/CustomButton"
         android:background="@drawable/custom_button"
-        android:drawableEnd="@drawable/baseline_logout"
         android:text="@string/log_out"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,6 +28,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/custom_input"
         android:padding="16dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -44,7 +44,7 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/img_edit_profile"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,14 +66,18 @@
             app:layout_constraintStart_toStartOf="@+id/txt_phone_number"
             app:layout_constraintTop_toBottomOf="@+id/txt_phone_number" />
 
-        <ImageView
-            android:id="@+id/img_edit_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_edit"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/img_edit_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="1dp"
+        android:src="@drawable/baseline_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/inner_Constraint"
+        app:layout_constraintTop_toTopOf="@+id/inner_Constraint" />
 
     <ProgressBar
         android:id="@+id/pb_profile"

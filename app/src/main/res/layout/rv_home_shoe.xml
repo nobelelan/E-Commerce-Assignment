@@ -31,6 +31,7 @@
             android:layout_marginTop="4dp"
             android:text="@string/product_name"
             android:maxLines="1"
+            android:textStyle="bold"
             android:ellipsize="end"
             android:ems="7"
             app:layout_constraintEnd_toStartOf="@+id/img_add_wishlist"

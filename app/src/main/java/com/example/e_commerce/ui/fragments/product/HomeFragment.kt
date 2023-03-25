@@ -238,8 +238,15 @@ class HomeFragment : Fragment() {
                     binding.pbHome.show()
                 }
                 is Resource.Success ->{
-                    binding.pbHome.hide()
+                    if (resource.data?.isEmpty() == true){
+                        binding.txtHomeGlassNoItems.show()
+                        binding.rvHomeGlass.hide()
+                    }else{
+                        binding.rvHomeGlass.show()
+                        binding.txtHomeGlassNoItems.hide()
+                    }
                     glassAdapter.differCallBack.submitList(resource.data)
+                    binding.pbHome.hide()
                 }
                 is Resource.Error ->{
                     binding.pbHome.hide()
@@ -277,8 +284,15 @@ class HomeFragment : Fragment() {
                     binding.pbHome.show()
                 }
                 is Resource.Success ->{
-                    binding.pbHome.hide()
+                    if (resource.data?.isEmpty() == true){
+                        binding.txtHomeShoeNoItems.show()
+                        binding.rvHomeShoe.hide()
+                    }else{
+                        binding.rvHomeShoe.show()
+                        binding.txtHomeShoeNoItems.hide()
+                    }
                     shoeAdapter.differCallBack.submitList(resource.data)
+                    binding.pbHome.hide()
                 }
                 is Resource.Error ->{
                     binding.pbHome.hide()
