@@ -90,13 +90,13 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_checkout"
+        style="@style/CustomButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        style="@style/CustomButton"
-        android:background="@drawable/custom_button"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/custom_button"
         android:text="@string/checkout"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -125,4 +125,19 @@
         app:layout_constraintBottom_toBottomOf="@+id/txt_total_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txt_total_text" />
+
+    <TextView
+        android:id="@+id/txt_no_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha=".5"
+        android:text="No item"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/txt_sub_total_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
