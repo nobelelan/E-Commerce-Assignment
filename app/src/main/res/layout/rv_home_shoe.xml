@@ -34,6 +34,7 @@
             android:textStyle="bold"
             android:ellipsize="end"
             android:ems="7"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toStartOf="@+id/img_add_wishlist"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/img_product"
