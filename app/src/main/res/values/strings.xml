@@ -62,5 +62,15 @@
     <string name="adidas">Adidas</string>
     <string name="order_status">Order Status</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="converse">Converse</string>
+    <string name="round_glasses">Round Glasses</string>
+    <string name="image_url">Image Url</string>
+    <string name="rating">Rating</string>
+    <string name="submit">Submit</string>
+    <string name="no_cart_items">No cart items</string>
+    <string name="home_converse">Converse</string>
+    <string name="no_items">No items</string>
+    <string name="round">Round</string>
+    <string name="description">Description</string>
+    <string name="no_wishlist_items">No wishlist items</string>
 </resources>

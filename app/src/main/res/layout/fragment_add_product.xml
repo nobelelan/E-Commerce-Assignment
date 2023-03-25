@@ -35,19 +35,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="Converse" />
+            android:text="@string/converse" />
 
         <RadioButton
             android:id="@+id/rb_nike"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nike" />
+            android:text="@string/nike" />
 
         <RadioButton
             android:id="@+id/rb_adidas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Adidas" />
+            android:text="@string/adidas" />
     </RadioGroup>
 
     <RadioGroup
@@ -66,19 +66,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="Round Glasses" />
+            android:text="@string/round_glasses" />
 
         <RadioButton
             android:id="@+id/rb_transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Transparent" />
+            android:text="@string/transparent" />
 
         <RadioButton
             android:id="@+id/rb_sunglass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sunglass" />
+            android:text="@string/sun_glass" />
     </RadioGroup>
 
     <EditText
@@ -88,7 +88,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/custom_input"
         android:ems="10"
-        android:hint="Product Name"
+        android:hint="@string/product_name"
         android:inputType="textPersonName"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
@@ -104,7 +104,7 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/custom_input"
         android:ems="10"
-        android:hint="Image Url"
+        android:hint="@string/image_url"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -119,7 +119,7 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/custom_input"
         android:ems="10"
-        android:hint="Price"
+        android:hint="@string/price"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -134,7 +134,7 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/custom_input"
         android:ems="10"
-        android:hint="Description"
+        android:hint="@string/description"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -149,7 +149,7 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/custom_input"
         android:ems="10"
-        android:hint="Rating"
+        android:hint="@string/rating"
         android:inputType="numberDecimal"
         android:maxLength="3"
         android:maxLines="1"
@@ -165,7 +165,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Submit"
+        android:text="@string/submit"
         android:background="@drawable/custom_button"
         style="@style/CustomButton"
         app:layout_constraintEnd_toEndOf="parent"

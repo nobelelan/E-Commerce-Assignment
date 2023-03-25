@@ -37,7 +37,7 @@
                 android:visibility="gone"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="No items"
+                android:text="@string/no_items"
                 android:gravity="center_horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +58,7 @@
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Round" />
+                    android:text="@string/round" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_transparent"
@@ -95,7 +95,7 @@
                 android:visibility="gone"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="No items"
+                android:text="@string/no_items"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chip_group_glasses" />
@@ -135,7 +135,7 @@
                 android:visibility="gone"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="No items"
+                android:text="@string/no_items"
                 app:layout_constraintBottom_toTopOf="@id/view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -164,7 +164,7 @@
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Converse" />
+                    android:text="@string/home_converse" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_nike"

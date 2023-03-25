@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:alpha=".5"
-        android:text="No wishlist items"
+        android:text="@string/no_wishlist_items"
         android:textSize="14sp"
         android:textStyle="bold"
         android:visibility="gone"
