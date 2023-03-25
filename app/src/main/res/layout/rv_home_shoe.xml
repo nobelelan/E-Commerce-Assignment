@@ -15,13 +15,12 @@
 
         <ImageView
             android:id="@+id/img_product"
-            android:layout_width="160dp"
-            android:layout_height="130dp"
+            android:layout_width="135dp"
+            android:layout_height="120dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/baseline_snowshoeing" />
 
         <TextView
@@ -59,10 +58,10 @@
             android:id="@+id/img_add_wishlist"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_product_price"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txt_product_name"
+            app:layout_constraintStart_toEndOf="@+id/img_product"
             app:srcCompat="@drawable/baseline_favorite"
             app:tint="@color/pink_500" />
 
@@ -70,12 +69,11 @@
             android:id="@+id/img_delete_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@+id/img_product"
+            android:layout_marginStart="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_product"
             app:layout_constraintTop_toTopOf="@+id/img_product"
-            app:srcCompat="@drawable/baseline_delete" />
+            app:srcCompat="@drawable/baseline_off" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
