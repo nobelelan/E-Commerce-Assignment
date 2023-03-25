@@ -23,6 +23,7 @@ import com.example.e_commerce.utils.Resource
 import com.example.e_commerce.viewmodel.FirebaseViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -178,13 +179,20 @@ class CartFragment : Fragment() {
                 }
                 is Resource.Success ->{
                     binding.pbCart.hide()
-                    cartAdapter.differCallBack.submitList(resource.data)
+                    if (resource.data?.isEmpty() == true){
+                        binding.txtNoItem.show()
+                        binding.rvCart.hide()
+                    }else{
+                        binding.txtNoItem.hide()
+                        binding.rvCart.show()
+                        cartAdapter.differCallBack.submitList(resource.data)
 
-                    val prices = arrayListOf<Int>()
-                    resource.data?.forEach { product ->
-                        prices.add(product.price.toString().toInt())
+                        val prices = arrayListOf<Int>()
+                        resource.data?.forEach { product ->
+                            prices.add(product.price.toString().toInt())
+                        }
+                        calculateTotal(prices = prices)
                     }
-                    calculateTotal(prices = prices)
                 }
                 is Resource.Error ->{
                     binding.pbCart.hide()
