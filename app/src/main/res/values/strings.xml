@@ -68,9 +68,7 @@
     <string name="rating">Rating</string>
     <string name="submit">Submit</string>
     <string name="no_cart_items">No cart items</string>
-    <string name="home_converse">Converse</string>
     <string name="no_items">No items</string>
     <string name="round">Round</string>
-    <string name="description">Description</string>
     <string name="no_wishlist_items">No wishlist items</string>
 </resources>

@@ -61,15 +61,13 @@
     <string name="nike">নাইকি</string>
     <string name="adidas">এডিডাস</string>
     <string name="order_status">অর্ডার স্ট্যাটাস</string>
-    <string name="converse">Converse</string>
-    <string name="round_glasses">Round Glasses</string>
-    <string name="image_url">Image Url</string>
-    <string name="rating">Rating</string>
-    <string name="submit">Submit</string>
-    <string name="no_cart_items">No cart items</string>
-    <string name="home_converse">Converse</string>
-    <string name="no_items">No items</string>
-    <string name="round">Round</string>
-    <string name="description">Description</string>
-    <string name="no_wishlist_items">No wishlist items</string>
+    <string name="converse">কনভার্স</string>
+    <string name="round_glasses">গোলাকার চশমা</string>
+    <string name="image_url">ছবির ঠিকানা</string>
+    <string name="rating">রেটিং</string>
+    <string name="submit">জমা দিন</string>
+    <string name="no_cart_items">কোন কার্ট আইটেম নেই</string>
+    <string name="no_items">কোন আইটেম নেই</string>
+    <string name="round">গোলাকার</string>
+    <string name="no_wishlist_items">চাহিদা তালিকায় আইটেম নেই</string>
 </resources>

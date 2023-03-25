@@ -134,7 +134,7 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/custom_input"
         android:ems="10"
-        android:hint="@string/description"
+        android:hint="@string/details"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
