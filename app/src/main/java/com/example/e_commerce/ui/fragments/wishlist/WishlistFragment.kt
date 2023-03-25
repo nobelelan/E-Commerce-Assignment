@@ -82,7 +82,14 @@ class WishlistFragment : Fragment() {
                     binding.pbWishlist.show()
                 }
                 is Resource.Success ->{
-                    wishlistAdapter.differCallBack.submitList(resource.data)
+                    if (resource.data?.isEmpty() == true){
+                        binding.txtNoItem.show()
+                        binding.rvWishlist.hide()
+                    }else{
+                        binding.txtNoItem.hide()
+                        binding.rvWishlist.show()
+                        wishlistAdapter.differCallBack.submitList(resource.data)
+                    }
                     binding.pbWishlist.hide()
                 }
                 is Resource.Error ->{
