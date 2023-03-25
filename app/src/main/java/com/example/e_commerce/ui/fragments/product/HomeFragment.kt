@@ -199,6 +199,13 @@ class HomeFragment : Fragment() {
                     binding.pbHome.show()
                 }
                 is Resource.Success ->{
+                    if (resource.data?.isEmpty() == true){
+                        binding.txtHomeVarietiesNoItems.show()
+                        binding.rvHomeOtherProducts.hide()
+                    }else{
+                        binding.rvHomeOtherProducts.show()
+                        binding.txtHomeVarietiesNoItems.hide()
+                    }
                     binding.pbHome.hide()
                     varietiesAdapter.differCallBack.submitList(resource.data)
                 }
