@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.sslwireless.sslcommerzlibrary.viewmodel.listener.SSLCTransactionResponseListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,7 +33,7 @@ import kotlin.math.roundToInt
 
 
 const val TOPIC = "/topics/myTopic2"
-class CartFragment : Fragment() {
+class CartFragment : Fragment(), SSLCTransactionResponseListener {
 
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
@@ -88,8 +89,13 @@ class CartFragment : Fragment() {
         })
 
         binding.btnCheckout.setOnClickListener {
-            showAlertDialog()
+//            showAlertDialog()
+            paymentGateWay()
         }
+    }
+
+    private fun paymentGateWay() {
+        TODO("Not yet implemented")
     }
 
     @SuppressLint("StringFormatInvalid")
