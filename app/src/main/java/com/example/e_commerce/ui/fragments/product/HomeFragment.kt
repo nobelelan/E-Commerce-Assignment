@@ -219,18 +219,16 @@ class HomeFragment : Fragment() {
 
     private fun retrieveAndSetGlasses() {
         getGlasses(ROUND_GLASSES)
-        binding.chipGroupGlasses.setOnCheckedStateChangeListener { group, checkedIds ->
-            checkedIds.forEach {
-                when(it){
-                    R.id.chip_round_glasses ->{
-                        getGlasses(ROUND_GLASSES)
-                    }
-                    R.id.chip_transparent ->{
-                        getGlasses(TRANSPARENT_GLASSES)
-                    }
-                    R.id.chip_sunglass ->{
-                        getGlasses(SUN_GLASSES)
-                    }
+        binding.chipGroupGlasses.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId){
+                R.id.chip_round_glasses ->{
+                    getGlasses(ROUND_GLASSES)
+                }
+                R.id.chip_transparent ->{
+                    getGlasses(TRANSPARENT_GLASSES)
+                }
+                R.id.chip_sunglass ->{
+                    getGlasses(SUN_GLASSES)
                 }
             }
         }
@@ -265,18 +263,16 @@ class HomeFragment : Fragment() {
 
     private fun retrieveAndSetShoes() {
         getShoes(CONVERSE_SHOES)
-        binding.chipGroupShoes.setOnCheckedStateChangeListener { group, checkedIds ->
-            checkedIds.forEach {
-                when(it){
-                    R.id.chip_converse_shoes ->{
-                        getShoes(CONVERSE_SHOES)
-                    }
-                    R.id.chip_adidas ->{
-                        getShoes(ADIDAS_SHOES)
-                    }
-                    R.id.chip_nike ->{
-                        getShoes(NIKE_SHOES)
-                    }
+        binding.chipGroupShoes.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId){
+                R.id.chip_converse_shoes ->{
+                    getShoes(CONVERSE_SHOES)
+                }
+                R.id.chip_adidas ->{
+                    getShoes(ADIDAS_SHOES)
+                }
+                R.id.chip_nike ->{
+                    getShoes(NIKE_SHOES)
                 }
             }
         }
