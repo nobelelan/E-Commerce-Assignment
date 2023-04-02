@@ -98,8 +98,8 @@ class CartFragment : Fragment(), SSLCTransactionResponseListener {
         })
 
         binding.btnCheckout.setOnClickListener {
-//            showAlertDialog()
-            paymentGateWay()
+            showAlertDialog()
+//            paymentGateWay()
         }
     }
 
@@ -171,6 +171,7 @@ class CartFragment : Fragment(), SSLCTransactionResponseListener {
                 ).also {
                     sendNotification(it)
                 }
+                requireActivity().showToast("${R.string.order_placed_successfully}")
             }
             .create()
             .show()
@@ -181,7 +182,6 @@ class CartFragment : Fragment(), SSLCTransactionResponseListener {
     }
 
     private fun removeCartProducts() {
-        firebaseViewModel.getCart()
         firebaseViewModel.getCart.observe(viewLifecycleOwner, Observer { resource->
             when(resource){
                 is Resource.Loading->{
@@ -234,8 +234,6 @@ class CartFragment : Fragment(), SSLCTransactionResponseListener {
     }
 
     private fun retrieveAndSetProducts() {
-        firebaseViewModel.getCart()
-
         firebaseViewModel.getCart.observe(viewLifecycleOwner, Observer { resource->
             when(resource){
                 is Resource.Loading ->{

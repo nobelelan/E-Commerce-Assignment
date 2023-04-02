@@ -115,7 +115,6 @@ class ProfileFragment : Fragment() {
                 }
             }
         })
-        firebaseViewModel.getProfile()
     }
 
     private fun editProfile() {

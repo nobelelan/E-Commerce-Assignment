@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.e_commerce.model.Product
 import com.example.e_commerce.model.Profile
+import com.example.e_commerce.utils.Constants.CONVERSE_SHOES
+import com.example.e_commerce.utils.Constants.ROUND_GLASSES
 import com.example.e_commerce.utils.Resource
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.SetOptions
@@ -101,6 +103,17 @@ class FirebaseViewModel: ViewModel() {
         .document(auth.currentUser?.uid!!).collection("wishlist")
     private val cartCollectionRef = Firebase.firestore.collection("users")
         .document(auth.currentUser?.uid!!).collection("cart")
+
+
+
+    init {
+        getProfile()
+        getVarieties()
+        getShoes(CONVERSE_SHOES)
+        getGlasses(ROUND_GLASSES)
+        getCart()
+        getWishlist()
+    }
 
     fun setProfile(profile: HashMap<String, String>){
         _setProfile.value = Resource.Loading()

@@ -74,8 +74,6 @@ class WishlistFragment : Fragment() {
     }
 
     private fun retrieveAndSetWishlist() {
-        firebaseViewModel.getWishlist()
-
         firebaseViewModel.getWishlist.observe(viewLifecycleOwner, Observer { resource->
             when(resource){
                 is Resource.Loading ->{

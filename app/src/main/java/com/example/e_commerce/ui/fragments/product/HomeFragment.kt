@@ -126,7 +126,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun retrieveProfileData(view: View? = null) {
-        firebaseViewModel.getProfile()
+//        firebaseViewModel.getProfile()
         firebaseViewModel.getProfile.observe(viewLifecycleOwner, Observer{resource->
             when(resource){
                 is Resource.Loading ->{
@@ -191,8 +191,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun retrieveAndSetVarieties() {
-        firebaseViewModel.getVarieties()
-
         firebaseViewModel.getVarieties.observe(viewLifecycleOwner, Observer { resource->
             when(resource){
                 is Resource.Loading ->{
@@ -218,25 +216,23 @@ class HomeFragment : Fragment() {
     }
 
     private fun retrieveAndSetGlasses() {
-        getGlasses(ROUND_GLASSES)
         binding.chipGroupGlasses.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId){
                 R.id.chip_round_glasses ->{
-                    getGlasses(ROUND_GLASSES)
+                    firebaseViewModel.getGlasses(ROUND_GLASSES)
                 }
                 R.id.chip_transparent ->{
-                    getGlasses(TRANSPARENT_GLASSES)
+                    firebaseViewModel.getGlasses(TRANSPARENT_GLASSES)
                 }
                 R.id.chip_sunglass ->{
-                    getGlasses(SUN_GLASSES)
+                    firebaseViewModel.getGlasses(SUN_GLASSES)
                 }
             }
         }
+        getGlasses()
     }
 
-    private fun getGlasses(type: String) {
-        firebaseViewModel.getGlasses(type)
-
+    private fun getGlasses() {
         firebaseViewModel.getGlasses.observe(viewLifecycleOwner, Observer { resource->
             when(resource){
                 is Resource.Loading ->{
@@ -262,25 +258,23 @@ class HomeFragment : Fragment() {
     }
 
     private fun retrieveAndSetShoes() {
-        getShoes(CONVERSE_SHOES)
         binding.chipGroupShoes.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId){
                 R.id.chip_converse_shoes ->{
-                    getShoes(CONVERSE_SHOES)
+                    firebaseViewModel.getShoes(CONVERSE_SHOES)
                 }
                 R.id.chip_adidas ->{
-                    getShoes(ADIDAS_SHOES)
+                    firebaseViewModel.getShoes(ADIDAS_SHOES)
                 }
                 R.id.chip_nike ->{
-                    getShoes(NIKE_SHOES)
+                    firebaseViewModel.getShoes(NIKE_SHOES)
                 }
             }
         }
+        getShoes()
     }
 
-    private fun getShoes(type: String) {
-        firebaseViewModel.getShoes(type)
-
+    private fun getShoes() {
         firebaseViewModel.getShoes.observe(viewLifecycleOwner, Observer { resource->
             when(resource){
                 is Resource.Loading ->{
