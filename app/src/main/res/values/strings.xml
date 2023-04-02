@@ -71,4 +71,5 @@
     <string name="no_items">No items</string>
     <string name="round">Round</string>
     <string name="no_wishlist_items">No wishlist items</string>
+    <string name="user_list">User List</string>
 </resources>

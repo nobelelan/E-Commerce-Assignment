@@ -18,9 +18,8 @@
         android:text="@string/log_out"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_change_language" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_user_list" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/inner_Constraint"
@@ -101,8 +100,20 @@
         android:layout_marginTop="8dp"
         android:text="@string/change_language"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inner_Constraint" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_user_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/CustomButton"
+        android:background="@drawable/custom_button"
+        android:layout_marginTop="8dp"
+        android:text="@string/user_list"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_change_language" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

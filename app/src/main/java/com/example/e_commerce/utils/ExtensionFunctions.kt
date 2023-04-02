@@ -15,6 +15,10 @@ object ExtensionFunctions {
         this.visibility = View.INVISIBLE
     }
 
+    fun View.gone(){
+        this.visibility = View.GONE
+    }
+
     fun Button.enable(){
         this.isEnabled = true
     }

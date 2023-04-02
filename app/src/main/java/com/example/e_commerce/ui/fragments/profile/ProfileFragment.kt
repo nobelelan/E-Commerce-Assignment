@@ -1,6 +1,7 @@
 package com.example.e_commerce.ui.fragments.profile
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,11 @@ import com.example.e_commerce.databinding.AdEditProfileBinding
 import com.example.e_commerce.databinding.FragmentProfileBinding
 import com.example.e_commerce.utils.Constants.BANGLA_LANG_CODE
 import com.example.e_commerce.utils.Constants.ENGLISH_LANG_CODE
+import com.example.e_commerce.utils.Constants.GENERAL_SHARED_PREF
+import com.example.e_commerce.utils.Constants.GENERAL_SHARED_PREF_CODE
+import com.example.e_commerce.utils.Constants.ROLE_ADMIN
+import com.example.e_commerce.utils.Constants.ROLE_USER
+import com.example.e_commerce.utils.ExtensionFunctions.gone
 import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
@@ -63,36 +69,66 @@ class ProfileFragment : Fragment() {
         }
 
         binding.btnSignOut.setOnClickListener {
-            AlertDialog.Builder(requireContext())
-                .setTitle(R.string.signing_out)
-                .setNegativeButton(R.string.cancel){_,_->}
-                .setPositiveButton(R.string.proceed){_,_->
-                    auth.signOut()
-                    if (auth.currentUser == null){
-                        activity?.finish()
-                    }
-                }
-                .create()
-                .show()
+            signOut()
         }
         binding.btnChangeLanguage.setOnClickListener {
-            val changeLanguageBinding = AdChangeLanguageBinding.inflate(LayoutInflater.from(requireContext()))
-            AlertDialog.Builder(requireContext())
-                .setTitle(R.string.change_language)
-                .setView(changeLanguageBinding.root)
-                .setNegativeButton(R.string.cancel){_,_->}
-                .setPositiveButton(R.string.done){_,_->
-                    if (changeLanguageBinding.radioBtnBangla.isChecked){
-                        applySharedPref(requireContext(), BANGLA_LANG_CODE)
-                        setLocal(requireActivity(), BANGLA_LANG_CODE)
-                    }else if (changeLanguageBinding.radioBtnEnglish.isChecked){
-                        applySharedPref(requireContext(), ENGLISH_LANG_CODE)
-                        setLocal(requireActivity(), ENGLISH_LANG_CODE)
-                    }
-                }
-                .create()
-                .show()
+            changeLanguage()
         }
+
+        maintainUserList()
+    }
+
+    private fun maintainUserList() {
+        val sharedPref = context?.getSharedPreferences(GENERAL_SHARED_PREF, Context.MODE_PRIVATE)
+        val role = sharedPref?.getString(
+            GENERAL_SHARED_PREF_CODE,
+            ROLE_USER
+        )
+        when(role){
+            ROLE_USER ->{
+                binding.btnUserList.gone()
+            }
+            ROLE_ADMIN ->{
+                binding.btnUserList.show()
+            }
+        }
+
+        binding.btnUserList.setOnClickListener {
+            //navigate user list
+        }
+    }
+
+    private fun changeLanguage() {
+        val changeLanguageBinding = AdChangeLanguageBinding.inflate(LayoutInflater.from(requireContext()))
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.change_language)
+            .setView(changeLanguageBinding.root)
+            .setNegativeButton(R.string.cancel){_,_->}
+            .setPositiveButton(R.string.done){_,_->
+                if (changeLanguageBinding.radioBtnBangla.isChecked){
+                    applySharedPref(requireContext(), BANGLA_LANG_CODE)
+                    setLocal(requireActivity(), BANGLA_LANG_CODE)
+                }else if (changeLanguageBinding.radioBtnEnglish.isChecked){
+                    applySharedPref(requireContext(), ENGLISH_LANG_CODE)
+                    setLocal(requireActivity(), ENGLISH_LANG_CODE)
+                }
+            }
+            .create()
+            .show()
+    }
+
+    private fun signOut() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.signing_out)
+            .setNegativeButton(R.string.cancel){_,_->}
+            .setPositiveButton(R.string.proceed){_,_->
+                auth.signOut()
+                if (auth.currentUser == null){
+                    activity?.finish()
+                }
+            }
+            .create()
+            .show()
     }
 
     private fun getProfileInfo() {

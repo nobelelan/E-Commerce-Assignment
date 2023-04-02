@@ -70,4 +70,5 @@
     <string name="no_items">কোন আইটেম নেই</string>
     <string name="round">গোলাকার</string>
     <string name="no_wishlist_items">চাহিদা তালিকায় আইটেম নেই</string>
+    <string name="user_list">User List</string>
 </resources>
