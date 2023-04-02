@@ -21,10 +21,20 @@ import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
 import com.example.e_commerce.utils.Resource
 import com.example.e_commerce.viewmodel.FirebaseViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCCustomerInfoInitializer
+import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCProductInitializer
+import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCShipmentInfoInitializer
+import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCommerzInitialization
+import com.sslwireless.sslcommerzlibrary.model.response.SSLCTransactionInfoModel
+import com.sslwireless.sslcommerzlibrary.model.util.SSLCCurrencyType
+import com.sslwireless.sslcommerzlibrary.model.util.SSLCSdkType
+import com.sslwireless.sslcommerzlibrary.view.singleton.IntegrateSSLCommerz
+import com.sslwireless.sslcommerzlibrary.viewmodel.listener.SSLCTransactionResponseListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,7 +42,7 @@ import kotlin.math.roundToInt
 
 
 const val TOPIC = "/topics/myTopic2"
-class CartFragment : Fragment() {
+class CartFragment : Fragment(), SSLCTransactionResponseListener {
 
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
@@ -88,7 +98,61 @@ class CartFragment : Fragment() {
         })
 
         binding.btnCheckout.setOnClickListener {
-            showAlertDialog()
+//            showAlertDialog()
+            paymentGateWay()
+        }
+    }
+
+    private fun paymentGateWay() {
+        val sslCommerzInitialization = SSLCommerzInitialization(
+            "elan641ade0b8132c",
+            "elan641ade0b8132c@ssl",
+            100.0,
+            SSLCCurrencyType.BDT,
+            "123456789098765",
+            "yourProductType",
+            SSLCSdkType.TESTBOX
+        )
+        val customerInfoInitializer = SSLCCustomerInfoInitializer(
+            "customer name",
+            "customer email",
+            "address",
+            "dhaka",
+            "1214",
+            "Bangladesh",
+            "123456"
+        )
+        val productInitializer = SSLCProductInitializer("food", "food",
+            SSLCProductInitializer.ProductProfile.TravelVertical("Travel", "10",
+                "A", "12", "Dhk-Syl"))
+        val shipmentInfoInitializer = SSLCShipmentInfoInitializer("Courier",
+            2, SSLCShipmentInfoInitializer.ShipmentDetails("AA", "Address 1",
+                "Dhaka", "1000", "BD"))
+
+        IntegrateSSLCommerz
+            .getInstance(requireContext())
+            .addSSLCommerzInitialization(sslCommerzInitialization)
+            .addCustomerInfoInitializer(customerInfoInitializer)
+            .addProductInitializer(productInitializer)
+            .addShipmentInfoInitializer(shipmentInfoInitializer)
+            .buildApiCall(this)
+    }
+    override fun transactionSuccess(sslcTransactionInfoModel: SSLCTransactionInfoModel?) {
+        sslcTransactionInfoModel?.let {
+            val transactionStatus = it.apiConnect + "\n" + it.status
+            Snackbar.make(binding.root, transactionStatus, Snackbar.LENGTH_LONG).show()
+        }
+    }
+
+    override fun transactionFail(fail: String?) {
+        fail?.let {
+            Snackbar.make(binding.root, "failed:$it", Snackbar.LENGTH_LONG).show()
+        }
+    }
+
+    override fun merchantValidationError(error: String?) {
+        error?.let {
+            Snackbar.make(binding.root, "error:$it", Snackbar.LENGTH_LONG).show()
         }
     }
 
