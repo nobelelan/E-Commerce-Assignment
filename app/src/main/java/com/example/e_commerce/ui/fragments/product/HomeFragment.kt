@@ -19,6 +19,8 @@ import com.example.e_commerce.ui.fragments.product.adapter.VarietiesAdapter
 import com.example.e_commerce.utils.Constants.ADIDAS_SHOES
 import com.example.e_commerce.utils.Constants.CONVERSE_SHOES
 import com.example.e_commerce.utils.Constants.NIKE_SHOES
+import com.example.e_commerce.utils.Constants.ROLE_ADMIN
+import com.example.e_commerce.utils.Constants.ROLE_USER
 import com.example.e_commerce.utils.Constants.ROUND_GLASSES
 import com.example.e_commerce.utils.Constants.SUN_GLASSES
 import com.example.e_commerce.utils.Constants.TRANSPARENT_GLASSES
@@ -26,6 +28,7 @@ import com.example.e_commerce.utils.ExtensionFunctions.hide
 import com.example.e_commerce.utils.ExtensionFunctions.show
 import com.example.e_commerce.utils.ExtensionFunctions.showToast
 import com.example.e_commerce.utils.Resource
+import com.example.e_commerce.utils.Util.applyGeneralSharedPref
 import com.example.e_commerce.viewmodel.FirebaseViewModel
 
 
@@ -126,7 +129,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun retrieveProfileData(view: View? = null) {
-//        firebaseViewModel.getProfile()
         firebaseViewModel.getProfile.observe(viewLifecycleOwner, Observer{resource->
             when(resource){
                 is Resource.Loading ->{
@@ -151,9 +153,11 @@ class HomeFragment : Fragment() {
             if (role == "user"){
                 binding.fabAddProduct.hide()
                 view?.hide()
+                applyGeneralSharedPref(requireContext(), ROLE_USER)
             }else if (role == "admin"){
                 binding.fabAddProduct.show()
                 view?.show()
+                applyGeneralSharedPref(requireContext(), ROLE_ADMIN)
             } else {}
         }
     }

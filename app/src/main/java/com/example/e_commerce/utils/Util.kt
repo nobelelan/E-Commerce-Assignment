@@ -2,8 +2,8 @@ package com.example.e_commerce.utils
 
 import android.app.Activity
 import android.content.Context
-import com.example.e_commerce.utils.Constants.PHONE_AUTH_SHARED_PREF_KEY
-import com.google.firebase.auth.PhoneAuthProvider
+import com.example.e_commerce.utils.Constants.GENERAL_SHARED_PREF_CODE
+import com.example.e_commerce.utils.Constants.LANGUAGE_CODE
 import java.util.*
 
 object Util {
@@ -20,7 +20,14 @@ object Util {
     fun applySharedPref(context: Context?,langCode: String){
         val sharedPref = context?.getSharedPreferences(Constants.SHARED_PREF_KEY, Context.MODE_PRIVATE)
         val editor = sharedPref?.edit()
-        editor?.putString(Constants.LANGUAGE_CODE, langCode)
+        editor?.putString(LANGUAGE_CODE, langCode)
+        editor?.apply()
+    }
+
+    fun applyGeneralSharedPref(context: Context?, value: String){
+        val sharedPref = context?.getSharedPreferences(Constants.GENERAL_SHARED_PREF, Context.MODE_PRIVATE)
+        val editor = sharedPref?.edit()
+        editor?.putString(GENERAL_SHARED_PREF_CODE, value)
         editor?.apply()
     }
 }

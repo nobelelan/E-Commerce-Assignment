@@ -25,9 +25,6 @@ import com.example.e_commerce.broadcast.SmsBroadcastReceiverListener
 import com.example.e_commerce.databinding.FragmentVerifyOtpBinding
 import com.example.e_commerce.utils.Constants.BANGLA_LANG_CODE
 import com.example.e_commerce.utils.Constants.ENGLISH_LANG_CODE
-import com.example.e_commerce.utils.Constants.LANGUAGE_CODE
-import com.example.e_commerce.utils.Constants.PHONE_AUTH_SHARED_PREF_KEY
-import com.example.e_commerce.utils.Constants.SHARED_PREF_KEY
 import com.example.e_commerce.utils.ExtensionFunctions.disable
 import com.example.e_commerce.utils.ExtensionFunctions.enable
 import com.example.e_commerce.utils.ExtensionFunctions.hide
