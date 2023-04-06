@@ -309,28 +309,6 @@ class VerifyOtpFragment : Fragment() {
                                         "role" to "user"
                                     )
                                 )
-                            }else{
-                                firebaseViewModel.getProfile()
-                                firebaseViewModel.getProfile.observe(viewLifecycleOwner, Observer { resource ->
-                                    when(resource){
-                                        is Resource.Success ->{
-                                            resource.data?.let { profile->
-                                                if (profile.name != null && profile.address != null && profile.role != null){
-                                                    firebaseViewModel.setProfile(
-                                                        hashMapOf(
-                                                            "name" to profile.name,
-                                                            "phone" to profile.phone,
-                                                            "address" to profile.address,
-                                                            "role" to profile.role
-                                                        )
-                                                    )
-                                                }
-                                            }
-                                        }
-                                        is Resource.Loading ->{}
-                                        is Resource.Error ->{}
-                                    }
-                                })
                             }
                         }
 
